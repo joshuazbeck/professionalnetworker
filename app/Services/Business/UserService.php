@@ -6,7 +6,7 @@
  * 4/16/2021
  * This class is a service designed to handle all actions regarding the UserModel.
  */
-namespace App\Http\Controllers;
+namespace App\Services\Business;
 
 use App\Models\UserModel;
 use App\Services\Data\UserDAO;

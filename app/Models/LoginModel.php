@@ -21,9 +21,7 @@ class LoginModel
         $this->password = $password;
     }
 
-    // Getters and setters
     /**
-     *
      * @return mixed
      */
     public function getEmail()
@@ -32,12 +30,11 @@ class LoginModel
     }
 
     /**
-     *
-     * @param mixed $username
+     * @param mixed $email
      */
-    public function setUsername($email): void
+    public function setEmail($email): void
     {
-        $this->username = $email;
+        $this->email = $email;
     }
 
     /**

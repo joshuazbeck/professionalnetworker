@@ -17,34 +17,49 @@ class UserModel
 
     private $lastName;
 
-    private $userName;
+    private $password;
 
     private $email;
 
-    private $password;
+    private $phone;
+
+    private $age;
+
+    private $is_male;
+
+    private $city;
+
+    private $state;
+
+
+
+    // Getters and setters
 
     /**
      * UserModel constructor.
-     *
-     * @param
-     *            $firstName
-     * @param
-     *            $lastName
-     * @param
-     *            $userName
-     * @param
-     *            $emailAddress
+     * @param $firstName
+     * @param $lastName
+     * @param $email
+     * @param $password
+     * @param $phone
+     * @param $age
+     * @param $is_male
+     * @param $city
+     * @param $state
      */
-    public function __construct($firstName, $lastName, $userName, $emailAddress, $password)
+    public function __construct($firstName, $lastName, $email, $password, $phone, $age, $is_male, $city, $state)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
-        $this->userName = $userName;
-        $this->email = $emailAddress;
+        $this->email = $email;
         $this->password = $password;
+        $this->phone = $phone;
+        $this->age = $age;
+        $this->is_male = $is_male;
+        $this->city = $city;
+        $this->state = $state;
     }
 
-    // Getters and setters
     /**
      *
      * @return mixed
@@ -103,24 +118,6 @@ class UserModel
      *
      * @return mixed
      */
-    public function getUserName()
-    {
-        return $this->userName;
-    }
-
-    /**
-     *
-     * @param mixed $userName
-     */
-    public function setUserName($userName): void
-    {
-        $this->userName = $userName;
-    }
-
-    /**
-     *
-     * @return mixed
-     */
     public function getPassword()
     {
         return $this->password;
@@ -152,4 +149,85 @@ class UserModel
     {
         $this->email = $email;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    /**
+     * @param mixed $age
+     */
+    public function setAge($age): void
+    {
+        $this->age = $age;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsMale()
+    {
+        return $this->is_male;
+    }
+
+    /**
+     * @param mixed $is_male
+     */
+    public function setIsMale($is_male): void
+    {
+        $this->is_male = $is_male;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param mixed $state
+     */
+    public function setState($state): void
+    {
+        $this->state = $state;
+    }
+
 }

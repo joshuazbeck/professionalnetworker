@@ -8,7 +8,7 @@ namespace App\Http\Controllers;
  * 4/16/2021
  * This is a Login Controller class for handling login requests.
  */
-use App\HTTP\Controllers\SecurityService;
+use App\Services\Business\SecurityService;
 use Illuminate\Http\Request;
 use App\Models\LoginModel;
 
@@ -20,11 +20,11 @@ class LoginController extends Controller
     {
 
         // Retrieve user form inputs and clean against SQL Injection
-        $username = $this->clean_input($request->input('username'));
+        $email = $this->clean_input($request->input('email'));
         $password = $this->clean_input($request->input('password'));
 
         // Create new UserModel for authentication
-        $loginModel = new LoginModel($username, $password);
+        $loginModel = new LoginModel($email, $password);
 
         // Create new Security service and call authenticateUser. Returns a UserModel or Null
         $securityService = new SecurityService();
@@ -34,14 +34,20 @@ class LoginController extends Controller
         if ($user) {
             // Set variables
             session([
-                'username' => $user->getUserName()
+                'email' => $user->getEmail()
             ]);
             session([
                 'userID' => $user->getUserID()
             ]);
+            session([
+                'fullName' => $user->getFirstName() . " " . $user->getLastName()
+            ]);
 
             // Do something post login
-            echo "Username: " . session('username') . " User ID: " . session('userID') . " Logged in";
+            echo "User Logged In. Data pulled from session: </br>";
+            echo "Full name: " . session('fullName') . "</br>";
+            echo "Username: " . session('email') . "</br>";
+            echo "User ID: " . session('userID');
         } else {
             // Do something if login failed.
             echo "Problem with username or password";

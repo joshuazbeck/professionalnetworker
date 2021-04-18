@@ -22,22 +22,20 @@ class UserController extends Controller
         $userService = new UserService();
 
         // Retrieve all user form inputs and clean against SQL injection.
-        $firstname = $this->clean_input($request->input('firstname'));
-        $lastname = $this->clean_input($request->input('lastname'));
-        $username = $this->clean_input($request->input('username'));
+        $firstname = $this->clean_input($request->input('firstName'));
+        $lastname = $this->clean_input($request->input('lastName'));
         $email = $this->clean_input($request->input('email'));
         $password = $this->clean_input($request->input('password'));
+        $phoneNum = $this->clean_input($request->input('phoneNum'));
+        $age = $this->clean_input($request->input('age'));
+        $gender = $this->clean_input($request->input('selector'));
+        $city = $this->clean_input($request->input('city'));
+        $state = $this->clean_input($request->input('state'));
 
-        // Check database for duplicate email address or duplicate Username. Both return boolean.
+        // Check database for duplicate email address and return boolean.
         $checkEmail = $userService->findEmail($email);
-        $checkUsername = $userService->findUsername($username);
 
-        // Check for valid username
-        if ($checkUsername) {
-            // Do something if invalid
-            echo "Username not available";
-        } // Check for valid email address
-        elseif ($checkEmail) {
+        if ($checkEmail) {
             // Do something if invalid
             echo "Email address already registered";
         } // Attempt to register user
@@ -45,7 +43,7 @@ class UserController extends Controller
             // Hash the password
             $hash = password_hash(trim($password), PASSWORD_DEFAULT);
             // Create a new UserModel with form data
-            $user = new UserModel($firstname, $lastname, $username, $email, $hash);
+            $user = new UserModel($firstname, $lastname, $email, $hash, $phoneNum, $age, $gender, $city, $state);
             // Register user with UserService addUser Method. Returns boolean.
             $registeredUser = $userService->addUser($user);
 

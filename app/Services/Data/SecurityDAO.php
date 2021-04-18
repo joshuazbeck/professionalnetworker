@@ -14,7 +14,7 @@ use App\Models\LoginModel;
 class SecurityDAO
 {
 
-    // Authenticates a user login attempt. Takes LoginModel as arugment and returns a UserModel or NULL
+    // Authenticates a user login attempt. Takes LoginModel as argument and returns a UserModel or NULL
     public function authenticateUser(LoginModel $loginModel): ?UserModel
     {
         // Get variables from login attempt
@@ -45,7 +45,7 @@ class SecurityDAO
 
             // Step through results and create new UserModel
             while ($user = $result->fetch_assoc()) {
-                $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["USERNAME"], $user["EMAIL"], $user["PASSWORD"]);
+                $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"], $user['PHONE'], $user['AGE'], $user['IS_MALE'], $user['CITY'], $user['STATE']);
                 $returnedUser->setUserID($user['USER_ID']);
 
                 array_push($user_array, $returnedUser);

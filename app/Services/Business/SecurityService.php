@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Services\Business;
 
 /*
  * Group 1 Milestone 1

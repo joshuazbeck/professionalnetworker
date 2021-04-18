@@ -14,11 +14,11 @@ class DatabaseConfig
 {
 
     // Database configuration
-    private $dbServerName = "cst256.mysql.database.azure.com";
+    private $dbServerName = "localhost";
 
-    private $dbUserName = "cst256@cst256";
+    private $dbUserName = "root";
 
-    private $dbPassword = "helloworld1!";
+    private $dbPassword = "root";
 
     private $dbName = "cst256";
 
