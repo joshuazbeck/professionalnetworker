@@ -30,7 +30,8 @@ class UserModel
     private $city;
 
     private $state;
-
+    
+    private $userRole;
 
 
     // Getters and setters
@@ -228,6 +229,30 @@ class UserModel
     public function setState($state): void
     {
         $this->state = $state;
+    }
+    
+    //@todo Need to ensure this numerical value of 3 for admin matches the database schema/stratagy
+    static public function isUserRoleAdmin($userRole){
+        if ($userRole == 3){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    /**
+     * @return int
+     */
+    public function getUserRole()
+    {
+        return $this->userRole;
+    }
+    
+    /**
+     * @param int $userRole
+     */
+    public function setUserRole($userRole): void
+    {
+        $this->userRole = $userRole;
     }
 
 }

@@ -42,7 +42,12 @@ class LoginController extends Controller
             session([
                 'fullName' => $user->getFirstName() . " " . $user->getLastName()
             ]);
-
+            
+            //@todo need to implement user role so that this value does not return null
+            //Save user role is session to provide clearance to appropriate pages
+            session_start();
+            $_SESSION['userRole'] = $user->getUserRole();
+           
             // Do something post login
             echo "User Logged In. Data pulled from session: </br>";
             echo "Full name: " . session('fullName') . "</br>";

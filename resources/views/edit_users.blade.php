@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html style="filter: blur(0px);">
+<html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Home - Professional Networker</title>
+    <title>CST256ProfessionalNetworking</title>
     <meta name="description" content="This site is designed for CST-256 as a professional networking webpage demo built on Laravel">
     <link rel="icon" type="image/jpeg" sizes="1900x1250" href="assets/img/header-bg.jpg">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
@@ -20,16 +20,16 @@
     <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css">
 </head>
 
-<body id="page-top" style="filter: blur(0px);">
+<body class="flex-grow-1" style="width: 100vw;height: 100vh;background: url(&quot;assets/img/header-bg.jpg&quot;) center / auto;">
     <?php include "resources/views/header.php"?>
-    <header class="masthead" style="background-image:url('assets/img/header-bg.jpg');">
-        <div class="container">
-            <div class="intro-text" style="padding-top: 150px;padding-bottom: 150px;">
-                <div class="intro-lead-in"><span>It shouldn't be hard!</span></div>
-                <div class="intro-heading text-uppercase"><span data-bss-hover-animate="shake">After all, we're better together</span></div><a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" role="button" data-bss-hover-animate="rubberBand" href="register">Jump in!</a>
-            </div>
-        </div>
-    </header>
+    <h1 style="text-align: center;font-size: 36px;color: var(--primary);margin-top: 29px;">Manage Users</h1>
+    <div class="container" style="margin-top: 30px;">
+        <?php 
+        use App\HTTP\Controllers\AdminController;
+        $adminController = new AdminController();
+        $adminController->populateList();
+        ?>
+    </div>
     <?php include "resources/views/footer.php"?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>

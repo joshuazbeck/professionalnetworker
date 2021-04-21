@@ -40,3 +40,24 @@ Route::post('doregister', [
     'as' => 'doregister',
     'uses' => 'App\Http\Controllers\UserController@addUser'
 ]);
+
+Route::get('admin', [
+    'as' => 'admin',
+    'uses' => 'App\Http\Controllers\AdminController@presentAdminView'
+]);
+Route::get('edit_user', [
+    'as' => 'edit_user',
+    'uses' => 'App\Http\Controllers\AdminController@presentEditUserView'
+]);
+Route::get('displayUser', [
+    'as' => 'displayUser',
+    'uses' => function () {
+        echo "<h1 style='text-color:red'>HELLO</h1>";
+    }
+]);
+
+Route::get('/deleteUser/{id}', [
+    'as' => '/deleteUser/{id}',
+    'uses' => 'App\Http\Controllers\AdminController@deleteUser'
+]);
+   
