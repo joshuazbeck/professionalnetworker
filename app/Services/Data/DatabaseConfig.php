@@ -12,20 +12,10 @@ use mysqli;
 
 class DatabaseConfig
 {
-
-    // Database configuration
-    private $dbServerName = "localhost";
-
-    private $dbUserName = "root";
-
-    private $dbPassword = "root";
-
-    private $dbName = "cst256";
-
     // Get database connection and return it.
-    function getConnection()
+    public static function getConnection()
     {
-        $conn = new mysqli($this->dbServerName, $this->dbUserName, $this->dbPassword, $this->dbName);
+        $conn = new mysqli("localhost", "root", "root", "cst256temp");
 
         if ($conn->connect_error) {
             return "Connection failed " . $conn->connect_error . "<br>";

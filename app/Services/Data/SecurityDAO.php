@@ -10,20 +10,20 @@ namespace App\Services\Data;
 
 use App\Models\UserModel;
 use App\Models\LoginModel;
+use Symfony\Component\VarDumper\Cloner\Data;
 
 class SecurityDAO
 {
 
     // Authenticates a user login attempt. Takes LoginModel as argument and returns a UserModel or NULL
-    public function authenticateUser(LoginModel $loginModel): ?UserModel
+    public static function authenticateUser(LoginModel $loginModel): ?UserModel
     {
         // Get variables from login attempt
         $email = $loginModel->getEmail();
         $password = $loginModel->getPassword();
 
         // Connect to database
-        $db = new DatabaseConfig();
-        $connection = $db->getConnection();
+        $connection = DatabaseConfig::getConnection();
 
         // Prepare SQL String and bind parameters
         $sql_query = "SELECT * FROM users WHERE email LIKE ?";
@@ -40,26 +40,22 @@ class SecurityDAO
             return null;
         } // Retrieve user data and verify password
         else {
-            // Array to hold results
-            $user_array = array();
-
-            // Step through results and create new UserModel
-            while ($user = $result->fetch_assoc()) {
-                $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"], $user['PHONE'], $user['AGE'], $user['IS_MALE'], $user['CITY'], $user['STATE']);
-                $returnedUser->setUserID($user['USER_ID']);
-
-                array_push($user_array, $returnedUser);
-            }
+            $user = $result->fetch_assoc();
+            $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"]);
+            $returnedUser->setUserID($user['USER_ID']);
+            $returnedUser->setSuspended($user['SUSPENDED']);
+            $returnedUser->setUserRole($user['ROLE_ID']);
+            $returnedUser->setProfileComplete($user['PROFILE_COMPLETE']);
 
             // Get retrieved password
-            $password_hash = $user_array[0]->getPassword();
+            $password_hash = $returnedUser->getPassword();
 
             // Check password hash
             $passwordCheck = password_verify($password, $password_hash);
 
             // Return UserModel if password check true, else return NULL.
             if ($passwordCheck) {
-                return $user_array[0];
+                return $returnedUser;
             } else {
                 return null;
             }

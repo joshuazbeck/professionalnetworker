@@ -14,13 +14,10 @@ use App\Services\Data\SecurityDAO;
 
 class SecurityService
 {
-
     // Function calls SecurityDAO to authenticate user login attempt. Returns UserModel or NULL
-    public function authenticateUser(LoginModel $loginModel): ?UserModel
+    public static function authenticateUser(LoginModel $loginModel): ?UserModel
     {
-        $securityDAO = new SecurityDAO();
-
         // Return UserModel if successful or NULL if unsuccessful
-        return $securityDAO->authenticateUser($loginModel);
+        return SecurityDAO::authenticateUser($loginModel);
     }
 }

@@ -21,44 +21,25 @@ class UserModel
 
     private $email;
 
-    private $phone;
-
-    private $age;
-
-    private $is_male;
-
-    private $city;
-
-    private $state;
-    
     private $userRole;
 
+    private $suspended;
 
-    // Getters and setters
+    private $profile_complete;
 
     /**
      * UserModel constructor.
      * @param $firstName
      * @param $lastName
-     * @param $email
      * @param $password
-     * @param $phone
-     * @param $age
-     * @param $is_male
-     * @param $city
-     * @param $state
+     * @param $email
      */
-    public function __construct($firstName, $lastName, $email, $password, $phone, $age, $is_male, $city, $state)
+    public function __construct($firstName, $lastName, $email, $password)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
-        $this->email = $email;
         $this->password = $password;
-        $this->phone = $phone;
-        $this->age = $age;
-        $this->is_male = $is_male;
-        $this->city = $city;
-        $this->state = $state;
+        $this->email = $email;
     }
 
     /**
@@ -154,83 +135,51 @@ class UserModel
     /**
      * @return mixed
      */
-    public function getPhone()
+    public function getUserRole()
     {
-        return $this->phone;
+        return $this->userRole;
     }
 
     /**
-     * @param mixed $phone
+     * @param mixed $userRole
      */
-    public function setPhone($phone): void
+    public function setUserRole($userRole): void
     {
-        $this->phone = $phone;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAge()
-    {
-        return $this->age;
-    }
-
-    /**
-     * @param mixed $age
-     */
-    public function setAge($age): void
-    {
-        $this->age = $age;
+        $this->userRole = $userRole;
     }
 
     /**
      * @return mixed
      */
-    public function getIsMale()
+    public function getSuspended()
     {
-        return $this->is_male;
+        return $this->suspended;
     }
 
     /**
-     * @param mixed $is_male
+     * @param mixed $suspended
      */
-    public function setIsMale($is_male): void
+    public function setSuspended($suspended): void
     {
-        $this->is_male = $is_male;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param mixed $city
-     */
-    public function setCity($city): void
-    {
-        $this->city = $city;
+        $this->suspended = $suspended;
     }
 
     /**
      * @return mixed
      */
-    public function getState()
+    public function getProfileComplete()
     {
-        return $this->state;
+        return $this->profile_complete;
     }
 
     /**
-     * @param mixed $state
+     * @param mixed $profile_complete
      */
-    public function setState($state): void
+    public function setProfileComplete($profile_complete): void
     {
-        $this->state = $state;
+        $this->profile_complete = $profile_complete;
     }
-    
+
     //@todo Need to ensure this numerical value of 3 for admin matches the database schema/stratagy
     static public function isUserRoleAdmin($userRole){
         if ($userRole == 3){
@@ -238,21 +187,6 @@ class UserModel
         } else {
             return false;
         }
-    }
-    /**
-     * @return int
-     */
-    public function getUserRole()
-    {
-        return $this->userRole;
-    }
-    
-    /**
-     * @param int $userRole
-     */
-    public function setUserRole($userRole): void
-    {
-        $this->userRole = $userRole;
     }
 
 }

@@ -13,17 +13,51 @@ use Illuminate\Support\Facades\DB;
 
 class UserDAO
 {
+    public static function getAllUsers(): ?array
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL String and bind parameters
+        $sql_query = "SELECT * FROM users";
+        $stmt = $connection->prepare($sql_query);
+
+        // Execute statement and get results.
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // If no results return null.
+        if ($result->num_rows == 0) {
+
+            return null;
+        } // Retrieve user data and verify password
+        else {
+            // Array to hold results
+            $user_array = array();
+
+            // Step through results and create new UserModel
+            while ($user = $result->fetch_assoc()) {
+                $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"]);
+                $returnedUser->setUserID($user['USER_ID']);
+                $returnedUser->setSuspended($user['SUSPENDED']);
+                $returnedUser->setUserRole($user['ROLE_ID']);
+                $returnedUser->setProfileComplete($user['PROFILE_COMPLETE']);
+
+                array_push($user_array, $returnedUser);
+            }
+
+            return $user_array;
+        }
+    }
 
     // Function for adding user to database. Takes UserModel as argument and returns boolean
-    public function addUser(UserModel $newUser): bool
+    public static function addUser(UserModel $newUser): bool
     {
-
         // Connect to database
-        $db = new DatabaseConfig();
-        $connection = $db->getConnection();
+        $connection = DatabaseConfig::getConnection();
 
         // Prepare SQL string
-        $sql_query = "INSERT INTO users (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, AGE, IS_MALE, CITY, STATE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql_query = "INSERT INTO users (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD) VALUES (?, ?, ?, ?)";
         $stmt = $connection->prepare($sql_query);
 
         // Retrieve user inputs from UserModelS
@@ -31,14 +65,9 @@ class UserDAO
         $lastname = $newUser->getLastname();
         $email = $newUser->getEmail();
         $password = $newUser->getPassword();
-        $phoneNum = $newUser->getPhone();
-        $age = (int)$newUser->getAge();
-        $gender = (int)$newUser->getIsMale();
-        $city = $newUser->getCity();
-        $state = $newUser->getState();
 
         // Bind parameters
-        $stmt->bind_param("sssssiiss", $firstname, $lastname, $email, $password, $phoneNum, $age, $gender, $city, $state);
+        $stmt->bind_param("ssss", $firstname, $lastname, $email, $password);
         // Execute and return boolean
         if ($stmt->execute()) {
             return true;
@@ -48,11 +77,10 @@ class UserDAO
     }
 
     // Function for checking database for an email address. Takes string as argument and returns boolean.
-    public function findEmail($email): bool
+    public static function findEmail($email): bool
     {
         // Connect to database
-        $db = new DatabaseConfig();
-        $connection = $db->getConnection();
+        $connection = DatabaseConfig::getConnection();
 
         // Prepare SQL string and bind parameters
         $sql_query = "SELECT EMAIL FROM users WHERE EMAIL = ?";
@@ -71,38 +99,46 @@ class UserDAO
         }
     }
 
-    // Function for adding a user to database with built in Laravel Connection. Demonstration purposes
-    public function addUserLaravel(UserModel $newUser): bool
+    public static function updateProfileComplete($userID, $value): bool
     {
-        // Retrieve user inputs from UserModel
-        $firstname = $newUser->getFirstname();
-        $lastname = $newUser->getLastname();
-        $email = $newUser->getEmail();
-        $password = $newUser->getPassword();
-        $username = $newUser->getUsername();
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
 
-        $results = DB::insert('INSERT INTO users (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, USERNAME) VALUES (?,?,?,?,?)', [
-            $firstname,
-            $lastname,
-            $email,
-            $password,
-            $username
-        ]);
+        // Prepare SQL string
+        $sql_query = "UPDATE users SET PROFILE_COMPLETE=? WHERE USER_ID=?";
+        $stmt = $connection->prepare($sql_query);
 
-        return $results;
-    }
+        $stmt->bind_param("ii", $value, $userID);
 
-    // Function for checking database for existing email address. Takes a string argument and returns a boolean. Demonstration purposes
-    public function findEmailLaravel($email): bool
-    {
-        // Query users table for email address. Returns one result.
-        $user = DB::table('users')->where('EMAIL', $email)->first();
-
-        // Check if NULL
-        if ($user) {
+        // Execute statement return boolean.
+        if ($stmt->execute())
+        {
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
+
+    public static function deleteUserById($id)
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL string
+        $sql_query = "DELETE FROM users WHERE USER_ID=?";
+        $stmt = $connection->prepare($sql_query);
+
+        $stmt->bind_param("i", $id);
+
+        // Execute statement return boolean.
+        if ($stmt->execute())
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }

@@ -37,22 +37,34 @@ class LoginController extends Controller
                 'email' => $user->getEmail()
             ]);
             session([
-                'userID' => $user->getUserID()
-            ]);
-            session([
                 'fullName' => $user->getFirstName() . " " . $user->getLastName()
             ]);
-            
+            session([
+                'userRole' => $user->getUserRole()
+            ]);
+            session([
+                'userID' => $user->getUserID()
+            ]);
+
             //@todo need to implement user role so that this value does not return null
             //Save user role is session to provide clearance to appropriate pages
-            session_start();
-            $_SESSION['userRole'] = $user->getUserRole();
-           
+//            session_start();
+//            $_SESSION['userRole'] = $user->getUserRole();
+
             // Do something post login
             echo "User Logged In. Data pulled from session: </br>";
             echo "Full name: " . session('fullName') . "</br>";
             echo "Username: " . session('email') . "</br>";
-            echo "User ID: " . session('userID');
+            echo "User ID: " . session('userID') . "</br>";
+            echo "User Role: " . session('userRole'). "</br>";
+
+            if ($user->getProfileComplete())
+            {
+                return redirect('/');
+            }
+            else{
+                return view('setupprofile');
+            }
         } else {
             // Do something if login failed.
             echo "Problem with username or password";

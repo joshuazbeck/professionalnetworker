@@ -15,30 +15,29 @@ class UserService
 {
 
     // Function for adding a new user to the database. Takes UserModel as argument and returns boolean.
-    public function addUser(UserModel $user): bool
+    public static function addUser(UserModel $user): bool
     {
-        $userDAO = new UserDAO();
-
-        // return $userDAO->addUserLaravel($user);
-
-        return $userDAO->addUser($user);
+        return UserDAO::addUser($user);
     }
 
     // Function for checking database for specific email. Takes string as argument and returns boolean.
-    public function findEmail($email): bool
+    public static function findEmail($email): bool
     {
-        $userDAO = new UserDAO();
-
-        // return $userDAO->findEmailLaravel($email);
-
-        return $userDAO->findEmail($email);
+        return UserDAO::findEmail($email);
     }
 
-    // Function for checking database for specific username. Takes string as argument and returns boolean.
-    public function findUsername($username): bool
+    public static function updateProfileComplete($userID, $value): bool
     {
-        $userDAO = new UserDAO();
+        return UserDAO::updateProfileComplete($userID, $value);
+    }
 
-        return $userDAO->findUsername($username);
+    public static function getAllUsers(): ?array
+    {
+        return UserDAO::getAllUsers();
+    }
+
+    public static function deleteUser($id)
+    {
+        return UserDAO::deleteUserById($id);
     }
 }

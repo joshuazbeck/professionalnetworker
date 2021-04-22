@@ -1,39 +1,49 @@
 <?php
+
 namespace App\Http\Controllers;
 
-/*
- * Group 1 Milestone 1
- * UserController.php Version 1
- * CST-256
- * 4/16/2021
- * This is a User Controller class for handling all requests concerning the UserModel.
- */
-use Illuminate\Http\Request;
 use App\Models\UserModel;
 use App\Services\Business\UserService;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
-    // Function for adding a new user to the database. Takes POST data as argument
-    public function addUser(Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     */
+    public function index()
     {
-        // New UserService
-        $userService = new UserService();
+        $userArray = UserService::getAllUsers();
 
+        return view('displayUsers')->with('userArray', $userArray);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     */
+    public function create()
+    {
+        return view('register');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         // Retrieve all user form inputs and clean against SQL injection.
         $firstname = $this->clean_input($request->input('firstName'));
         $lastname = $this->clean_input($request->input('lastName'));
         $email = $this->clean_input($request->input('email'));
         $password = $this->clean_input($request->input('password'));
-        $phoneNum = $this->clean_input($request->input('phoneNum'));
-        $age = $this->clean_input($request->input('age'));
-        $gender = $this->clean_input($request->input('selector'));
-        $city = $this->clean_input($request->input('city'));
-        $state = $this->clean_input($request->input('state'));
 
         // Check database for duplicate email address and return boolean.
-        $checkEmail = $userService->findEmail($email);
+        $checkEmail = UserService::findEmail($email);
 
         if ($checkEmail) {
             // Do something if invalid
@@ -43,19 +53,65 @@ class UserController extends Controller
             // Hash the password
             $hash = password_hash(trim($password), PASSWORD_DEFAULT);
             // Create a new UserModel with form data
-            $user = new UserModel($firstname, $lastname, $email, $hash, $phoneNum, $age, $gender, $city, $state);
+            $user = new UserModel($firstname, $lastname, $email, $hash);
             // Register user with UserService addUser Method. Returns boolean.
-            $registeredUser = $userService->addUser($user);
+            $registeredUser = UserService::addUser($user);
 
             // Check if registration was valid
             if ($registeredUser) {
                 // Do something if valid.
-                echo "User Registered";
+               return redirect('login');
             } else {
                 // Do something if invalid
                 echo "There was a problem registering users";
             }
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     */
+    public function destroy($id)
+    {
+       UserService::deleteUser($id);
+
+       return redirect('/users');
     }
 
     // Function for clearing user inputs against SQL injection
