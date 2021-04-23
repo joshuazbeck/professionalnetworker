@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserModel;
+use App\Services\Business\ProfileService;
 use App\Services\Business\UserService;
 use Illuminate\Http\Request;
 
@@ -86,8 +87,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = UserService::getUserById($id);
-        return view('updateUser')->with('user', $user);
+        if(session('userRole') != 3 && session('userID') != $id)
+        {
+            return redirect('/');
+        }
+        else
+        {
+            $user = UserService::getUserById($id);
+            return view('updateUser')->with('user', $user);
+        }
     }
 
     /**
@@ -107,7 +115,12 @@ class UserController extends Controller
         $suspended = $this->clean_input($request->input('suspended'));
         $password = "";
 
-        echo $userID . " " . $firstname . " " . $lastname . " " . $email . " " . $role . " " . $suspended;
+        if(session('userRole') != 3)
+        {
+            $user = UserService::getUserById($id);
+            $role = $user->getUserRole();
+            $suspended = $user->getSuspended();
+        }
 
         $userModel = new UserModel($firstname, $lastname, $email, $password);
         $userModel->setUserRole($role);
@@ -116,7 +129,14 @@ class UserController extends Controller
 
         if(UserService::updateUser($userModel))
         {
-            return redirect('users');
+            if(session('userRole') != 3)
+            {
+                return redirect('userinfo/'.session('userID'));
+            }
+            else
+            {
+                return redirect('users');
+            }
         }
         else
         {
@@ -134,6 +154,22 @@ class UserController extends Controller
        UserService::deleteUser($id);
 
        return redirect('/users');
+    }
+
+    public function userInfo($id)
+    {
+        if(session('userRole') != 3 && session('userID') != $id)
+        {
+            return redirect('/');
+        }
+        else
+        {
+            $user = UserService::getUserById($id);
+
+            $profileModel = ProfileService::getProfileByUserID($id);
+
+            return view('displayUserInfo')->with('profile', $profileModel)->with('user', $user);
+        }
     }
 
     // Function for clearing user inputs against SQL injection

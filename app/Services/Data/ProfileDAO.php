@@ -7,6 +7,7 @@ namespace App\Services\Data;
 use App\Models\ProfileModel;
 use App\Models\UserModel;
 use App\Services\Data\DatabaseConfig;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class ProfileDAO
 {
@@ -17,7 +18,7 @@ class ProfileDAO
         $connection = DatabaseConfig::getConnection();
 
         // Prepare SQL string
-        $sql_query = "INSERT INTO profiles (USER_ID, PHONE, AGE, CITY, STATE, BIO) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql_query = "INSERT INTO profiles (USER_ID, PHONE, AGE, CITY, STATE, BIO, IS_MALE) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $connection->prepare($sql_query);
 
         // Retrieve user inputs from UserModelS
@@ -27,9 +28,10 @@ class ProfileDAO
         $city = $newProfile->getCity();
         $state = $newProfile->getState();
         $bio = $newProfile->getBio();
+        $is_male = $newProfile->getIsMale();
 
         // Bind parameters
-        $stmt->bind_param("isssss", $user_id, $phone, $age, $city, $state, $bio);
+        $stmt->bind_param("isssssi", $user_id, $phone, $age, $city, $state, $bio, $is_male);
         // Execute and return boolean
         if ($stmt->execute()) {
             return true;
@@ -38,7 +40,7 @@ class ProfileDAO
         }
     }
 
-    public static function getProfileByUserId($id)
+    public static function getProfileByUserId($id): ?ProfileModel
     {
         // Connect to database
         $connection = DatabaseConfig::getConnection();
@@ -59,11 +61,43 @@ class ProfileDAO
             return null;
         }
         else {
-            $user = $result->fetch_assoc();
+            $profile = $result->fetch_assoc();
 
-            $profile = new ProfileModel($user["USER_ID"], $user['PHONE'], $user['AGE'], 1,  $user['CITY'], $user['STATE'], $user['BIO']);
+            $returnedProfile = new ProfileModel($profile["USER_ID"], $profile['PHONE'], $profile['AGE'], $profile['IS_MALE'],  $profile['CITY'], $profile['STATE'], $profile['BIO']);
+            $returnedProfile->setProfileID($profile['PROFILE_ID']);
 
-            return $profile;
+            return $returnedProfile;
+        }
+    }
+
+    public static function updateProfile(ProfileModel $userProfile): bool
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL string
+        $sql_query = "UPDATE profiles SET PHONE=?, AGE=?, CITY=?, STATE=?, BIO=?, IS_MALE=? WHERE PROFILE_ID=?";
+
+        $stmt = $connection->prepare($sql_query);
+
+        // Retrieve user inputs from UserModelS
+        $phone = $userProfile->getPhone();
+        $age = $userProfile->getAge();
+        $city = $userProfile->getCity();
+        $state = $userProfile->getState();
+        $bio = $userProfile->getBio();
+        $is_male = $userProfile->getIsMale();
+        $profileID= $userProfile->getProfileID();
+
+        $stmt->bind_param("sisssii", $phone, $age, $city, $state, $bio, $is_male, $profileID);
+
+        // Execute statement and return boolean.
+        if ($stmt->execute())
+        {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }

@@ -17,21 +17,22 @@
                     <div style="width: 75%; height: auto;">
                         <div class="form-group">
                             <label for="firstName"
-                                   style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">First
+                                   style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">First
                                 Name:</label>
                             <input type="text" name="firstName" value="{{ $user->getFirstName() }}">
                         </div>
                         <div class="form-group">
                             <label for="lastName"
-                                   style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Last
+                                   style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Last
                                 Name:</label>
                             <input type="text" name="lastName" value="{{ $user->getLastName() }}">
                         </div>
                         <div class="form-group">
                             <label for="email"
-                                   style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Email:</label>
+                                   style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Email:</label>
                             <input type="text" name="email" value="{{ $user->getEmail() }}">
                         </div>
+                        @if(session('userRole') == 3)
                         <div class="form-group">
                             <label for="selector"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">User
@@ -57,12 +58,16 @@
                                 </optgroup>
                             </select>
                         </div>
+                            @endif
                     </div>
                     <div
                         class="btn-group d-lg-flex d-xl-flex flex-column justify-content-lg-center justify-content-xl-center"
                         role="group"
                         style="padding-right: 0px; margin-left: 0px; width: auto;">
-                        <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('users.index') }}"
+                        <a class="nav-link border rounded-0 border-primary js-scroll-trigger"
+                           @if(session('userRole') == 3) href="{{ route('users.index') }}"
+                           @else href="{{ route('userinfo', session('userID') ) }}"
+                           @endif
                            style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Cancel</a></li>
                         <div>
                             <button class="btn btn-lg btn-outline-warning border" type="submit" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Update</button>

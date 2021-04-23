@@ -8,6 +8,8 @@ class ProfileModel
 {
     private $userID;
 
+    private $profileID;
+
     private $phone;
 
     private $age;
@@ -153,8 +155,20 @@ class ProfileModel
         $this->userID = $userID;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getProfileID()
+    {
+        return $this->profileID;
+    }
 
-
-
+    /**
+     * @param mixed $profileID
+     */
+    public function setProfileID($profileID): void
+    {
+        $this->profileID = $profileID;
+    }
 
 }

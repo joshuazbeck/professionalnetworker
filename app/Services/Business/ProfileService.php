@@ -18,4 +18,9 @@ class ProfileService
     {
         return ProfileDAO::getProfileByUserId($id);
     }
+
+    public static function updateProfile(ProfileModel $userProfile): bool
+    {
+        return ProfileDAO::updateProfile($userProfile);
+    }
 }

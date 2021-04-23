@@ -22,7 +22,7 @@
                                 class="form-control form-control bg-dark text-white" data-aos="fade-up" name="selector" value="Gender" required>
                                 <optgroup label="Gender">
                                     <option value="1" selected="">Male</option>
-                                    <option value="2">Female</option>
+                                    <option value="0">Female</option>
                                 </optgroup>
                             </select>
                             <input class="form-control form-control bg-dark text-white" type="number" data-aos="fade-up" name="age"

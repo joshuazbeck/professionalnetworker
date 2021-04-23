@@ -33,7 +33,6 @@ class ProfileController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -67,22 +66,32 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $user = UserService::getUserById($id);
+        if(session('userRole') != 3 && session('userID') != $id)
+        {
+            return redirect('/');
+        }
+        else
+        {
+            $user = UserService::getUserById($id);
 
-        $profileModel = ProfileService::getProfileByUserID($id);
+            $profileModel = ProfileService::getProfileByUserID($id);
 
-        return view('displayProfile')->with('profile', $profileModel)->with('user', $user);
+            return view('displayProfile')->with('profile', $profileModel)->with('user', $user);
+        }
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $user = UserService::getUserById($id);
+        $profile = ProfileService::getProfileByUserID($id);
+
+        return view('updateProfile')->with('user', $user)->with('profile', $profile);
     }
 
     /**
@@ -90,11 +99,37 @@ class ProfileController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        $user_id = $id;
+        $profileID = $request->input('profileID');
+        $gender = $request->input('gender');
+        $age = $request->input('age');
+        $phone = $request->input('phone');
+        $bio = $request->input('bio');
+        $city = $request->input('city');
+        $state = $request->input('state');
+
+        $newProfile = new ProfileModel($user_id, $phone, $age, $gender, $city, $state, $bio);
+        $newProfile->setProfileID($profileID);
+
+        if(ProfileService::updateProfile($newProfile))
+        {
+            if(session('userRole') != 3)
+            {
+                return redirect('userinfo/'.session('userID'));
+            }
+            else
+            {
+                return redirect('profiles/'.$id);
+            }
+        }
+        else
+        {
+            return redirect('/');
+        }
+
     }
 
     /**

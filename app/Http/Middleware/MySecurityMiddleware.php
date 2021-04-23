@@ -16,9 +16,9 @@ class MySecurityMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $path = $request->path();
-        if(($request->is('admin') || $request->is('users/destroy')) && session('userRole') != 3)
+        if(($request->is('admin') || $request->is('users/destroy') || $request->is('users')) && session('userRole') != 3)
         {
+            echo $request->path();
             return redirect('/');
         }
         else

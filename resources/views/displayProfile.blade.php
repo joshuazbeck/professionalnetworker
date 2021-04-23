@@ -15,6 +15,7 @@
                         <div style="width: 75%; height: auto;">
                             <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Phone: {{ $profile->getPhone() }}</p>
                             <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Age: {{ $profile->getAge() }}</p>
+                            <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Gender: @if($profile->getIsMale() == 0) Female @else Male @endif</p>
                             <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">City: {{ $profile->getCity() }}</p>
                             <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">State: {{ $profile->getState() }}</p>
                             <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Bio: {{ $profile->getBio() }}</p>
@@ -23,8 +24,8 @@
                             class="btn-group d-lg-flex d-xl-flex flex-column justify-content-lg-center justify-content-xl-center"
                             role="group"
                             style="padding-right: 0px; margin-left: 0px; width: auto;">
-                            <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="deleteUser/1" style="opacity: 0.5;pointer-events: none; margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Update</a></li>
-                            <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('users.index') }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Back</a></li>
+                            <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('profiles.edit', $user->getUserID() ) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Update</a>
+                            <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('users.index') }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Back</a>
 
                         </div>
                     </div>

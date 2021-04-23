@@ -14,10 +14,8 @@
                 <div class="form-container" style="margin-right: 0px;">
                     <form method="post" style="width: auto;" action="{{route('users.store')}}">
                         @csrf
-                        <input type="hidden" name="_method" value="put" />
                         <i class="icon ion-android-checkmark-circle d-flex d-lg-flex justify-content-center justify-content-xl-center"
                            style="text-align: center;color: var(--primary);padding-bottom: 18px;"></i>
-                        @csrf
                         <h2 class="text-center" style="color: var(--primary);"><strong>Create</strong> an account.</h2>
                         <div class="input-group">
                             <div class="input-group-prepend"></div>
