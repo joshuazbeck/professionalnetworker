@@ -3,10 +3,10 @@
 @section('content')
     <h1 style="text-align: center;font-size: 36px;color: var(--primary);margin-top: 29px;">Update Profile</h1>
     <div class="row"
-         style="margin-right: 10%; margin-left: 10%; margin-top: 8px; margin-bottom: 8px;">
-        <div class="col" style="border-style: none;">
+         style="margin-right: 10%; margin-left: 10%; margin-top: 8px; margin-bottom: 8px; ">
+        <div class="col" style="border-style: none; ">
             <div class="card"
-                 style="border-radius: 10px; background: var(- -dark); border-style: none; border-top-width: 49px;">
+                 style="border-radius: 10px; background:var(--gray-dark); border-style: none; border-top-width: 49px;">
                 <div class="card-header">
                     <h5 class="mb-0" style="color: var(- -light); text-align: left;">{{ $user->getFirstName() }} {{ $user->getLastName() }}</h5>
                 </div>
@@ -60,9 +60,9 @@
                             role="group"
                             style="padding-right: 0px; margin-left: 0px; width: auto;">
                             <a class="nav-link border rounded-0 border-primary js-scroll-trigger" @if(session('userRole')==3) href="{{ route('profiles.show', $user->getUserID()) }}" @else href="{{ route('userinfo', session('userID')) }}"  @endif
-                               style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Cancel</a></li>
+                               style="text-align:center;margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Cancel</a></li>
                             <div>
-                                <button class="btn btn-lg btn-outline-warning border" type="submit" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Update</button>
+                                <button class="nav-link border rounded-0 border-primary" type="submit" style="margin-right: 0px; margin-top: 6px; padding-left: 50px; padding-right: 50px; margin-bottom: 6px; background: var(- -info); border-radius: 6px;border-style: none; color: lightblue;">Update</button>
                             </div>
                         </div>
                     </div>

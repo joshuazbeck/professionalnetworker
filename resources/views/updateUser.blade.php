@@ -6,38 +6,38 @@
          style="margin-right: 10%; margin-left: 10%; margin-top: 8px; margin-bottom: 8px;">
         <div class="col" style="border-style: none;">
             <div class="card"
-                 style="border-radius: 10px; background: var(- -dark); border-style: none; border-top-width: 49px;">
+                 style="border-radius: 10px; background:var(--gray-dark); border-style: none; border-top-width: 49px;">
                 <div class="card-header">
                     <h5 class="mb-0" style="color: var(- -light); text-align: left;"></h5>
                 </div>
                 <form method="post" action="{{ route('users.update', $user->getUserID()) }}">
                     @csrf
                     <input type="hidden" name="_method" value="put" />
-                <div class="card-body d-sm-flex flex-row justify-content-sm-center">
-                    <div style="width: 75%; height: auto;">
-                        <div class="form-group">
+                <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background:var(--gray-dark);">
+                    <div style="width: 75%; height: auto; color:var(--primary)" >
+                        <div class="form-group" >
                             <label for="firstName"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">First
                                 Name:</label>
-                            <input type="text" name="firstName" value="{{ $user->getFirstName() }}">
+                            <input type="text" name="firstName" value="{{ $user->getFirstName() }}" style="background:var(--gray-dark);">
                         </div>
                         <div class="form-group">
                             <label for="lastName"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Last
                                 Name:</label>
-                            <input type="text" name="lastName" value="{{ $user->getLastName() }}">
+                            <input type="text" name="lastName" value="{{ $user->getLastName() }}" style="background:var(--gray-dark);">
                         </div>
                         <div class="form-group">
                             <label for="email"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Email:</label>
-                            <input type="text" name="email" value="{{ $user->getEmail() }}">
+                            <input type="text" name="email" value="{{ $user->getEmail() }}" style="background:var(--gray-dark);">
                         </div>
                         @if(session('userRole') == 3)
                         <div class="form-group">
                             <label for="selector"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">User
                                 Role:</label>
-                            <select name="selector" value="role" required>
+                            <select name="selector" value="role" required style="background:var(--gray-dark);">
                                 <optgroup label="Role">
                                     <option @if($user->getUserRole() == 1) selected @endif value="1">1 - Customer
                                     </option>
@@ -48,10 +48,10 @@
                                 </optgroup>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" >
                             <label for="suspended"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Suspended:</label>
-                            <select name="suspended" value="suspended" required>
+                            <select name="suspended" value="suspended" required style="background:var(--gray-dark);">
                                 <optgroup label="Suspended">
                                     <option @if($user->getSuspended() == 1) selected @endif value="1">True</option>
                                     <option @if($user->getSuspended() == 0) selected @endif value="0">False</option>
@@ -68,9 +68,9 @@
                            @if(session('userRole') == 3) href="{{ route('users.index') }}"
                            @else href="{{ route('userinfo', session('userID') ) }}"
                            @endif
-                           style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Cancel</a></li>
+                           style="text-align:center;margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Cancel</a></li>
                         <div>
-                            <button class="btn btn-lg btn-outline-warning border" type="submit" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Update</button>
+                            <button class="nav-link border rounded-0 border-primary" type="submit" style="margin-right: 0px; margin-top: 6px; padding-left: 50px; padding-right: 50px; margin-bottom: 6px; background: var(- -info); background:var(--gray-dark); border-radius: 6px; border-color: red;border-style: none; color: lightblue;">Update</button>
                         </div>
                     </div>
                 </div>

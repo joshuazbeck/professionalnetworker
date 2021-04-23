@@ -9,18 +9,23 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ml-auto">
                 @if(session()->has('userID'))
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ session('fullName') }}
-                    </a>
-                    <div class="dropdown-menu bg-secondary border-primary" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item font-weight-bold" href="{{ route('userinfo', session('userID') ) }}">Profile</a>
-                        @if(session('userRole') == 3)
-                            <a class="dropdown-item font-weight-bold" href="{!! route('admin') !!}">Admin
-                            </a>
+               
+                @if(session('userRole') == 3)
+                <li class="nav-item">
+                    <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{!! route('admin') !!}"
+                       style="text-align: center;margin-right: 24px;">Admin</a>
+                </li>
+                            
                         @endif
-                        <a class="dropdown-item font-weight-bold" href="{!! route('logout') !!}">Logout</a>
-                    </div>
+                <li class="nav-item">
+                     <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('userinfo', session('userID') ) }}" style="text-align: center;margin-right: 24px;">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{!! route('logout') !!}"
+                       style="text-align: center;margin-right: 24px;">Log Out</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{!! route('users.create') !!}" style="filter: blur(0px);text-align: center;margin-right: 24px;">Register</a>
                 </li>
                 @else
                 <li class="nav-item">

@@ -18,18 +18,15 @@ Route::get('/', [
         return view('index');
     }
 ]);
-Route::get('logout', [
-    'as' => 'logout',
-    'uses' => function () {
-        session()->flush();
-        return view('index');
-    }
-]);
 Route::get('login', [
     'as' => 'login',
     'uses' => function () {
         return view('login');
     }
+]);
+Route::get('logout', [
+    'as' => 'logout',
+    'uses' => 'App\Http\Controllers\LoginController@log_out'
 ]);
 Route::post('dologin', [
     'as' => 'dologin',

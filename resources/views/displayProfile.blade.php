@@ -4,9 +4,9 @@
     <h1 style="text-align: center;font-size: 36px;color: var(--primary);margin-top: 29px;">User Profile</h1>
         <div class="row"
              style="margin-right: 10%; margin-left: 10%; margin-top: 8px; margin-bottom: 8px;">
-            <div class="col" style="border-style: none;">
+            <div class="col" style="border-style: none; ">
                 <div class="card"
-                     style="border-radius: 10px; background: var(- -dark); border-style: none; border-top-width: 49px;">
+                     style="background:var(--gray-dark); color:var(--primary);border-radius: 10px; background: var(- -dark); border-style: none; border-top-width: 49px;">
                     <div class="card-header">
                         <h5 class="mb-0" style="color: var(- -light); text-align: left;">{{ $user->getFirstName() }} {{ $user->getLastName() }}</h5>
                     </div>
@@ -24,8 +24,8 @@
                             class="btn-group d-lg-flex d-xl-flex flex-column justify-content-lg-center justify-content-xl-center"
                             role="group"
                             style="padding-right: 0px; margin-left: 0px; width: auto;">
-                            <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('profiles.edit', $user->getUserID() ) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Update</a>
-                            <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('users.index') }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Back</a>
+                            <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('profiles.edit', $user->getUserID() ) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;text-align:center">Update</a>
+                            <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('users.index') }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none; text-align:center">Back</a>
 
                         </div>
                     </div>

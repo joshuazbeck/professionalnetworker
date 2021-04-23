@@ -3,12 +3,12 @@
 @section('content')
 <h1 style="text-align: center;font-size: 36px;color: var(--primary);margin-top: 29px;">User Information</h1>
 <div class="row"
-     style="margin-right: 10%; margin-left: 10%; margin-top: 8px; margin-bottom: 8px;">
+     style="color:var(--primary);margin-right: 10%; margin-left: 10%; margin-top: 8px; margin-bottom: 8px;">
     <div class="col" style="border-style: none;">
         <div class="card"
-             style="border-radius: 10px; background: var(- -dark); border-style: none; border-top-width: 49px;">
+             style="border-radius: 10px; background: var(- -dark); background:var(--gray-dark);border-style: none; border-top-width: 49px;">
             <div class="card-header">
-                <h5 class="mb-0" style="color: var(- -light); text-align: left;">{{ $user->getFirstName() }} {{ $user->getLastName() }}</h5>
+                <h5 class="mb-0" style="color: var(- -light); text-align: left; ">{{ $user->getFirstName() }} {{ $user->getLastName() }}</h5>
             </div>
             <div class="card-body d-sm-flex flex-row justify-content-sm-center">
                 <div class="btn-toolbar"></div>
@@ -23,20 +23,20 @@
 
                 </div>
             </div>
-            <div class="card-footer">
-                <div class="accordion" id="accordionExample">
+            <div class="card-footer" >
+                <div class="accordion" style="background:var(--gray-dark);" id="accordionExample">
                     <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                                <button class="btn btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <div class="card-header" style="background:var(--gray-dark);" id="headingOne">
+                            <h2 class="mb-0" style="background:var(--gray-dark);">
+                                <button class="btn btn-block text-left" style="background:var(--gray-dark); color:var(--primary);" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     User Profile
                                 </button>
                             </h2>
                         </div>
 
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="card-body d-sm-flex flex-row justify-content-sm-center">
+                        <div id="collapseOne" style="background:var(--gray-dark);"class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body" style="background:var(--gray-dark);">
+                                <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background:var(--gray-dark);">
                                     <div class="btn-toolbar"></div>
                                     <div style="width: 75%; height: auto;">
                                         <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Phone: {{ $profile->getPhone() }}</p>
@@ -56,16 +56,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
+                    <div class="card" >
+                        <div class="card-header" style="background:var(--gray-dark);" id="headingTwo">
                             <h2 class="mb-0">
-                                <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <button class="btn btn-block text-left collapsed" style="color:var(--primary);;background:var(--gray-dark);" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Professional Profile
                                 </button>
                             </h2>
                         </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
+                        <div id="collapseTwo"  class="collapse" style="background:var(--gray-dark);" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body" style="background:var(--gray-dark);">
                                 Coming in Milestone 3
                             </div>
                         </div>
