@@ -83,11 +83,11 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $user = UserService::getUserById($id);
+        return view('updateUser')->with('user', $user);
     }
 
     /**
@@ -95,11 +95,33 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        //
+        // Retrieve all user form inputs and clean against SQL injection.
+        $userID = $this->clean_input($id);
+        $firstname = $this->clean_input($request->input('firstName'));
+        $lastname = $this->clean_input($request->input('lastName'));
+        $email = $this->clean_input($request->input('email'));
+        $role = $this->clean_input($request->input('selector'));
+        $suspended = $this->clean_input($request->input('suspended'));
+        $password = "";
+
+        echo $userID . " " . $firstname . " " . $lastname . " " . $email . " " . $role . " " . $suspended;
+
+        $userModel = new UserModel($firstname, $lastname, $email, $password);
+        $userModel->setUserRole($role);
+        $userModel->setSuspended($suspended);
+        $userModel->setUserID($userID);
+
+        if(UserService::updateUser($userModel))
+        {
+            return redirect('users');
+        }
+        else
+        {
+            return redirect('/');
+        }
     }
 
     /**

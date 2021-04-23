@@ -13,6 +13,8 @@
                 style="width: 40%;height: auto;margin: 0px;padding: 0px;padding-top: 0px;padding-bottom: 0px;margin-top: 59px;margin-bottom: 0;margin-right: auto;margin-left: AUTO;">
                 <div class="form-container" style="margin-right: 0px;">
                     <form method="post" style="width: auto;" action="{{route('users.store')}}">
+                        @csrf
+                        <input type="hidden" name="_method" value="put" />
                         <i class="icon ion-android-checkmark-circle d-flex d-lg-flex justify-content-center justify-content-xl-center"
                            style="text-align: center;color: var(--primary);padding-bottom: 18px;"></i>
                         @csrf
@@ -22,16 +24,16 @@
                             <div class="input-group-append"></div>
                         </div>
                         <input class="form-control bg-dark text-white" type="text" data-aos="fade-up" name="firstName"
-                               placeholder="First Name" style="background: var(--dark);margin-top: 23px;">
+                               placeholder="First Name" style="background: var(--dark);margin-top: 23px;" required>
                         <input class="form-control bg-dark text-white" type="text" data-aos="fade-up" name="lastName" placeholder="Last Name"
-                               style="background: var(--dark);margin-top: 23px;">
-                        <input class="form-control bg-dark text-white" type="email" data-aos="fade-up" name="email" placeholder="Email" style="background: var(--dark);margin-top: 25px;">
+                               style="background: var(--dark);margin-top: 23px;" required>
+                        <input class="form-control bg-dark text-white" type="email" data-aos="fade-up" name="email" placeholder="Email" style="background: var(--dark);margin-top: 25px;" required>
                         <input
                             class="form-control bg-dark text-white" type="password" data-aos="fade-up" name="password"
-                            placeholder="Password" style="background: var(--dark);margin-top: 23px;">
+                            placeholder="Password" style="background: var(--dark);margin-top: 23px;" required>
                         <input
                             class="form-control bg-dark text-white" type="password" data-aos="fade-up" name="password-repeat"
-                            placeholder="Password (repeat)" style="background: var(--dark);margin-top: 23px;">
+                            placeholder="Password (repeat)" style="background: var(--dark);margin-top: 23px;" required>
                         <button class="btn btn-primary btn-block" type="submit" style="margin-top: 15px;">Sign Up
                         </button>
                         <a class="d-md-flex justify-content-md-center already" href="login"

@@ -67,11 +67,11 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $profileService = new ProfileService();
+        $user = UserService::getUserById($id);
 
-        $profileModel = $profileService->getProfileByUserID($id);
+        $profileModel = ProfileService::getProfileByUserID($id);
 
-        return view('displayProfile')->with('profile', $profileModel);
+        return view('displayProfile')->with('profile', $profileModel)->with('user', $user);
     }
 
     /**

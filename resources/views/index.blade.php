@@ -8,7 +8,7 @@
                 <div class="intro-heading text-uppercase">
                     <span data-bss-hover-animate="shake">After all, we're better together</span>
                 </div>
-                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" role="button" data-bss-hover-animate="rubberBand" href="register">Jump in!</a>
+                <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" role="button" data-bss-hover-animate="rubberBand" href="{{ route('users.create') }}">Jump in!</a>
             </div>
         </div>
     </header>

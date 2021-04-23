@@ -36,10 +36,5 @@ Route::get('admin', [
     }
 ]);
 
-Route::get('/deleteUser/{id}', [
-    'as' => '/deleteUser/{id}',
-    'uses' => 'App\Http\Controllers\AdminController@deleteUser'
-]);
-
 Route::resource('profiles', App\Http\Controllers\ProfileController::class);
 Route::resource('users', App\Http\Controllers\UserController::class);

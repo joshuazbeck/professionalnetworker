@@ -51,12 +51,12 @@ class LoginController extends Controller
 //            session_start();
 //            $_SESSION['userRole'] = $user->getUserRole();
 
-            // Do something post login
-            echo "User Logged In. Data pulled from session: </br>";
-            echo "Full name: " . session('fullName') . "</br>";
-            echo "Username: " . session('email') . "</br>";
-            echo "User ID: " . session('userID') . "</br>";
-            echo "User Role: " . session('userRole'). "</br>";
+//            // Do something post login
+//            echo "User Logged In. Data pulled from session: </br>";
+//            echo "Full name: " . session('fullName') . "</br>";
+//            echo "Username: " . session('email') . "</br>";
+//            echo "User ID: " . session('userID') . "</br>";
+//            echo "User Role: " . session('userRole'). "</br>";
 
             if ($user->getProfileComplete())
             {

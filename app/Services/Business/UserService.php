@@ -36,8 +36,18 @@ class UserService
         return UserDAO::getAllUsers();
     }
 
-    public static function deleteUser($id)
+    public static function deleteUser($id): bool
     {
         return UserDAO::deleteUserById($id);
+    }
+
+    public static function getUserById($id): ?UserModel
+    {
+        return UserDAO::getUserById($id);
+    }
+
+    public static function updateUser(UserModel $userModel): bool
+    {
+        return UserDAO::updateUser($userModel);
     }
 }

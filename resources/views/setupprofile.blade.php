@@ -19,25 +19,26 @@
                                 style="text-align: center;color: var(--primary);padding-bottom: 18px;"></i>
                             <h2 class="text-center" style="color: var(--primary);">Set Up Profile</h2>
                             <select
-                                class="form-control form-control bg-dark text-white" data-aos="fade-up" name="selector" value="Gender">
+                                class="form-control form-control bg-dark text-white" data-aos="fade-up" name="selector" value="Gender" required>
                                 <optgroup label="Gender">
                                     <option value="1" selected="">Male</option>
                                     <option value="2">Female</option>
                                 </optgroup>
-                            </select><input class="form-control form-control bg-dark text-white" type="number" data-aos="fade-up" name="age"
-                                            placeholder="Age" style="background: var(--dark);margin-top: 23px;">
+                            </select>
+                            <input class="form-control form-control bg-dark text-white" type="number" data-aos="fade-up" name="age"
+                                            placeholder="Age" style="background: var(--dark);margin-top: 23px;" required>
                             <input
                                 class="form-control text-white" type="tel" data-aos="fade-up" name="phoneNum"
-                                placeholder="Phone Number" style="background: var(--dark);margin-top: 23px;">
+                                placeholder="Phone Number" style="background: var(--dark);margin-top: 23px;" required>
                             <input
                                 class="form-control text-white bg-dark" type="text" data-aos="fade-up" name="city" placeholder="City"
-                                style="background: var(--dark);margin-top: 23px;">
+                                style="background: var(--dark);margin-top: 23px;" required>
                             <input class="form-control text-white bg-dark" type="text"
                                    data-aos="fade-up" name="state"
                                    placeholder="State (XX)"
-                                   style="background: var(--dark);margin-top: 23px;">
+                                   style="background: var(--dark);margin-top: 23px;" required>
                             <textarea
-                                class="form-control text-white bg-dark" name="bio" placeholder="Short Bio"></textarea>
+                                class="form-control text-white bg-dark" name="bio" placeholder="Short Bio" required></textarea>
                             <button class="btn btn-primary btn-block" type="submit" style="margin-top: 15px;">Finish
                                 Profile
                             </button>

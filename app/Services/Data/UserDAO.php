@@ -141,4 +141,64 @@ class UserDAO
         }
     }
 
+    public static function getUserById($id): ?UserModel
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL String and bind parameters
+        $sql_query = "SELECT * FROM users WHERE USER_ID LIKE ?";
+        $stmt = $connection->prepare($sql_query);
+        $stmt->bind_param("i", $id);
+
+        // Execute statement and get results.
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // If no results return null.
+        if ($result->num_rows == 0) {
+
+            return null;
+        } // Retrieve user data and verify password
+        else {
+            $user = $result->fetch_assoc();
+            $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"]);
+            $returnedUser->setUserID($user['USER_ID']);
+            $returnedUser->setSuspended($user['SUSPENDED']);
+            $returnedUser->setUserRole($user['ROLE_ID']);
+            $returnedUser->setProfileComplete($user['PROFILE_COMPLETE']);
+
+            return $returnedUser;
+        }
+    }
+
+    public static function updateUser(UserModel $user): bool
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL string
+        $sql_query = "UPDATE users SET FIRST_NAME=?, LAST_NAME=?, EMAIL=?, ROLE_ID=?, SUSPENDED=? WHERE USER_ID=?";
+
+        $stmt = $connection->prepare($sql_query);
+
+        $firstname = $user->getFirstName();
+        $lastname = $user->getLastName();
+        $email = $user->getEmail();
+        $role = $user->getUserRole();
+        $suspended = $user->getSuspended();
+        $user_id = $user->getUserID();
+
+        $stmt->bind_param("sssiii", $firstname, $lastname, $email, $role, $suspended, $user_id);
+
+        // Execute statement and return boolean.
+        if ($stmt->execute())
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
