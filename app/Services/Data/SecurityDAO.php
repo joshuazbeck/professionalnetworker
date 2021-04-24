@@ -38,8 +38,10 @@ class SecurityDAO
         if ($result->num_rows == 0) {
 
             return null;
-        } // Retrieve user data and verify password
-        else {
+        }
+        // Retrieve user data and verify password
+        else
+        {
             $user = $result->fetch_assoc();
             $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"]);
             $returnedUser->setUserID($user['USER_ID']);
@@ -54,9 +56,12 @@ class SecurityDAO
             $passwordCheck = password_verify($password, $password_hash);
 
             // Return UserModel if password check true, else return NULL.
-            if ($passwordCheck) {
+            if ($passwordCheck)
+            {
                 return $returnedUser;
-            } else {
+            }
+            else
+            {
                 return null;
             }
         }

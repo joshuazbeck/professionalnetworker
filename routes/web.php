@@ -18,12 +18,14 @@ Route::get('/', [
         return view('index');
     }
 ]);
+
 Route::get('login', [
     'as' => 'login',
     'uses' => function () {
         return view('login');
     }
 ]);
+
 Route::get('logout', [
     'as' => 'logout',
     'uses' => 'App\Http\Controllers\LoginController@log_out'

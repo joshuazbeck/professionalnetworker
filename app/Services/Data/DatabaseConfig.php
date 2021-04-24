@@ -1,9 +1,9 @@
 <?php
 /*
- * Group 1 Milestone 1
- * DatabaseConfig.php Version 1
+ * Group 1 Milestone 2
+ * DatabaseConfig.php Version 2
  * CST-256
- * 4/16/2021
+ * 4/24/2021
  * This class is a service designed to create a mysqli database connection.
  */
 namespace App\Services\Data;

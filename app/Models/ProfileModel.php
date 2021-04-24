@@ -1,11 +1,18 @@
 <?php
-
+/*
+ * Group 1 Milestone 2
+ * ProfileModel.php Version 1
+ * CST-256
+ * 4/24/2021
+ * This Model represents a UserProfile for the site.
+ */
 
 namespace App\Models;
 
 
 class ProfileModel
 {
+    // Profile specific variables
     private $userID;
 
     private $profileID;
@@ -43,6 +50,7 @@ class ProfileModel
         $this->bio = $bio;
     }
 
+    // Getters and setters
     /**
      * @return mixed
      */

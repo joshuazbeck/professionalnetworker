@@ -1,9 +1,9 @@
 <?php
 /*
- * Group 1 Milestone 1
- * UserModel.php Version 1
+ * Group 1 Milestone 2
+ * UserModel.php Version 2
  * CST-256
- * 4/16/2021
+ * 4/24/2021
  * This Model represents a User for the site.
  */
 namespace App\Models;
@@ -23,9 +23,9 @@ class UserModel
 
     private $userRole;
 
-    private $suspended;
+    private $suspended; // Track if user has been suspended
 
-    private $profile_complete;
+    private $profile_complete; // Track if user completed creating a profile
 
     /**
      * UserModel constructor.
@@ -178,15 +178,6 @@ class UserModel
     public function setProfileComplete($profile_complete): void
     {
         $this->profile_complete = $profile_complete;
-    }
-
-    //@todo Need to ensure this numerical value of 3 for admin matches the database schema/stratagy
-    static public function isUserRoleAdmin($userRole){
-        if ($userRole == 3){
-            return true;
-        } else {
-            return false;
-        }
     }
 
 }

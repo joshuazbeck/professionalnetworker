@@ -1,9 +1,9 @@
 <?php
 /*
- * Group 1 Milestone 1
- * SecurityService.php Version 1
+ * Group 1 Milestone 2
+ * SecurityService.php Version 2
  * CST-256
- * 4/16/2021
+ * 4/24/2021
  * This class is a data access object designed to handle database transactions concerning Users.
  */
 namespace App\Services\Data;
@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserDAO
 {
+    // Function for returning an array of all Users.
     public static function getAllUsers(): ?array
     {
         // Connect to database
@@ -30,13 +31,16 @@ class UserDAO
         if ($result->num_rows == 0) {
 
             return null;
-        } // Retrieve user data and verify password
-        else {
+        }
+        // Retrieve user data and verify password
+        else
+        {
             // Array to hold results
             $user_array = array();
 
             // Step through results and create new UserModel
-            while ($user = $result->fetch_assoc()) {
+            while ($user = $result->fetch_assoc())
+            {
                 $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"]);
                 $returnedUser->setUserID($user['USER_ID']);
                 $returnedUser->setSuspended($user['SUSPENDED']);
@@ -68,10 +72,14 @@ class UserDAO
 
         // Bind parameters
         $stmt->bind_param("ssss", $firstname, $lastname, $email, $password);
+
         // Execute and return boolean
-        if ($stmt->execute()) {
+        if ($stmt->execute())
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
@@ -92,13 +100,17 @@ class UserDAO
         $result = $stmt->get_result();
 
         // Check results. Return true for results and false for none.
-        if (! $result || $result->num_rows == 0) {
+        if (! $result || $result->num_rows == 0)
+        {
             return false;
-        } else {
+        }
+        else
+        {
             return true;
         }
     }
 
+    // Function for updating the status of user completing a Profile. Takes userID and boolean as arguments. Returns boolean
     public static function updateProfileComplete($userID, $value): bool
     {
         // Connect to database
@@ -115,12 +127,14 @@ class UserDAO
         {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
 
-    public static function deleteUserById($id)
+    // Function to delete user by their User ID. Takes User ID as argument.
+    public static function deleteUserById($id): bool
     {
         // Connect to database
         $connection = DatabaseConfig::getConnection();
@@ -136,11 +150,13 @@ class UserDAO
         {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }
 
+    // Function for getting a User by their ID. Takes User ID as argument and returns UserModel
     public static function getUserById($id): ?UserModel
     {
         // Connect to database
@@ -159,9 +175,14 @@ class UserDAO
         if ($result->num_rows == 0) {
 
             return null;
-        } // Retrieve user data and verify password
-        else {
+        }
+        // Retrieve user data and verify password
+        else
+        {
+            // Get associative array of results
             $user = $result->fetch_assoc();
+
+            // Create UserModel from results
             $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"]);
             $returnedUser->setUserID($user['USER_ID']);
             $returnedUser->setSuspended($user['SUSPENDED']);
@@ -172,6 +193,7 @@ class UserDAO
         }
     }
 
+    // Function for updating a User. Takes UserModel as argument and returns boolean.
     public static function updateUser(UserModel $user): bool
     {
         // Connect to database
@@ -179,9 +201,9 @@ class UserDAO
 
         // Prepare SQL string
         $sql_query = "UPDATE users SET FIRST_NAME=?, LAST_NAME=?, EMAIL=?, ROLE_ID=?, SUSPENDED=? WHERE USER_ID=?";
-
         $stmt = $connection->prepare($sql_query);
 
+        // Get User information from input
         $firstname = $user->getFirstName();
         $lastname = $user->getLastName();
         $email = $user->getEmail();
@@ -189,6 +211,7 @@ class UserDAO
         $suspended = $user->getSuspended();
         $user_id = $user->getUserID();
 
+        // Bind parameters
         $stmt->bind_param("sssiii", $firstname, $lastname, $email, $role, $suspended, $user_id);
 
         // Execute statement and return boolean.
@@ -196,7 +219,8 @@ class UserDAO
         {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }

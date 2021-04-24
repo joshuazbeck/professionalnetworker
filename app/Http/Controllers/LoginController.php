@@ -1,13 +1,14 @@
 <?php
-namespace App\Http\Controllers;
-
 /*
- * Group 1 Milestone 1
- * LoginController.php Version 1
+ * Group 1 Milestone 2
+ * LoginController.php Version 2
  * CST-256
- * 4/16/2021
+ * 4/24/2021
  * This is a Login Controller class for handling login requests.
  */
+
+namespace App\Http\Controllers;
+
 use App\Services\Business\SecurityService;
 use Illuminate\Http\Request;
 use App\Models\LoginModel;
@@ -26,13 +27,12 @@ class LoginController extends Controller
         // Create new UserModel for authentication
         $loginModel = new LoginModel($email, $password);
 
-        // Create new Security service and call authenticateUser. Returns a UserModel or Null
-        $securityService = new SecurityService();
-        $user = $securityService->authenticateUser($loginModel);
+        // Call SecurityService class and use authenticateUser. Returns a UserModel or Null
+        $user = SecurityService::authenticateUser($loginModel);
 
         // CHeck if $user is null. If not, set Session variables to those of logged in user.
         if ($user) {
-            // Set variables
+            // Set session variables
             session([
                 'email' => $user->getEmail()
             ]);
@@ -46,23 +46,35 @@ class LoginController extends Controller
                 'userID' => $user->getUserID()
             ]);
 
+            if($user->getSuspended() == true)
+            {
+                return redirect('logout');
+            }
 
+            // Check if user has completed profile. If true, redirect to home. If False setup profile
             if ($user->getProfileComplete())
             {
                 return redirect('/');
             }
-            else{
+            else
+            {
                 return view('setupprofile');
             }
-        } else {
+        }
+        // If no user, return error
+        else
+        {
             // Do something if login failed.
-            echo "Problem with username or password";
+            return "Problem with username or password";
         }
     }
+
+    // Function for login off a user by deleting the session data.
     function log_out(){
         session()->flush();
-        return view('login');
+        return redirect('login');
     }
+
     // Function for clearing user inputs against SQL injection
     function clean_input($inputData): string
     {
