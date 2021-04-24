@@ -56,13 +56,15 @@ class LoginController extends Controller
             }
         } else {
             // Do something if login failed.
-            echo "Problem with username or password";
+            return "Problem with username or password";
         }
     }
+
     function log_out(){
         session()->flush();
-        return view('login');
+        return redirect('login');
     }
+
     // Function for clearing user inputs against SQL injection
     function clean_input($inputData): string
     {
