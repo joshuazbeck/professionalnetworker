@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * Group 1 Milestone 2
+ * UserController.php Version 1
+ * CST-256
+ * 4/23/2021
+ * This is a User Controller class for handling all User functions.
+ */
 namespace App\Http\Controllers;
 
 use App\Models\UserModel;
