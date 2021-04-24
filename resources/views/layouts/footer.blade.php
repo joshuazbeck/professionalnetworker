@@ -1,5 +1,5 @@
 <section class="py-5" style="width:100vw;position:fixed; bottom: 0px;text-align: center;border-color: rgb(33, 37, 41);background: var(--dark);">
-    <small style="margin: auto;padding: auto;color: #4a4f55;">Copyright 2021&nbsp;(©) Joshua Beck, Mark Pratt, Shawn Fradet</small>
+    <small style="margin: auto;padding: auto;color: #AAAAAA;">Copyright 2021&nbsp;(©) Joshua Beck, Mark Pratt, Shawn Fradet</small>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
