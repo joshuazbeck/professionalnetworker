@@ -21,8 +21,10 @@ class UserController extends Controller
      */
     public function index()
     {
+        // Get array of all users from database
         $userArray = UserService::getAllUsers();
 
+        // Return view with Users array
         return view('displayUsers')->with('userArray', $userArray);
     }
 
@@ -92,13 +94,17 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        // Check if user is admin or trying to update a user other than themselves. Reroute to main page
         if(session('userRole') != 3 && session('userID') != $id)
         {
             return redirect('/');
         }
         else
         {
+            // Get user info
             $user = UserService::getUserById($id);
+
+            // Return view with User data
             return view('updateUser')->with('user', $user);
         }
     }
@@ -120,6 +126,7 @@ class UserController extends Controller
         $suspended = $this->clean_input($request->input('suspended'));
         $password = "";
 
+        // Check if user is admin. If not, keep original information for role and suspended.
         if(session('userRole') != 3)
         {
             $user = UserService::getUserById($id);
@@ -127,11 +134,13 @@ class UserController extends Controller
             $suspended = $user->getSuspended();
         }
 
+        // Create new user and set variables.
         $userModel = new UserModel($firstname, $lastname, $email, $password);
         $userModel->setUserRole($role);
         $userModel->setSuspended($suspended);
         $userModel->setUserID($userID);
 
+        // Reroute based upon success of update
         if(UserService::updateUser($userModel))
         {
             if(session('userRole') != 3)
@@ -156,23 +165,29 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        // Call Delete function and delete user
        UserService::deleteUser($id);
 
        return redirect('/users');
     }
 
+    // Function for returning a single user ID combined with the user's profile data
     public function userInfo($id)
     {
+        // Check if user is admin or trying to access user information other than their own
         if(session('userRole') != 3 && session('userID') != $id)
         {
             return redirect('/');
         }
         else
         {
+            // Get user data
             $user = UserService::getUserById($id);
 
+            // Get Profile Data
             $profileModel = ProfileService::getProfileByUserID($id);
 
+            // Return view with User and Profile data
             return view('displayUserInfo')->with('profile', $profileModel)->with('user', $user);
         }
     }

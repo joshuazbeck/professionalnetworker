@@ -1,9 +1,9 @@
 <?php
 /*
- * Group 1 Milestone 1
- * UserService.php Version 1
+ * Group 1 Milestone 2
+ * UserService.php Version 2
  * CST-256
- * 4/16/2021
+ * 4/24/2021
  * This class is a service designed to handle all actions regarding the UserModel.
  */
 namespace App\Services\Business;
@@ -26,26 +26,31 @@ class UserService
         return UserDAO::findEmail($email);
     }
 
+    // Function for updating the status of user completing a Profile. Takes userID and boolean as input. Returns boolean
     public static function updateProfileComplete($userID, $value): bool
     {
         return UserDAO::updateProfileComplete($userID, $value);
     }
 
+    // Function for getting an array of all users in the database. Returns array of users
     public static function getAllUsers(): ?array
     {
         return UserDAO::getAllUsers();
     }
 
+    // Function for deleting a User from the database. Takes User ID as argument and returns boolean.
     public static function deleteUser($id): bool
     {
         return UserDAO::deleteUserById($id);
     }
 
+    // Function for getting a User by their ID from the database. Takes User ID and returns a UserModel
     public static function getUserById($id): ?UserModel
     {
         return UserDAO::getUserById($id);
     }
 
+    // Function for updating a User's information in the database. Takes a UserModel as arugment and returns boolean.
     public static function updateUser(UserModel $userModel): bool
     {
         return UserDAO::updateUser($userModel);

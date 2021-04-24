@@ -1,13 +1,15 @@
 <?php
-namespace App\Services\Business;
 
 /*
- * Group 1 Milestone 1
- * SecurityService.php Version 1
+ * Group 1 Milestone 2
+ * SecurityService.php Version 2
  * CST-256
- * 4/16/2021
+ * 4/24/2021
  * This class is a service designed to handle authenticating users for the website.
  */
+
+namespace App\Services\Business;
+
 use App\Models\LoginModel;
 use App\Models\UserModel;
 use App\Services\Data\SecurityDAO;
