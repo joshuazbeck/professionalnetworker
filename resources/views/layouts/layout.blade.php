@@ -22,7 +22,7 @@
 {{--    <link rel="stylesheet" href="assets/css/Login-Form-Dark.css">--}}
 {{--    <link rel="stylesheet" href="assets/css/Registration-Form-with-Photo.css">--}}
 </head>
-<body id="page-top" style="background: url({{ asset('assets/img/header-bg.jpg') }}) center / cover;">
+<body id="page-top" style="display: flex; flex-direction: column; margin-bottom: 15vh; min-height: 100vh;background: url({{ asset('assets/img/header-bg.jpg') }}) center / cover;">
 @include('layouts.header')
 @yield('content')
 @include('layouts.footer')
