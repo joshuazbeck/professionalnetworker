@@ -10,6 +10,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Business\SecurityService;
+use App\Services\Data\DatabaseConfig;
 use Illuminate\Http\Request;
 use App\Models\LoginModel;
 
@@ -19,6 +20,9 @@ class LoginController extends Controller
     // Method for logging in a user. Takes POST data as an argument.
     public function login(Request $request)
     {
+        // Set rules for validation and cell validate on inputs
+        $rules = ['email'=> 'Required | email:rfc,dns', 'password'=>'Required'];
+        $this->validate($request, $rules);
 
         // Retrieve user form inputs and clean against SQL Injection
         $email = $this->clean_input($request->input('email'));
@@ -64,8 +68,9 @@ class LoginController extends Controller
         // If no user, return error
         else
         {
-            // Do something if login failed.
-            return "Problem with username or password";
+            return back()
+                ->withInput()
+                ->withErrors(['info' => 'Username or Password not found']);
         }
     }
 

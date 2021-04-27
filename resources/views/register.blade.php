@@ -22,16 +22,34 @@
                             <div class="input-group-append"></div>
                         </div>
                         <input class="form-control bg-dark text-white" type="text" data-aos="fade-up" name="firstName"
-                               placeholder="First Name" style="background: var(--dark);margin-top: 23px;" required>
-                        <input class="form-control bg-dark text-white" type="text" data-aos="fade-up" name="lastName" placeholder="Last Name"
+                               placeholder="First Name" value="{{old('firstName')}}" style="background: var(--dark);margin-top: 23px;" required>
+                        @error('firstName')
+                        <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                        @enderror
+                        <input class="form-control bg-dark text-white" value="{{old('lastName')}}" type="text" data-aos="fade-up" name="lastName" placeholder="Last Name"
                                style="background: var(--dark);margin-top: 23px;" required>
-                        <input class="form-control bg-dark text-white" type="email" data-aos="fade-up" name="email" placeholder="Email" style="background: var(--dark);margin-top: 25px;" required>
+                        @error('lastName')
+                        <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                        @enderror
+                        <input class="form-control bg-dark text-white" value="{{old('email')}}" type="email" data-aos="fade-up" name="email" placeholder="Email" style="background: var(--dark);margin-top: 25px;" required>
+                        @error('email')
+                        <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                        @enderror
                         <input
                             class="form-control bg-dark text-white" type="password" data-aos="fade-up" name="password"
                             placeholder="Password" style="background: var(--dark);margin-top: 23px;" required>
+                        @error('password')
+                        <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                        @enderror
                         <input
                             class="form-control bg-dark text-white" type="password" data-aos="fade-up" name="password-repeat"
                             placeholder="Password (repeat)" style="background: var(--dark);margin-top: 23px;" required>
+                        @error('password-repeat')
+                        <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                        @enderror
+                        @error('fail')
+                        <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                        @enderror
                         <button class="btn btn-primary btn-block" type="submit" style="margin-top: 15px;">Sign Up
                         </button>
                         <a class="d-md-flex justify-content-md-center already" href="login"

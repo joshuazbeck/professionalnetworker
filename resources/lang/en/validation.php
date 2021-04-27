@@ -95,7 +95,7 @@ return [
     'numeric' => 'The :attribute must be a number.',
     'password' => 'The password is incorrect.',
     'present' => 'The :attribute field must be present.',
-    'regex' => 'The :attribute format is invalid.',
+    'regex' => 'The :attribute must contain 1 uppercase letter, 1 lower case letter, 1 number, and be at least 8 characters long.',
     'required' => 'The :attribute field is required.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_unless' => 'The :attribute field is required unless :other is in :values.',
@@ -103,7 +103,7 @@ return [
     'required_with_all' => 'The :attribute field is required when :values are present.',
     'required_without' => 'The :attribute field is required when :values is not present.',
     'required_without_all' => 'The :attribute field is required when none of :values are present.',
-    'same' => 'The :attribute and :other must match.',
+    'same' => 'The passwords must match.',
     'size' => [
         'numeric' => 'The :attribute must be :size.',
         'file' => 'The :attribute must be :size kilobytes.',

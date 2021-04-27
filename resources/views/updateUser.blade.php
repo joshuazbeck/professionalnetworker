@@ -6,7 +6,7 @@
          style="margin-right: 10%; margin-left: 10%; margin-top: 8px; margin-bottom: 8px;">
         <div class="col" style="border-style: none;">
             <div class="card"
-                 style="border-radius: 10px; background:var(--gray-dark); border-style: none; border-top-width: 49px;">
+                 style="border-radius: 10px; color: white; background:var(--gray-dark); border-style: none; border-top-width: 49px;">
                 <div class="card-header">
                     <h5 class="mb-0" style="color: var(- -light); text-align: left;"></h5>
                 </div>
@@ -20,17 +20,26 @@
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">First
                                 Name:</label>
                             <input type="text" name="firstName" value="{{ $user->getFirstName() }}" style="background:var(--gray-dark);">
+                            @error('firstName')
+                            <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="lastName"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Last
                                 Name:</label>
                             <input type="text" name="lastName" value="{{ $user->getLastName() }}" style="background:var(--gray-dark);">
+                            @error('lastName')
+                            <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="email"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Email:</label>
                             <input type="text" name="email" value="{{ $user->getEmail() }}" style="background:var(--gray-dark);">
+                            @error('email')
+                            <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                            @enderror
                         </div>
                         @if(session('userRole') == 3)
                         <div class="form-group">

@@ -15,7 +15,7 @@ class DatabaseConfig
     // Get database connection and return it.
     public static function getConnection()
     {
-        $conn = new mysqli("localhost", "root", "root", "cst-256");
+        $conn = new mysqli("localhost", "root", "root", "cst256temp");
 
         if ($conn->connect_error) {
             return "Connection failed " . $conn->connect_error . "<br>";

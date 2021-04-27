@@ -40,10 +40,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
+        // Call validate method to validate user inputs
+        $this->validateForm($request);
+
         // Retrieve all user form inputs and clean against SQL injection.
         $firstname = $this->clean_input($request->input('firstName'));
         $lastname = $this->clean_input($request->input('lastName'));
@@ -69,9 +73,13 @@ class UserController extends Controller
             if ($registeredUser) {
                 // Do something if valid.
                return redirect('login');
-            } else {
+            }
+            else
+            {
                 // Do something if invalid
-                echo "There was a problem registering users";
+                return back()
+                    ->withInput()
+                    ->withErrors(['fail'=>'There was a problem registering the user']);
             }
         }
     }
@@ -117,6 +125,9 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Call validate method and validate user inputs
+        $this->validateForm($request);
+
         // Retrieve all user form inputs and clean against SQL injection.
         $userID = $this->clean_input($id);
         $firstname = $this->clean_input($request->input('firstName'));
@@ -199,5 +210,20 @@ class UserController extends Controller
         $inputData = stripslashes($inputData);
         $inputData = htmlspecialchars($inputData);
         return $inputData;
+    }
+
+    // Function for validating form inputs from user.
+    private function validateForm(Request $request)
+    {
+        // Set rules
+        $rules = ['firstName'=>'Required | Alpha',
+            'lastName'=>'Required | Alpha',
+            'email'=>'unique:users,EMAIL|email:rfc,dns|Required',
+            'password'=>['regex:/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/'],
+            'password-repeat'=>'same:password'
+        ];
+
+        // Validate input
+        $this->validate($request, $rules);
     }
 }
