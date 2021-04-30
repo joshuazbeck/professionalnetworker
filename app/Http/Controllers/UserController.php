@@ -204,7 +204,7 @@ class UserController extends Controller
     }
 
     // Function for clearing user inputs against SQL injection
-    function clean_input($inputData): string
+    private function clean_input($inputData): string
     {
         $inputData = trim($inputData);
         $inputData = stripslashes($inputData);

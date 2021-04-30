@@ -1,10 +1,10 @@
 <?php
 /*
- * Group 1 Milestone 2
- * ProfileModel.php Version 1
+ * Group 1 Milestone 3
+ * JobModel.php Version 1
  * CST-256
- * 4/24/2021
- * This Model represents a UserProfile for the site.
+ * 4/30/2021
+ * This Model represents a Job for the site.
  */
 
 namespace App\Models;
@@ -12,7 +12,7 @@ namespace App\Models;
 
 class JobModel
 {
-    
+
     private $jobID;
 
     private $jobTitle;
@@ -27,9 +27,25 @@ class JobModel
     private $status;
 
     private $jobDescription;
-    
-    
-    public function __construct($jobID, $jobTitle, $desiredSkill, $company, $payHourly, $status, $jobDescription){
+
+    private $city;
+
+    private $state;
+
+    /**
+     * JobModel constructor.
+     * @param $jobID
+     * @param $jobTitle
+     * @param $desiredSkill
+     * @param $company
+     * @param $payHourly
+     * @param $status
+     * @param $jobDescription
+     * @param $city
+     * @param $state
+     */
+    public function __construct($jobID, $jobTitle, $desiredSkill, $company, $payHourly, $status, $jobDescription, $city, $state)
+    {
         $this->jobID = $jobID;
         $this->jobTitle = $jobTitle;
         $this->desiredSkill = $desiredSkill;
@@ -37,7 +53,11 @@ class JobModel
         $this->payHourly = $payHourly;
         $this->status = $status;
         $this->jobDescription = $jobDescription;
-    }/**
+        $this->city = $city;
+        $this->state = $state;
+    }
+
+    /**
      * @return mixed
      */
     public function getJobID()
@@ -149,7 +169,36 @@ class JobModel
         $this->jobDescription = $jobDescription;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
 
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
 
-    
+    /**
+     * @return mixed
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param mixed $state
+     */
+    public function setState($state): void
+    {
+        $this->state = $state;
+    }
+
 }

@@ -40,15 +40,31 @@
                             <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                             @enderror
                         </div>
-                         <div class="form-group">
-                            <label for="payHourly"
-                                   style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Hourly Pay:</label>
-                            <input type="text" name="payhourly" value="{{ $job->getPayHourly() }}" style="background:var(--gray-dark);">
-                            @error('payhourly')
+                        <div class="form-group">
+                            <label for="company"
+                                   style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">City:</label>
+                            <input type="text" name="city" value="{{ $job->getCity() }}" style="background:var(--gray-dark);">
+                            @error('company')
                             <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                             @enderror
                         </div>
-              
+                        <div class="form-group">
+                            <label for="company"
+                                   style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">State:</label>
+                            <input type="text" name="state" value="{{ $job->getState() }}" style="background:var(--gray-dark);">
+                            @error('company')
+                            <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                            @enderror
+                        </div>
+                         <div class="form-group">
+                            <label for="payHourly"
+                                   style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Hourly Pay:</label>
+                            <input type="text" name="payHourly" value="{{ $job->getPayHourly() }}" style="background:var(--gray-dark);">
+                            @error('payHourly')
+                            <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <div class="form-group">
                             <label for="selector"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">User
@@ -64,12 +80,11 @@
                                 </optgroup>
                             </select>
                         </div>
-                        
                 		<div class="form-group">
-                            <label for="jobdescription"
+                            <label for="jobDescription"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Job Description:</label>
-                            <input type="text" name="jobdescription" value="{{ $job->getJobDescription() }}" style="background:var(--gray-dark);">
-                            @error('jobdescription')
+                            <input type="text" name="jobDescription" value="{{ $job->getJobDescription() }}" style="background:var(--gray-dark);">
+                            @error('jobDescription')
                             <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                             @enderror
                         </div>

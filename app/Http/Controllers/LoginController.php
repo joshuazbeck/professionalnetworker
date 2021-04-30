@@ -20,9 +20,7 @@ class LoginController extends Controller
     // Method for logging in a user. Takes POST data as an argument.
     public function login(Request $request)
     {
-        // Set rules for validation and cell validate on inputs
-        $rules = ['email'=> 'Required | email:rfc,dns', 'password'=>'Required'];
-        $this->validate($request, $rules);
+        $this->validateForm($request);
 
         // Retrieve user form inputs and clean against SQL Injection
         $email = $this->clean_input($request->input('email'));
@@ -81,11 +79,18 @@ class LoginController extends Controller
     }
 
     // Function for clearing user inputs against SQL injection
-    function clean_input($inputData): string
+    private function clean_input($inputData): string
     {
         $inputData = trim($inputData);
         $inputData = stripslashes($inputData);
         $inputData = htmlspecialchars($inputData);
         return $inputData;
+    }
+
+    private function validateForm(Request $request)
+    {
+        // Set rules for validation and cell validate on inputs
+        $rules = ['email'=> 'Required | email', 'password'=>'Required'];
+        $this->validate($request, $rules);
     }
 }

@@ -1,16 +1,14 @@
 <?php
 /*
- * Group 1 Milestone 2
- * UserController.php Version 1
+ * Group 1 Milestone 3
+ * JobController.php Version 1
  * CST-256
- * 4/23/2021
- * This is a User Controller class for handling all User functions.
+ * 4/30/2021
+ * This is a Job Controller that provides all requests for jobs..
  */
 namespace App\Http\Controllers;
 
-use App\Models\UserModel;
-use App\Services\Business\ProfileService;
-use App\Services\Business\UserService;
+use App\Models\JobModel;
 use App\Services\Business\JobService;
 use Illuminate\Http\Request;
 
@@ -22,8 +20,11 @@ class JobController extends Controller
      */
     public function index()
     {
-       $availableJobs = JobService::getAllJobs();
-       return view('displayJobs')->with('availableJobs', $availableJobs);
+        // Get array of available jobs
+        $jobsArray = JobService::getAllJobs();
+
+        // Return view with Jobs and Skills array
+        return view('displayJobs')->with('jobsArray', $jobsArray);
     }
 
     /**
@@ -32,18 +33,40 @@ class JobController extends Controller
      */
     public function create()
     {
+        // Return form for creating a job with list of Skills
         return view('createjob');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @throws \Illuminate\Validation\ValidationException
+     * @param  \Illuminate\Http\Request  $request
      */
     public function store(Request $request)
     {
-        //@todo implement
+
+        // Retrieve variables from form input
+        $title = $this->clean_input($request->input('jobTitle'));
+        $company = $this->clean_input($request->input('company'));
+        $pay = $this->clean_input($request->input('payHourly'));
+        $status = $this->clean_input($request->input('status'));
+        $description = $this->clean_input($request->input('jobDescription'));
+        $city = $this->clean_input($request->input('city'));
+        $state = $this->clean_input($request->input('state'));
+        $desiredSkill = $this->clean_input($request->input('desiredSkill'));
+
+        // Create new profile class
+        $newJob = new JobModel(null, $title, $desiredSkill, $company, $pay, $status, $description, $city, $state);
+
+        // Add new Job to database.
+        if ($jobID = JobService::addJob($newJob))
+        {
+            return redirect('jobs');
+        }
+        else
+        {
+            return view('jobs.create');
+        }
     }
 
     /**
@@ -64,19 +87,11 @@ class JobController extends Controller
      */
     public function edit($id)
     {
-        // Check if user is admin or trying to update a user other than themselves. Reroute to main page
-        if(session('userRole') != 3 && session('userID') != $id)
-        {
-            return redirect('/');
-        }
-        else
-        {
-            // Get user info
-            $job = JobService::getJobById($id);
+        // Get Job by its id
+        $job = JobService::getJobByID($id);
 
-            // Return view with User data
-            return view('updateJob')->with('job', $job);
-        }
+        // Return form with Job information
+        return view('updateJob')->with('job', $job);
     }
 
     /**
@@ -87,10 +102,28 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
-      
-        //@todo implement
-        return redirect('jobs');
-         
+        // Retrieve variables from form input
+        $title = $this->clean_input($request->input('jobTitle'));
+        $company = $this->clean_input($request->input('company'));
+        $pay = $this->clean_input($request->input('payHourly'));
+        $status = $this->clean_input($request->input('selector'));
+        $description = $this->clean_input($request->input('jobDescription'));
+        $city = $this->clean_input($request->input('city'));
+        $state = $this->clean_input($request->input('state'));
+        $desiredSkill = $this->clean_input($request->input('desiredSkill'));
+
+        // Create new Job class
+        $newJob = new JobModel($id, $title, $desiredSkill, $company, $pay, $status, $description, $city, $state);
+
+        // Reroute based upon job update success
+        if(JobService::updateJob($newJob))
+        {
+            return redirect('jobs');
+        }
+        else
+        {
+            return redirect('/');
+        }
     }
 
     /**
@@ -100,34 +133,19 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
-        // Call Delete function and delete user
-       JobService::deleteJob($id);
+        // Call Delete function and delete job
+        JobService::deleteJobById($id);
 
-       return redirect('/jobs');
+        // Send user back to Job listing
+        return redirect('jobs');
     }
 
-    
     // Function for clearing user inputs against SQL injection
-    function clean_input($inputData): string
+    private function clean_input($inputData): string
     {
         $inputData = trim($inputData);
         $inputData = stripslashes($inputData);
         $inputData = htmlspecialchars($inputData);
         return $inputData;
-    }
-
-    // Function for validating form inputs from user.
-    private function validateForm(Request $request)
-    {
-        // Set rules
-        $rules = ['firstName'=>'Required | Alpha',
-            'lastName'=>'Required | Alpha',
-            'email'=>'unique:users,EMAIL|email:rfc,dns|Required',
-            'password'=>['regex:/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/'],
-            'password-repeat'=>'same:password'
-        ];
-
-        // Validate input
-        $this->validate($request, $rules);
     }
 }

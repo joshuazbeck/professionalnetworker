@@ -1,37 +1,45 @@
 <?php
 /*
- * Group 1 Milestone 2
- * UserService.php Version 2
+ * Group 1 Milestone 3
+ * JobService.php Version 1
  * CST-256
- * 4/24/2021
- * This class is a service designed to handle all actions regarding the UserModel.
+ * 4/30/2021
+ * This class is a service designed to handle interactions with the database concerning Jobs.
  */
 namespace App\Services\Business;
 
-use App\Models\JobModel;
+
 use App\Services\Data\JobDAO;
 
 class JobService
 {
-
-    
-    // Function for getting an array of all users in the database. Returns array of users
+    // Static function for getting all Jobs from database. Returns array or Null
     public static function getAllJobs(): ?array
     {
         return JobDAO::getAllJobs();
     }
-    
-    
-    // Function for deleting a User from the database. Takes User ID as argument and returns boolean.
-    public static function deleteJob($id): bool
+
+    // Static function for adding a job to the database. Takes JobModel as argument and returns insert id or boolean
+    public static function addJob($job)
+    {
+        return JobDAO::addJob($job);
+    }
+
+    // Static function for deleting a job by its ID. Takes id as arugment and returns boolean
+    public static function deleteJobById($id): bool
     {
         return JobDAO::deleteJobById($id);
     }
 
-    // Function for getting a User by their ID from the database. Takes User ID and returns a UserModel
-    public static function getJobById($id): ?JobModel
+    // Static function for getting a job by its id. Takes id number and returns JobModel
+    public static function getJobByID($id): ?\App\Models\JobModel
     {
         return JobDAO::getJobById($id);
     }
 
+    // Static function for updating a job by its ID. Takes JobModel as argument and returns boolean.
+    public static function updateJob($job): bool
+    {
+        return JobDAO::updateJobById($job);
+    }
 }

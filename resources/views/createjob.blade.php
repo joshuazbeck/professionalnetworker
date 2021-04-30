@@ -35,13 +35,22 @@
                         @error('company')
                         <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                         @enderror
-                      
+
+                        <input class="form-control bg-dark text-white" value="{{ old('company') }}" type="text" data-aos="fade-up" name="city" placeholder="City" style="background: var(--dark);margin-top: 25px;" required>
+                        @error('company')
+                        <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                        @enderror
+
+                        <input class="form-control bg-dark text-white" value="{{old('state')}}" type="text" data-aos="fade-up" name="state" placeholder="State" style="background: var(--dark);margin-top: 25px;" required>
+                        @error('company')
+                        <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                        @enderror
+
                       	<input class="form-control text-white" type="number" data-aos="fade-up" name="payHourly" placeholder="Hourly Pay" style="background: var(--dark);margin-top: 23px;" required>
                          @error('payhourly')
                         <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                         @enderror
                         <div class="form-group">
-                        
                         <select class="text-primary" id="status" name="status" style="color:white; margin-top: 20px; padding: 10px; border: solid; border-color:white; border-radius: 5px; border-width: 1px; background:var(--gray-dark); width:100%;">
                           <option value="0" style="background:var(--gray-dark);">Full-Time</option>
                           <option value="1" style="background:var(--gray-dark);">Part-Time</option>
@@ -51,7 +60,7 @@
                         @error('status')
                         <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                         @enderror
-                      
+
                             <textarea class="form-control text-white bg-dark" name="jobDescription" placeholder="Job Description" required></textarea>
                        	@error('jobdescription')
                         <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
