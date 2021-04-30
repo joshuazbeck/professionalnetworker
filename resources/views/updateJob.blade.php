@@ -83,7 +83,7 @@
                 		<div class="form-group">
                             <label for="jobDescription"
                                    style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Job Description:</label>
-                            <input type="text" name="jobDescription" value="{{ $job->getJobDescription() }}" style="background:var(--gray-dark);">
+                            <textarea type="text" name="jobDescription" value="" style="width: 75%; background:var(--gray-dark);"> {{ $job->getJobDescription() }}</textarea>
                             @error('jobDescription')
                             <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                             @enderror
