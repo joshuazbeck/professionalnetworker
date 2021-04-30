@@ -27,19 +27,27 @@ class UserModel
 
     private $profile_complete; // Track if user completed creating a profile
 
+    
     /**
      * UserModel constructor.
      * @param $firstName
      * @param $lastName
      * @param $password
      * @param $email
+     * @param $userRole
+     * @param $suspended
+     * @param $profile_complete
      */
-    public function __construct($firstName, $lastName, $email, $password)
+    public function __construct($firstName, $lastName, $email, $password, $id=null, $userRole=null, $suspended=null, $profile_complete=null)
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->password = $password;
         $this->email = $email;
+        $this->userID = $id;
+        $this->userRole =  $userRole;
+        $this->suspended = $suspended;
+        $this->profile_complete = $profile_complete;
     }
 
     /**

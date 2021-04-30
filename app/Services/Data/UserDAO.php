@@ -183,12 +183,9 @@ class UserDAO
             $user = $result->fetch_assoc();
 
             // Create UserModel from results
-            $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"]);
-            $returnedUser->setUserID($user['USER_ID']);
-            $returnedUser->setSuspended($user['SUSPENDED']);
-            $returnedUser->setUserRole($user['ROLE_ID']);
-            $returnedUser->setProfileComplete($user['PROFILE_COMPLETE']);
-
+          
+            $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"], $user['USER_ID'], $user['ROLE_ID'], $user['SUSPENDED'], $user['PROFILE_COMPLETE']);
+           
             return $returnedUser;
         }
     }
