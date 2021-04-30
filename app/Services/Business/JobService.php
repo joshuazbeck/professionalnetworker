@@ -20,6 +20,18 @@ class JobService
     {
         return JobDAO::getAllJobs();
     }
+    
+    
+    // Function for deleting a User from the database. Takes User ID as argument and returns boolean.
+    public static function deleteJob($id): bool
+    {
+        return JobDAO::deleteJobById($id);
+    }
 
+    // Function for getting a User by their ID from the database. Takes User ID and returns a UserModel
+    public static function getJobById($id): ?JobModel
+    {
+        return JobDAO::getJobById($id);
+    }
 
 }
