@@ -48,3 +48,4 @@ Route::get('admin', [
 Route::resource('profiles', App\Http\Controllers\ProfileController::class);
 Route::resource('users', App\Http\Controllers\UserController::class);
 Route::resource('jobs', App\Http\Controllers\JobController::class);
+Route::resource('jobHistory', App\Http\Controllers\JobHistoryController::class);

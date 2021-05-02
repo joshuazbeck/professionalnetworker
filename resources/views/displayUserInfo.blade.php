@@ -66,7 +66,28 @@
                         </div>
                         <div id="collapseTwo"  class="collapse" style="background:var(--gray-dark);" aria-labelledby="headingTwo" data-parent="#accordionExample">
                             <div class="card-body" style="background:var(--gray-dark);">
-                                Coming in Milestone 3
+                            <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background:var(--gray-dark);">
+                                    <div class="btn-toolbar"></div>
+                                    <div style="width: 75%; height: auto;">
+                                        @if ($jobHistory)
+                                            @foreach ($jobHistory as $job)
+                                        <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Company: {{ $job->getCompanyName() }}</p>
+                                        <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Job Title: {{ $job->getJobTitle() }}</p>
+                                        <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Years Worked: {{ $job->getYears() }}</p>
+                                        <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Description: {{ $job->getDesc() }}</p>
+                                                </br>
+                                                </br>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div
+                                        class="btn-group d-lg-flex d-xl-flex flex-column justify-content-lg-center justify-content-xl-center"
+                                        role="group"
+                                        style="padding-right: 0px; margin-left: 0px; width: auto;">
+                                        <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('jobHistory.edit', $user->getUserID() ) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Update</a></li>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

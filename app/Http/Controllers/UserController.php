@@ -182,7 +182,7 @@ class UserController extends Controller
        return redirect('/users');
     }
 
-    // Function for returning a single user ID combined with the user's profile data
+    // Function for returning a single user ID combined with the user's profile data and Job history
     public function userInfo($id)
     {
         // Check if user is admin or trying to access user information other than their own
@@ -198,8 +198,11 @@ class UserController extends Controller
             // Get Profile Data
             $profileModel = ProfileService::getProfileByUserID($id);
 
+            // Get Job History data
+            $jobHistory = ProfileService::getJobHistoryByID($id);
+
             // Return view with User and Profile data
-            return view('displayUserInfo')->with('profile', $profileModel)->with('user', $user);
+            return view('displayUserInfo')->with('profile', $profileModel)->with('user', $user)->with('jobHistory', $jobHistory);
         }
     }
 
@@ -218,7 +221,7 @@ class UserController extends Controller
         // Set rules
         $rules = ['firstName'=>'Required | Alpha',
             'lastName'=>'Required | Alpha',
-            'email'=>'unique:users,EMAIL|email:rfc,dns|Required',
+            'email'=>'unique:users,EMAIL|Required',
             'password'=>['regex:/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/'],
             'password-repeat'=>'same:password'
         ];

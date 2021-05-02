@@ -90,7 +90,7 @@ class LoginController extends Controller
     private function validateForm(Request $request)
     {
         // Set rules for validation and cell validate on inputs
-        $rules = ['email'=> 'Required | email', 'password'=>'Required'];
+        $rules = ['email'=> 'Required | email:rfc,dns', 'password'=>'Required'];
         $this->validate($request, $rules);
     }
 }
