@@ -18,6 +18,9 @@
                             <i class="icon ion-android-checkmark-circle d-flex d-lg-flex justify-content-center justify-content-xl-center"
                                 style="text-align: center;color: var(--primary);padding-bottom: 18px;"></i>
                             <h2 class="text-center" style="color: var(--primary);">Set Up Profile</h2>
+                            <input
+                                class="form-control text-white bg-dark" type="text" data-aos="fade-up" name="occupation" placeholder="Occupation"
+                                style="background: var(--dark);margin-top: 23px;" required>
                             <select
                                 class="form-control form-control bg-dark text-white" data-aos="fade-up" name="selector" value="Gender" required>
                                 <optgroup label="Gender">

@@ -13,6 +13,7 @@
                     <div class="card-body d-sm-flex flex-row justify-content-sm-center">
                         <div class="btn-toolbar"></div>
                         <div style="width: 75%; height: auto;">
+                            <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Occupation: {{ $profile->getOccupation() }}</p>
                             <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Phone: {{ $profile->getPhone() }}</p>
                             <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Age: {{ $profile->getAge() }}</p>
                             <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Gender: @if($profile->getIsMale() == 0) Female @else Male @endif</p>

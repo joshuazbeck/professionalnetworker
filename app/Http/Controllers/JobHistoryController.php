@@ -8,6 +8,7 @@
  */
 namespace App\Http\Controllers;
 
+use App\Services\Business\JobHistoryService;
 use App\Services\Business\ProfileService;
 use App\Services\Business\UserService;
 use Illuminate\Http\Request;
@@ -28,22 +29,39 @@ class JobHistoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        // Return view with User and Profile data
+        return view('createJobHistory');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        // Get form inputs
+        $user_id = $this->clean_input($request->input('userID'));
+        $company = $this->clean_input($request->input('job-company'));
+        $title = $this->clean_input($request->input('job-title'));
+        $desc = $this->clean_input($request->input('job-desc'));
+        $startDate = $this->clean_input($request->input('date-start'));
+        $stopDate = $this->clean_input($request->input('date-stop'));
+
+        // Create new Job History
+        $newJobHistory = new JobHistoryModel($user_id, $company, $title, $desc, $startDate, $stopDate);
+
+        // If success, return to user's info, if not return to profile
+        if (JobHistoryService::addJobHistory($newJobHistory))
+        {
+            return redirect('userinfo/'.session('userID'));
+        }
+        else{
+            return redirect('profiles/'.$user_id);
+        }
     }
 
     /**
@@ -53,27 +71,11 @@ class JobHistoryController extends Controller
      */
     public function show($id)
     {
-        // If user is not admin or the profile being accessed is not their own, reroute to mainpage
-        if(session('userRole') != 3 && session('userID') != $id)
-        {
-            return redirect('/');
-        }
-        // Get User information, User Profile, Job History and return displayUserInfo view
-        else
-        {
-            // Get User data
-            $user = UserService::getUserById($id);
+        $user = UserService::getUserById($id);
 
-            // Get User's Profile data
-            $profileModel = ProfileService::getProfileByUserID($id);
+        $jobHistory = JobHistoryService::getJobHistoryByUserID($id);
 
-            // Get User's Job History
-            $jobHistory = ProfileService::getJobHistoryByID($id);
-
-            // Return view ith user and profile data
-            return view('displayUserInfo')->with('profile', $profileModel)->with('user', $user)->with('jobHistory', $jobHistory);
-        }
-
+        return view('displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
     }
 
     /**
@@ -83,14 +85,11 @@ class JobHistoryController extends Controller
      */
     public function edit($id)
     {
-        // Get User data
-        $user = UserService::getUserById($id);
-
         // Get user Profile Data
-        $profile = ProfileService::getProfileByUserID($id);
+        $job = JobHistoryService::getJobHistoryByJobID($id);
 
         // Return view with User and Profile data
-        return view('editJobHistory')->with('user', $user)->with('profile', $profile);
+        return view('editJobHistory')->with('job', $job);
     }
 
     /**
@@ -101,24 +100,25 @@ class JobHistoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // User's id
-        $user_id = $id;
-
         // Get form inputs
+        $user_id = $this->clean_input($request->input('userID'));
         $company = $this->clean_input($request->input('job-company'));
         $title = $this->clean_input($request->input('job-title'));
-        $years = $this->clean_input($request->input('job-years'));
         $desc = $this->clean_input($request->input('job-desc'));
+        $startDate = $this->clean_input($request->input('date-start'));
+        $stopDate = $this->clean_input($request->input('date-stop'));
 
         // Create new Job History
-        $newJobHistory = new JobHistoryModel($company, $title, $years, $desc);
+        $jobHistory = new JobHistoryModel($user_id, $company, $title, $desc, $startDate, $stopDate);
+        $jobHistory->setJobID($id);
 
         // If success, return to user's info, if not return to profile
-        if (ProfileService::addJobProfile($newJobHistory, $user_id))
+        if (JobHistoryService::updateJobHistory($jobHistory))
         {
-            return redirect('userinfo/'.session('userID'));
+            return redirect('jobHistory/'.session('userID'));
         }
-        else{
+        else
+        {
             return redirect('profiles/'.$id);
         }
     }
@@ -127,11 +127,18 @@ class JobHistoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $userID = session('userID');
+
+        JobHistoryService::deleteJobHistoryByJobID($id);
+
+        $user = UserService::getUserById($userID);
+
+        $jobHistory = JobHistoryService::getJobHistoryByUserID($userID);
+
+        return view('displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
     }
 
 

@@ -9,6 +9,7 @@
 namespace App\Services\Data;
 
 
+use App\Models\EducationModel;
 use App\Models\ProfileModel;
 use App\Models\JobHistoryModel;
 use App\Models\UserModel;
@@ -22,12 +23,13 @@ class ProfileDAO
         $connection = DatabaseConfig::getConnection();
 
         // Prepare SQL string
-        $sql_query = "INSERT INTO profiles (USER_ID, PHONE, AGE, CITY, STATE, BIO, IS_MALE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql_query = "INSERT INTO profiles (USER_ID, PHONE, OCCUPATION, AGE, CITY, STATE, BIO, IS_MALE) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $connection->prepare($sql_query);
 
         // Retrieve user inputs from ProfileModel
         $user_id = $newProfile->getUserID();
         $phone = $newProfile->getPhone();
+        $occupation = $newProfile->getOccupation();
         $age = $newProfile->getAge();
         $city = $newProfile->getCity();
         $state = $newProfile->getState();
@@ -35,7 +37,7 @@ class ProfileDAO
         $is_male = $newProfile->getIsMale();
 
         // Bind parameters
-        $stmt->bind_param("isssssi", $user_id, $phone, $age, $city, $state, $bio, $is_male);
+        $stmt->bind_param("ississsi", $user_id, $phone, $occupation, $age, $city, $state, $bio, $is_male);
 
         // Execute and return boolean
         if ($stmt->execute()) {
@@ -75,7 +77,7 @@ class ProfileDAO
             $profile = $result->fetch_assoc();
 
             // Get profile from array and save to ProfileModel
-            $returnedProfile = new ProfileModel($profile["USER_ID"], $profile['PHONE'], $profile['AGE'], $profile['IS_MALE'],  $profile['CITY'], $profile['STATE'], $profile['BIO']);
+            $returnedProfile = new ProfileModel($profile["USER_ID"], $profile['PHONE'], $profile['OCCUPATION'], $profile['AGE'], $profile['IS_MALE'],  $profile['CITY'], $profile['STATE'], $profile['BIO']);
             $returnedProfile->setProfileID($profile['PROFILE_ID']);
 
             // Return results
@@ -90,12 +92,13 @@ class ProfileDAO
         $connection = DatabaseConfig::getConnection();
 
         // Prepare SQL string
-        $sql_query = "UPDATE profiles SET PHONE=?, AGE=?, CITY=?, STATE=?, BIO=?, IS_MALE=? WHERE PROFILE_ID=?";
+        $sql_query = "UPDATE profiles SET PHONE=?, OCCUPATION=?, AGE=?, CITY=?, STATE=?, BIO=?, IS_MALE=? WHERE PROFILE_ID=?";
 
         $stmt = $connection->prepare($sql_query);
 
         // Retrieve user inputs from ProfileModel
         $phone = $userProfile->getPhone();
+        $occupation = $userProfile->getOccupation();
         $age = $userProfile->getAge();
         $city = $userProfile->getCity();
         $state = $userProfile->getState();
@@ -103,7 +106,7 @@ class ProfileDAO
         $is_male = $userProfile->getIsMale();
         $profileID= $userProfile->getProfileID();
 
-        $stmt->bind_param("sisssii", $phone, $age, $city, $state, $bio, $is_male, $profileID);
+        $stmt->bind_param("ssisssii", $phone, $occupation, $age, $city, $state, $bio, $is_male, $profileID);
 
         // Execute statement and return boolean.
         if ($stmt->execute())
@@ -114,107 +117,4 @@ class ProfileDAO
             return false;
         }
     }
-
-    // For adding a users job history to the DB
-    public static function addJobProfile(JobHistoryModel $newJob, $id): bool
-    {
-        // Connect to database
-        $connection = DatabaseConfig::getConnection();
-
-        // Prepare SQL string
-        $sql = "INSERT INTO job_history (JOB_TITLE, COMPANY_NAME, YEARS_WORKED, JOB_DESC, FK_USERID) values (?,?,?,?,$id)";
-
-        $stmt = $connection->prepare($sql);
-
-        // Retrieve user inputs from ProfileModel
-        $jobTitle = $newJob->getJobTitle();
-        $companyName = $newJob->getCompanyName();
-        $years = $newJob->getYears();
-        $desc = $newJob->getDesc();
-
-        $stmt->bind_param("ssis", $jobTitle, $companyName, $years, $desc);
-
-        // Execute statement and return boolean.
-        if($stmt->execute())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-
-    }
-
-    // Method for updating a user's job history.
-    public static function updateJobHistory(JobHistoryModel $job, $id): bool
-    {
-        // Connect to database
-        $con = DatabaseConfig::getConnection();
-
-        // Prepare SQL string
-        $sql = "UPDATE JOB_HISTORY SET JOB_TITLE = ?, COMPANY_NAME = ?, YEARS_WORKED = ?, JOB_DES = ? where FK_USERID = $id";
-
-        $stmt = $con->prepare($sql);
-
-        // Retrieve user inputs from ProfileModel
-        $jobTitle = $job->getJobTitle();
-        $companyName = $Job->getCompanyName();
-        $years = $job->getYears();
-        $desc = $newJob->getDesc();
-
-        $stmt->bind_param("ssis", $jobTitle, $companyName, $years, $desc);
-
-        // Execute statement and return boolean.
-        if($stmt->execute())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    // Method for getting a users job history by id.
-    public static function getJobHistoryByID($id): ?array
-    {
-        // Connect to database
-        $connection = DatabaseConfig::getConnection();
-
-        // Prepare SQL String and bind parameters
-        $sql_query = "SELECT * FROM JOB_HISTORY WHERE FK_USERID = ?";
-        $stmt = $connection->prepare($sql_query);
-
-        // Bind parameters
-        $stmt->bind_param("i", $id);
-
-        // Execute statement and get results.
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        // If no results return null.
-        if ($result->num_rows == 0) {
-
-            return null;
-        }
-        else
-        {
-            // Array to hold results
-            $history_array = array();
-
-            // Step through results and create new JobHistoryModel
-            while ($jobHistory = $result->fetch_assoc())
-            {
-                $returnedJobHistory = new JobHistoryModel($jobHistory['COMPANY_NAME'], $jobHistory['JOB_TITLE'], $jobHistory['YEARS_WORKED'], $jobHistory['JOB_DESC']);
-                $returnedJobHistory->setJobID($jobHistory['JOB_HISTORY_ID']);
-
-                array_push($history_array, $returnedJobHistory);
-            }
-
-            // Return Array
-            return $history_array;
-        }
-    }
-
 }

@@ -33,12 +33,12 @@
                                 </button>
                             </h2>
                         </div>
-
                         <div id="collapseOne" style="background:var(--gray-dark);"class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div class="card-body" style="background:var(--gray-dark);">
                                 <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background:var(--gray-dark);">
                                     <div class="btn-toolbar"></div>
                                     <div style="width: 75%; height: auto;">
+                                        <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Occupation: {{ $profile->getOccupation() }}</p>
                                         <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Phone: {{ $profile->getPhone() }}</p>
                                         <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Age: {{ $profile->getAge() }}</p>
                                         <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Gender: @if($profile->getIsMale() == 0) Female @else Male @endif</p>
@@ -72,8 +72,9 @@
                                         @if ($jobHistory)
                                             @foreach ($jobHistory as $job)
                                         <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Company: {{ $job->getCompanyName() }}</p>
-                                        <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Job Title: {{ $job->getJobTitle() }}</p>
-                                        <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Years Worked: {{ $job->getYears() }}</p>
+                                        <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Last Position Held: {{ $job->getJobTitle() }}</p>
+                                                <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Start Date: {{ date("F Y", strtotime($job->getStartDate())) }}</p>
+                                                <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Stop Date: {{ date("F Y", strtotime($job->getStopDate())) }}</p>
                                         <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Description: {{ $job->getDesc() }}</p>
                                                 </br>
                                                 </br>
@@ -84,7 +85,44 @@
                                         class="btn-group d-lg-flex d-xl-flex flex-column justify-content-lg-center justify-content-xl-center"
                                         role="group"
                                         style="padding-right: 0px; margin-left: 0px; width: auto;">
-                                        <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('jobHistory.edit', $user->getUserID() ) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Update</a></li>
+                                        <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('jobHistory.create') }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Add Job</a></li>
+                                        <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('jobHistory.show', $user->getUserID() ) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Manage Jobs</a></li>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card" >
+                        <div class="card-header" style="background:var(--gray-dark);" id="headingThree">
+                            <h2 class="mb-0">
+                                <button class="btn btn-block text-left collapsed" style="color:var(--primary);;background:var(--gray-dark);" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Education
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseThree"  class="collapse" style="background:var(--gray-dark);" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body" style="background:var(--gray-dark);">
+                                <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background:var(--gray-dark);">
+                                    <div class="btn-toolbar"></div>
+                                    <div style="width: 75%; height: auto;">
+                                        @if ($education)
+                                            @foreach ($education as $edu)
+                                                <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">School: {{ $edu->getSchoolName() }}</p>
+                                                <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Field of Study: {{ $edu->getFieldStudy() }}</p>
+                                                <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Degree Type: {{ $edu->getDegreeType() }}</p>
+                                                <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Date Graduated: {{ date("F Y", strtotime($edu->getDateGraduated())) }}</p>
+                                                </br>
+                                                </br>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div
+                                        class="btn-group d-lg-flex d-xl-flex flex-column justify-content-lg-center justify-content-xl-center"
+                                        role="group"
+                                        style="padding-right: 0px; margin-left: 0px; width: auto;">
+                                        <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('education.create') }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Add Education</a></li>
+                                        <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('education.show', $user->getUserID() ) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Manage Education</a></li>
                                     </div>
                                 </div>
 

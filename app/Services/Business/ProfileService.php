@@ -9,6 +9,7 @@
 
 namespace App\Services\Business;
 
+use App\Models\EducationModel;
 use App\Models\ProfileModel;
 use App\Models\JobHistoryModel;
 use App\Services\Data\ProfileDAO;
@@ -31,16 +32,5 @@ class ProfileService
     public static function updateProfile(ProfileModel $userProfile): bool
     {
         return ProfileDAO::updateProfile($userProfile);
-    }
-    // Method to add a new job to users profile. Takes JobHistoryModel and user ID as argument.
-    public static function addJobProfile(JobHistoryModel $newJob, $id): bool
-    {
-        return ProfileDAO::addJobProfile($newJob, $id);
-    }
-
-    // Method for getting a users complete job history. Takes user id as argument and returns array of JobHistoryModel
-    public static function getJobHistoryByID($id): ?array
-    {
-        return ProfileDAO::getJobHistoryByID($id);
     }
 }

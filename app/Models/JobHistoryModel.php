@@ -11,48 +11,145 @@ namespace App\Models;
 
 class JobHistoryModel{
     private $jobID;
+    private $userID;
     private $companyName;
     private $jobTitle;
-    private $years;
     private $desc;
+    private $startDate;
+    private $stopDate;
 
-    public function __construct($companyName, $jobTitle, $years, $desc){
+    /**
+     * JobHistoryModel constructor.
+     * @param $userID
+     * @param $companyName
+     * @param $jobTitle
+     * @param $desc
+     * @param $startDate
+     * @param $stopDate
+     */
+    public function __construct($userID, $companyName, $jobTitle, $desc, $startDate, $stopDate=null)
+    {
+        $this->userID = $userID;
         $this->companyName = $companyName;
         $this->jobTitle = $jobTitle;
-        $this->years = $years;
         $this->desc = $desc;
+        $this->startDate = $startDate;
+        $this->stopDate = $stopDate;
     }
 
-    public function getJobID(){
+
+    /**
+     * @return mixed
+     */
+    public function getJobID()
+    {
         return $this->jobID;
     }
-    public function getCompanyName(){
+
+    /**
+     * @param mixed $jobID
+     */
+    public function setJobID($jobID): void
+    {
+        $this->jobID = $jobID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserID()
+    {
+        return $this->userID;
+    }
+
+    /**
+     * @param mixed $userID
+     */
+    public function setUserID($userID): void
+    {
+        $this->userID = $userID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompanyName()
+    {
         return $this->companyName;
     }
-    public function getJobTitle(){
+
+    /**
+     * @param mixed $companyName
+     */
+    public function setCompanyName($companyName): void
+    {
+        $this->companyName = $companyName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getJobTitle()
+    {
         return $this->jobTitle;
     }
-    public function getYears(){
-        return $this->years;
+
+    /**
+     * @param mixed $jobTitle
+     */
+    public function setJobTitle($jobTitle): void
+    {
+        $this->jobTitle = $jobTitle;
     }
-    public function getDesc(){
+
+    /**
+     * @return mixed
+     */
+    public function getDesc()
+    {
         return $this->desc;
     }
 
-    public function setJobID($jobID){
-        $this->jobID = $jobID;
-    }
-    public function setCompanyName($companyName){
-        $this->companyName = $companyName;
-    }
-    public function setJobTitle($jobTitle){
-        $this->jobTitle = $jobTitle;
-    }
-    public function setYears($years){
-        $this->years = $years;
-    }
-    public function setDesc($desc){
+    /**
+     * @param mixed $desc
+     */
+    public function setDesc($desc): void
+    {
         $this->desc = $desc;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStartDate()
+    {
+        return $this->startDate;
+    }
+
+    /**
+     * @param mixed $startDate
+     */
+    public function setStartDate($startDate): void
+    {
+        $this->startDate = $startDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStopDate()
+    {
+        return $this->stopDate;
+    }
+
+    /**
+     * @param mixed $stopDate
+     */
+    public function setStopDate($stopDate): void
+    {
+        $this->stopDate = $stopDate;
+    }
+
+
 
 }

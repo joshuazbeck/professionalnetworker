@@ -9,8 +9,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserModel;
+use App\Services\Business\EducationService;
+use App\Services\Business\JobHistoryService;
 use App\Services\Business\ProfileService;
 use App\Services\Business\UserService;
+use App\Services\Data\EducationDAO;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -199,10 +202,17 @@ class UserController extends Controller
             $profileModel = ProfileService::getProfileByUserID($id);
 
             // Get Job History data
-            $jobHistory = ProfileService::getJobHistoryByID($id);
+            $jobHistory = JobHistoryService::getJobHistoryByUserID($id);
+
+            // Get Education History
+            $eduHistory = EducationService::getEducationByUserID($id);
 
             // Return view with User and Profile data
-            return view('displayUserInfo')->with('profile', $profileModel)->with('user', $user)->with('jobHistory', $jobHistory);
+            return view('displayUserInfo')
+                ->with('profile', $profileModel)
+                ->with('user', $user)
+                ->with('jobHistory', $jobHistory)
+                ->with('education', $eduHistory);
         }
     }
 

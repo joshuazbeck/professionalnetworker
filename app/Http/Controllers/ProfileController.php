@@ -44,6 +44,7 @@ class ProfileController extends Controller
     {
         // Retrieve variables from form input
         $user_id = session('userID');
+        $occupation = $this->clean_input($request->input('occupation'));
         $gender = $this->clean_input($request->input('selector'));
         $age = $this->clean_input($request->input('age'));
         $phone = $this->clean_input($request->input('phoneNum'));
@@ -52,7 +53,7 @@ class ProfileController extends Controller
         $state = $this->clean_input($request->input('state'));
 
         // Create new profile class
-        $newProfile = new ProfileModel($user_id, $phone, $age, $gender, $city, $state, $bio);
+        $newProfile = new ProfileModel($user_id, $phone, $occupation, $age, $gender, $city, $state, $bio);
 
         // Add new Profile to database. If good update User class for profile complete
         if (ProfileService::addProfile($newProfile))
@@ -120,6 +121,7 @@ class ProfileController extends Controller
         // Get form input data
         $user_id = $id;
         $profileID = $this->clean_input($request->input('profileID'));
+        $occupation = $this->clean_input($request->input('occupation'));
         $gender = $this->clean_input($request->input('gender'));
         $age = $this->clean_input($request->input('age'));
         $phone = $this->clean_input($request->input('phone'));
@@ -128,7 +130,7 @@ class ProfileController extends Controller
         $state = $this->clean_input($request->input('state'));
 
         // Create new Profile class with data
-        $newProfile = new ProfileModel($user_id, $phone, $age, $gender, $city, $state, $bio);
+        $newProfile = new ProfileModel($user_id, $phone, $occupation, $age, $gender, $city, $state, $bio);
         $newProfile->setProfileID($profileID);
 
         // Reroute based upon Profile update success

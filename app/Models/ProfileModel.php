@@ -17,6 +17,8 @@ class ProfileModel
 
     private $profileID;
 
+    private $occupation;
+
     private $phone;
 
     private $age;
@@ -33,16 +35,18 @@ class ProfileModel
      * ProfileModel constructor.
      * @param $userID
      * @param $phone
+     * @param $occupation
      * @param $age
      * @param $is_male
      * @param $city
      * @param $state
      * @param $bio
      */
-    public function __construct($userID, $phone, $age, $is_male, $city, $state, $bio)
+    public function __construct($userID, $phone, $occupation, $age, $is_male, $city, $state, $bio)
     {
         $this->userID = $userID;
         $this->phone = $phone;
+        $this->occupation = $occupation;
         $this->age = $age;
         $this->is_male = $is_male;
         $this->city = $city;
@@ -177,6 +181,22 @@ class ProfileModel
     public function setProfileID($profileID): void
     {
         $this->profileID = $profileID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOccupation()
+    {
+        return $this->occupation;
+    }
+
+    /**
+     * @param mixed $occupation
+     */
+    public function setOccupation($occupation): void
+    {
+        $this->occupation = $occupation;
     }
 
 }

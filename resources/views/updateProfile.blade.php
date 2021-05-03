@@ -17,6 +17,11 @@
                     <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background:var(--gray-dark);">
                         <div style="width: 75%; height: auto;">
                             <div class="form-group">
+                                <label for="occupation"
+                                       style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Occupation:</label>
+                                <input type="text" name="occupation" value="{{ $profile->getOccupation() }}" style="color:white; background:var(--gray-dark);">
+                            </div>
+                            <div class="form-group">
                                 <label for="phone"
                                        style="width: auto; min-width: 100%; max-width: 100%; height: auto; color: var(- -light);">Phone:</label>
                                 <input type="text" name="phone" value="{{ $profile->getPhone() }}" style="color:white; background:var(--gray-dark);">
