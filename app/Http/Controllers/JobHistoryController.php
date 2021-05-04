@@ -9,7 +9,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\Business\JobHistoryService;
-use App\Services\Business\ProfileService;
 use App\Services\Business\UserService;
 use Illuminate\Http\Request;
 use App\Models\JobHistoryModel;
@@ -71,8 +70,10 @@ class JobHistoryController extends Controller
      */
     public function show($id)
     {
+        // Get user information
         $user = UserService::getUserById($id);
 
+        // Get user's job history
         $jobHistory = JobHistoryService::getJobHistoryByUserID($id);
 
         return view('displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
@@ -85,10 +86,10 @@ class JobHistoryController extends Controller
      */
     public function edit($id)
     {
-        // Get user Profile Data
+        // Get user Job Data
         $job = JobHistoryService::getJobHistoryByJobID($id);
 
-        // Return view with User and Profile data
+        // Return view with job history
         return view('editJobHistory')->with('job', $job);
     }
 
@@ -130,12 +131,16 @@ class JobHistoryController extends Controller
      */
     public function destroy($id)
     {
-        $userID = session('userID');
-
+        // Delete job history by id
         JobHistoryService::deleteJobHistoryByJobID($id);
 
+        // Get user id
+        $userID = session('userID');
+
+        // Get user information
         $user = UserService::getUserById($userID);
 
+        // Get user job history
         $jobHistory = JobHistoryService::getJobHistoryByUserID($userID);
 
         return view('displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);

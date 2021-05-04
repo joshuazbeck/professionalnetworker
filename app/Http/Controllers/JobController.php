@@ -55,7 +55,7 @@ class JobController extends Controller
         $state = $this->clean_input($request->input('state'));
         $desiredSkill = $this->clean_input($request->input('desiredSkill'));
 
-        // Create new profile class
+        // Create new job
         $newJob = new JobModel(null, $title, $desiredSkill, $company, $pay, $status, $description, $city, $state);
 
         // Add new Job to database.

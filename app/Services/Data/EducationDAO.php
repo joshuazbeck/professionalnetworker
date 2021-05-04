@@ -1,8 +1,12 @@
 <?php
-
-
+/*
+ * Group 1 Milestone 3
+ * JobDAO.php Version 1
+ * CST-256
+ * 4/30/2021
+ * This class is a data access object for handling database transactions regarding jobs.
+ */
 namespace App\Services\Data;
-
 
 use App\Models\EducationModel;
 

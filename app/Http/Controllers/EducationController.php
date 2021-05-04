@@ -1,12 +1,16 @@
 <?php
-
+/*
+ * Group 1 Milestone 4
+ * EducationController.php Version 1
+ * CST-256
+ * 5/4/2021
+ * This is a Education Controller that provides all requests for education.
+ */
 namespace App\Http\Controllers;
 
 use App\Models\EducationModel;
 use App\Services\Business\EducationService;
-use App\Services\Business\JobHistoryService;
 use App\Services\Business\UserService;
-use App\Services\Data\ProfileDAO;
 use Illuminate\Http\Request;
 
 class EducationController extends Controller
@@ -44,12 +48,10 @@ class EducationController extends Controller
         $degreeType= $this->clean_input($request->input('degreeType'));
         $dateGrad = $this->clean_input($request->input('dateGrad'));
 
-        // Create new Job History
+        // Create new education History
         $newEducation = new EducationModel($user_id, $school, $field, $dateGrad, $degreeType);
-//
-//        echo $user_id . " " . $school . " " . $field . " " . $degreeType . " " . $dateGrad;
 
-//        // If success, return to user's info, if not return to profile
+        // If success, return to user's info, if not return to profile
         if (EducationService::addEducation($newEducation))
         {
             return redirect('userinfo/'.session('userID'));
@@ -66,8 +68,10 @@ class EducationController extends Controller
      */
     public function show($id)
     {
+        // Get user information
         $user = UserService::getUserById($id);
 
+        // Get user education
         $education = EducationService::getEducationByUserID($id);
 
         return view('displayEducation')->with('user', $user)->with('education', $education);
@@ -80,6 +84,7 @@ class EducationController extends Controller
      */
     public function edit($id)
     {
+        // Get specific education instance for user
         $education = EducationService::getEducationByEduID($id);
 
         return view('editEducation')->with('education', $education);
@@ -100,13 +105,11 @@ class EducationController extends Controller
         $degreeType= $this->clean_input($request->input('degreeType'));
         $dateGrad = $this->clean_input($request->input('dateGrad'));
 
-        // Create new Job History
+        // Create new Education History
         $newEducation = new EducationModel($user_id, $school, $field, $dateGrad, $degreeType);
         $newEducation->setEduID($id);
-//
-//        echo $user_id . " " . $school . " " . $field . " " . $degreeType . " " . $dateGrad;
 
-//        // If success, return to user's info, if not return to profile
+        // If success, return to user's info, if not return to profile
         if (EducationService::updateEducation($newEducation))
         {
             return redirect('userinfo/'.session('userID'));
@@ -123,12 +126,16 @@ class EducationController extends Controller
      */
     public function destroy($id)
     {
-        $userID = session('userID');
-
+        // Delete instance of education by id
         EducationService::deleteEducationByID($id);
 
+        // Get user ID from session
+        $userID = session('userID');
+
+        // Get user information
         $user = UserService::getUserById($userID);
 
+        // Get user's education history
         $education = EducationService::getEducationByUserID($userID);
 
         return view('displayEducation')->with('user', $user)->with('education', $education);

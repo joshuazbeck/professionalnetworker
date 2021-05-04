@@ -94,8 +94,6 @@ class SkillDAO
         $sql_query = "INSERT INTO user_skill (SKILL_ID, USER_ID) VALUES (?, ?)";
         $stmt = $connection->prepare($sql_query);
 
-        // Retrieve user inputs from job
-
         // Bind parameters
         $stmt->bind_param("ii", $skillID, $userID);
 
