@@ -12,8 +12,10 @@ use App\Models\UserModel;
 use App\Services\Business\EducationService;
 use App\Services\Business\JobHistoryService;
 use App\Services\Business\ProfileService;
+use App\Services\Business\SkillService;
 use App\Services\Business\UserService;
 use App\Services\Data\EducationDAO;
+use App\Services\Data\SkillDAO;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -207,12 +209,16 @@ class UserController extends Controller
             // Get Education History
             $eduHistory = EducationService::getEducationByUserID($id);
 
+            // Get User Skills
+            $skills = SkillService::getSkillsByUserId($id);
+
             // Return view with User and Profile data
             return view('displayUserInfo')
                 ->with('profile', $profileModel)
                 ->with('user', $user)
                 ->with('jobHistory', $jobHistory)
-                ->with('education', $eduHistory);
+                ->with('education', $eduHistory)
+                ->with('skills', $skills);
         }
     }
 
@@ -231,7 +237,7 @@ class UserController extends Controller
         // Set rules
         $rules = ['firstName'=>'Required | Alpha',
             'lastName'=>'Required | Alpha',
-            'email'=>'unique:users,EMAIL|Required',
+            'email'=>'unique:users,EMAIL|email|Required',
             'password'=>['regex:/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/'],
             'password-repeat'=>'same:password'
         ];

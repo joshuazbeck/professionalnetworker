@@ -44,9 +44,18 @@ Route::get('admin', [
         return view('admin');
     }
 ]);
+Route::get('editUserSkills/{user}', [
+    'as' => 'editUserSkills',
+    'uses' => 'App\Http\Controllers\SkillController@editUserSkills'
+]);
+Route::put('updateUserSkills/{user}', [
+    'as' => 'updateUserSkills',
+    'uses' => 'App\Http\Controllers\SkillController@updateUserSkills'
+]);
 
 Route::resource('profiles', App\Http\Controllers\ProfileController::class);
 Route::resource('users', App\Http\Controllers\UserController::class);
 Route::resource('jobs', App\Http\Controllers\JobController::class);
 Route::resource('jobHistory', App\Http\Controllers\JobHistoryController::class);
 Route::resource('education', App\Http\Controllers\EducationController::class);
+Route::resource('skills', App\Http\Controllers\SkillController::class);

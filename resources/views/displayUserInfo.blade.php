@@ -129,6 +129,37 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card" >
+                        <div class="card-header" style="background:var(--gray-dark);" id="headingFour">
+                            <h2 class="mb-0">
+                                <button class="btn btn-block text-left collapsed" style="color:var(--primary);;background:var(--gray-dark);" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    Skills/Strengths
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseFour"  class="collapse" style="background:var(--gray-dark);" aria-labelledby="headingFour" data-parent="#accordionExample">
+                            <div class="card-body" style="background:var(--gray-dark);">
+                                <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background:var(--gray-dark);">
+                                    <div class="btn-toolbar"></div>
+                                    <div style="width: 75%; height: auto;">
+                                        @if ($skills)
+                                            @foreach ($skills as $skill)
+                                                <p style="width: auto; min-width: 75%; max-width: 75%; height: auto; color: var(- -light);">Skill: {{ $skill->getName() }}</p>
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <div
+                                        class="btn-group d-lg-flex d-xl-flex flex-column justify-content-lg-center justify-content-xl-center"
+                                        role="group"
+                                        style="padding-right: 0px; margin-left: 0px; width: auto;">
+                                        <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('editUserSkills', session('userID') ) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Manage Skills</a></li>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

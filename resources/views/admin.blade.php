@@ -7,6 +7,7 @@
             <a class="btn btn-primary d-xl-flex justify-content-xl-center" type="button" style="width: auto;padding-right: auto;padding-left: auto;margin-top: 40px;margin-bottom: 10px;" href="{{ route('users.index') }}">Manage Users</a>
             <a class="btn btn-primary d-xl-flex justify-content-xl-center" type="button" style="width: auto;padding-right: auto;padding-left: auto;margin-top: 10px;margin-bottom: 10px;" href="{{ route('jobs.index') }}">Manage Jobs</a>
             <a class="btn btn-primary d-xl-flex justify-content-xl-center" type="button" style="width: auto;padding-right: auto;padding-left: auto;margin-top: 10px;margin-bottom: 40px;" href="{{ route('jobs.create') }}">Add A Job</a>
+            <a class="btn btn-primary d-xl-flex justify-content-xl-center" type="button" style="width: auto;padding-right: auto;padding-left: auto;margin-top: 10px;margin-bottom: 40px;" href="{{ route('jobs.create') }}">Add Affinity Group</a>
         </div>
     </section>
 @endsection
