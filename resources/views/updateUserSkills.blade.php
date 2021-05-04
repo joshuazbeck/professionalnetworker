@@ -20,7 +20,7 @@
                             @foreach($skills as $skill)
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="checkbox" name="skillarray[]"
-                                       @if (!is_bool(array_search($skill->getSkillId(), array_column($userSkill, 'skillId')))) checked @endif value="{{ $skill->getSkillId() }}">
+                                      @if($userSkill) @if (!is_bool(array_search($skill->getSkillId(), array_column($userSkill, 'skillId')))) checked @endif @endif value="{{ $skill->getSkillId() }}">
                                 <label class="form-check-label" for="inlineCheckbox1">{{ $skill->getName() }}</label>
                             </div>
                             @endforeach

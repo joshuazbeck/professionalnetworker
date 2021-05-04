@@ -51,11 +51,11 @@ class SkillDAO
         $connection = DatabaseConfig::getConnection();
 
         // Prepare SQL String and bind parameters
-        $sql_query = "SELECT skills.SKILL_ID, skills.SKILL_NAME, user_skill.USER_SKILL_ID FROM skills INNER JOIN user_skill ON skills.SKILL_ID = user_skill.SKILL_ID WHERE user_skill.USER_ID = 10";
+        $sql_query = "SELECT skills.SKILL_ID, skills.SKILL_NAME, user_skill.USER_SKILL_ID FROM skills INNER JOIN user_skill ON skills.SKILL_ID = user_skill.SKILL_ID WHERE user_skill.USER_ID = ?";
         $stmt = $connection->prepare($sql_query);
 
         // Bind parameters
-        //$stmt->bind_param("i", $id);
+        $stmt->bind_param("i", $id);
 
         // Execute statement and get results.
         $stmt->execute();

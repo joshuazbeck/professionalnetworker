@@ -98,20 +98,39 @@ class SkillController extends Controller
         $skillarray = $request->input('skillarray');
         $userSkill = SkillService::getSkillsByUserId($id);
 
-        foreach($userSkill as $skill)
+        if($userSkill)
         {
-            if(!in_array($skill->getSkillId(), $skillarray))
+            foreach($userSkill as $skill)
             {
-                SkillService::deleteSkillByUserId($skill->getAssociatedId());
+                if($skillarray == NULL || !in_array($skill->getSkillId(), $skillarray))
+                {
+                    SkillService::deleteSkillByUserId($skill->getAssociatedId());
+                }
+            }
+
+            if($skillarray)
+            {
+                foreach($skillarray as $skill)
+                {
+                    if (is_bool(array_search($skill, array_column($userSkill, 'skillId'))))
+                    {
+                        SkillService::addUserSkill($skill, session('userID'));
+                    }
+                }
+            }
+
+        }
+        else
+        {
+            if($skillarray)
+            {
+                foreach($skillarray as $skill)
+                {
+                    SkillService::addUserSkill($skill, session('userID'));
+                }
             }
         }
-        foreach($skillarray as $skill)
-        {
-            if (is_bool(array_search($skill, array_column($userSkill, 'skillId'))))
-            {
-                SkillService::addUserSkill($skill, session('userID'));
-            }
-        }
+
 
         return redirect('userinfo/'.session('userID'));
     }
