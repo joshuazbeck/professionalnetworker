@@ -26,9 +26,12 @@ class AffinityGroupsController extends Controller
         $affinityGroupArray = AffinityGroupService::getAllAffinityGroups();
 
         // Get array of user ids for each affinity group and set to AffinityGroupModel $user
-        foreach($affinityGroupArray as $group)
+        if ($affinityGroupArray)
         {
-            $group->setUsers(AffinityGroupService::getAffinityGroupUsers($group->getAffinityGroupID()));
+            foreach($affinityGroupArray as $group)
+            {
+                $group->setUsers(AffinityGroupService::getAffinityGroupUsers($group->getAffinityGroupID()));
+            }
         }
 
         // Return view with Affinity Groups

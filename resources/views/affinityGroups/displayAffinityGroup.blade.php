@@ -12,6 +12,9 @@
                 <div class="card-header" style="background: var(--gray-dark);">
                     <h5 class="mb-0" style="color: var(--primary); text-align: left; ">{{ $group->getAffinityGroupName() }}</h5>
                 </div>
+                <div class="card-header" style="background: var(--gray-dark);">
+                    <h5 class="mb-0" style="color: var(--primary); text-align: left; ">{{ $group->getAffinityGroupDesc() }}</h5>
+                </div>
                 <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background: var(--gray-dark);color:var(--primary);">
 
                  <div
@@ -27,8 +30,6 @@
                                 <button class="nav-link border rounded-0 border-primary" type="submit" style="margin-right: 0px; margin-top: 6px; padding-left: 50px; padding-right: 50px; margin-bottom: 6px; border-radius: 6px; background: var(--gray-dark);border-color: red;border-style: none; color: red;">Delete</button>
                         </form>
 						@endif
-
-{{--						@if ($user->isFollowingAffinityGroup($group->getAffinityGroupID(), $user->getUserID()))--}}
                             @if ($group->getUsers() != null && in_array(session('userID'), $group->getUsers()))
 						<a class="nav-link border rounded-0 border-primary" href="{{ route('removeUserFromGroup', $group->getAffinityGroupID()) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">Unfollow Group</a>
 						<a class="nav-link border rounded-0 border-primary" href="{{ route('affinitygroup.show', $group->getAffinityGroupID()) }}" style="margin-right: 0px; margin-top: 6px; padding-left: 25px; padding-right: 25px; margin-bottom: 6px; background: var(- -info); border-radius: 6px; border-style: none;">View</a>
@@ -42,6 +43,6 @@
     </div>
     @endforeach
     @else
-        <h2 style="text-align: center;font-size: 36px;color: var(--primary);margin-top: 100px;">Currently No Jobs Available</h2>
+        <h2 style="text-align: center;font-size: 36px;color: var(--primary);margin-top: 100px;">Currently No Affinity Groups Available</h2>
     @endif
 @endsection
