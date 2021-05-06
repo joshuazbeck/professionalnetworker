@@ -19,6 +19,9 @@
                      <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('userinfo', session('userID') ) }}" style="text-align: center;margin-right: 24px;">Profile</a>
                 </li>
                 <li class="nav-item">
+                     <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{!! route('affinitygroup.index' ) !!}" style="text-align: center;margin-right: 24px;">Affinity Groups</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{!! route('logout') !!}"
                        style="text-align: center;margin-right: 24px;">Log Out</a>
                 </li>

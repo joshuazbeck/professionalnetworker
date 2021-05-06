@@ -59,3 +59,4 @@ Route::resource('jobs', App\Http\Controllers\JobController::class);
 Route::resource('jobHistory', App\Http\Controllers\JobHistoryController::class);
 Route::resource('education', App\Http\Controllers\EducationController::class);
 Route::resource('skills', App\Http\Controllers\SkillController::class);
+Route::resource('affinitygroup', App\Http\Controllers\AffinityGroupsController::class);

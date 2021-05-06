@@ -221,6 +221,24 @@ class UserController extends Controller
                 ->with('skills', $skills);
         }
     }
+    
+    public function unfollowGroup($affinityGroupID, $userID) {
+        //@todo Need to still implement the code to unfollow the group
+        route('affinitygroup');
+
+        
+    }
+    public function followGroup($affinityGroupID, $userID) {
+        //@todo Need to still implement the code to follow the group
+        route('affinitygroup');
+        
+    }
+    
+    public function isFollowingAffinityGroup($affinityGroupID, $withUserID): bool {
+        //@todo Need to still implement the code to follow the group
+        return true;
+        
+    }
 
     // Function for clearing user inputs against SQL injection
     private function clean_input($inputData): string
