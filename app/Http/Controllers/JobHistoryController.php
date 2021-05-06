@@ -32,7 +32,7 @@ class JobHistoryController extends Controller
     public function create()
     {
         // Return view with User and Profile data
-        return view('createJobHistory');
+        return view('jobHistory/createJobHistory');
     }
 
     /**
@@ -76,7 +76,7 @@ class JobHistoryController extends Controller
         // Get user's job history
         $jobHistory = JobHistoryService::getJobHistoryByUserID($id);
 
-        return view('displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
+        return view('jobHistory/displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
     }
 
     /**
@@ -90,7 +90,7 @@ class JobHistoryController extends Controller
         $job = JobHistoryService::getJobHistoryByJobID($id);
 
         // Return view with job history
-        return view('editJobHistory')->with('job', $job);
+        return view('jobHistory/editJobHistory')->with('job', $job);
     }
 
     /**
@@ -143,7 +143,7 @@ class JobHistoryController extends Controller
         // Get user job history
         $jobHistory = JobHistoryService::getJobHistoryByUserID($userID);
 
-        return view('displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
+        return view('jobHistory/displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
     }
 
 

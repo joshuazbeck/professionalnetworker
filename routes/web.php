@@ -22,7 +22,7 @@ Route::get('/', [
 Route::get('login', [
     'as' => 'login',
     'uses' => function () {
-        return view('login');
+        return view('login/login');
     }
 ]);
 
@@ -41,7 +41,7 @@ Route::get('userinfo/{user}', [
 Route::get('admin', [
     'as' => 'admin',
     'uses' => function () {
-        return view('admin');
+        return view('admin/admin');
     }
 ]);
 Route::get('editUserSkills/{user}', [
@@ -51,6 +51,14 @@ Route::get('editUserSkills/{user}', [
 Route::put('updateUserSkills/{user}', [
     'as' => 'updateUserSkills',
     'uses' => 'App\Http\Controllers\SkillController@updateUserSkills'
+]);
+Route::get('addUserToGroup/{group_id}', [
+    'as' => 'addUserToGroup',
+    'uses' => 'App\Http\Controllers\AffinityGroupsController@addUserToGroup'
+]);
+Route::get('removeUserFromGroup/{group_id}', [
+    'as' => 'removeUserFromGroup',
+    'uses' => 'App\Http\Controllers\AffinityGroupsController@removeUserFromGroup'
 ]);
 
 Route::resource('profiles', App\Http\Controllers\ProfileController::class);

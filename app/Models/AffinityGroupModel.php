@@ -1,14 +1,13 @@
 <?php
 /*
- * Group 1 Milestone 3
+ * Group 1 Milestone 4
  * JobModel.php Version 1
  * CST-256
- * 4/30/2021
- * This Model represents a Job for the site.
+ * 5/6/2021
+ * This Model represents a Affinity Group for the site.
  */
 
 namespace App\Models;
-
 
 class AffinityGroupModel
 {
@@ -16,10 +15,28 @@ class AffinityGroupModel
     private $affinityGroupID;
 
     private $affinityGroupName;
-    
-    private $users;
+
+    private $affinityGroupDesc;
+
+    private $users = array(); // Array of user ids as int
 
     private $affinityGroupSuspended;
+
+    /**
+     * JobModel constructor.
+     * @param $affinityGroupID
+     * @param $affinityGroupName
+     * @param $affinityGroupDesc
+     * @param $affinityGroupSuspended
+     */
+    public function __construct($affinityGroupID, $affinityGroupName, $affinityGroupDesc, $affinityGroupSuspended, $users=null)
+    {
+        $this->affinityGroupID = $affinityGroupID;
+        $this->affinityGroupName = $affinityGroupName;
+        $this->affinityGroupDesc = $affinityGroupDesc;
+        $this->affinityGroupSuspended = $affinityGroupSuspended;
+        $this->users = $users;
+    }
 
     /**
      * @return mixed
@@ -86,18 +103,19 @@ class AffinityGroupModel
     }
 
     /**
-     * JobModel constructor.
-     * @param $affinityGroupID
-     * @param $affinityGroupName
-     * @param $affinityGroupSuspended
+     * @return mixed
      */
-    public function __construct($affinityGroupID, $affinityGroupName, $affinityGroupSuspended, $users=null)
+    public function getAffinityGroupDesc()
     {
-        $this->affinityGroupID = $affinityGroupID;
-        $this->affinityGroupName = $affinityGroupName;
-        $this->affinityGroupSuspended = $affinityGroupSuspended;
-        $this->users = $users;
+        return $this->affinityGroupDesc;
     }
 
-   
+    /**
+     * @param mixed $affinityGroupDesc
+     */
+    public function setAffinityGroupDesc($affinityGroupDesc): void
+    {
+        $this->affinityGroupDesc = $affinityGroupDesc;
+    }
+
 }

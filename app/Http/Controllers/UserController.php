@@ -30,7 +30,7 @@ class UserController extends Controller
         $userArray = UserService::getAllUsers();
 
         // Return view with Users array
-        return view('displayUsers')->with('userArray', $userArray);
+        return view('users/displayUsers')->with('userArray', $userArray);
     }
 
     /**
@@ -39,7 +39,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('register');
+        return view('users/register');
     }
 
     /**
@@ -118,7 +118,7 @@ class UserController extends Controller
             $user = UserService::getUserById($id);
 
             // Return view with User data
-            return view('updateUser')->with('user', $user);
+            return view('users/updateUser')->with('user', $user);
         }
     }
 
@@ -213,31 +213,13 @@ class UserController extends Controller
             $skills = SkillService::getSkillsByUserId($id);
 
             // Return view with User and Profile data
-            return view('displayUserInfo')
+            return view('users/displayUserInfo')
                 ->with('profile', $profileModel)
                 ->with('user', $user)
                 ->with('jobHistory', $jobHistory)
                 ->with('education', $eduHistory)
                 ->with('skills', $skills);
         }
-    }
-    
-    public function unfollowGroup($affinityGroupID, $userID) {
-        //@todo Need to still implement the code to unfollow the group
-        route('affinitygroup');
-
-        
-    }
-    public function followGroup($affinityGroupID, $userID) {
-        //@todo Need to still implement the code to follow the group
-        route('affinitygroup');
-        
-    }
-    
-    public function isFollowingAffinityGroup($affinityGroupID, $withUserID): bool {
-        //@todo Need to still implement the code to follow the group
-        return true;
-        
     }
 
     // Function for clearing user inputs against SQL injection

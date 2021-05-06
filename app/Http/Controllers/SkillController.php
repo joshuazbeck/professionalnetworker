@@ -22,7 +22,7 @@ class SkillController extends Controller
         // Get all skills
         $skills = SkillService::getAllSkills();
 
-        return view('displaySkills')->with('skills', $skills);
+        return view('skills/displaySkills')->with('skills', $skills);
     }
 
     /**
@@ -100,7 +100,7 @@ class SkillController extends Controller
         // Get all skills associated with user
         $userSkill = SkillService::getSkillsByUserId($id);
 
-        return view('updateUserSkills')->with('skills', $skills)->with('userSkill', $userSkill);
+        return view('skills/updateUserSkills')->with('skills', $skills)->with('userSkill', $userSkill);
     }
 
     // Method for updating user skills in database
@@ -153,7 +153,6 @@ class SkillController extends Controller
                 }
             }
         }
-
 
         return redirect('userinfo/'.session('userID'));
     }

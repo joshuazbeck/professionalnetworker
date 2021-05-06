@@ -60,7 +60,7 @@ class LoginController extends Controller
             }
             else
             {
-                return view('setupprofile');
+                return view('profiles/setupprofile');
             }
         }
         // If no user, return error

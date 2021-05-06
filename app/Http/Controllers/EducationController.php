@@ -31,7 +31,7 @@ class EducationController extends Controller
      */
     public function create()
     {
-        return view('createEducation');
+        return view('education/createEducation');
     }
 
     /**
@@ -74,7 +74,7 @@ class EducationController extends Controller
         // Get user education
         $education = EducationService::getEducationByUserID($id);
 
-        return view('displayEducation')->with('user', $user)->with('education', $education);
+        return view('education/displayEducation')->with('user', $user)->with('education', $education);
     }
 
     /**
@@ -87,7 +87,7 @@ class EducationController extends Controller
         // Get specific education instance for user
         $education = EducationService::getEducationByEduID($id);
 
-        return view('editEducation')->with('education', $education);
+        return view('education/editEducation')->with('education', $education);
     }
 
     /**
@@ -138,7 +138,7 @@ class EducationController extends Controller
         // Get user's education history
         $education = EducationService::getEducationByUserID($userID);
 
-        return view('displayEducation')->with('user', $user)->with('education', $education);
+        return view('education/displayEducation')->with('user', $user)->with('education', $education);
     }
 
 

@@ -24,7 +24,7 @@ class JobController extends Controller
         $jobsArray = JobService::getAllJobs();
 
         // Return view with Jobs and Skills array
-        return view('displayJobs')->with('jobsArray', $jobsArray);
+        return view('jobs/displayJobs')->with('jobsArray', $jobsArray);
     }
 
     /**
@@ -34,7 +34,7 @@ class JobController extends Controller
     public function create()
     {
         // Return form for creating a job with list of Skills
-        return view('createjob');
+        return view('jobs/createjob');
     }
 
     /**
@@ -91,7 +91,7 @@ class JobController extends Controller
         $job = JobService::getJobByID($id);
 
         // Return form with Job information
-        return view('updateJob')->with('job', $job);
+        return view('jobs/updateJob')->with('job', $job);
     }
 
     /**

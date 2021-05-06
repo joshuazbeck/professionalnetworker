@@ -22,14 +22,20 @@
                             <div class="input-group-append"></div>
                         </div>
                         <input class="form-control bg-dark text-white" type="text" data-aos="fade-up" name="affinityGroupTitle"
-                               placeholder="Job Title" value="{{old('jobtitle')}}" style="background: var(--dark);margin-top: 23px;" required>
+                               placeholder="Group Title" value="{{old('jobtitle')}}" style="background: var(--dark);margin-top: 23px;" required>
                         @error('affinityGroupTitle')
                         <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                         @enderror
-                 
+
+                        <textarea class="form-control bg-dark text-white" type="text" data-aos="fade-up" name="affinityGroupDesc"
+                               placeholder="Group Description" style="background: var(--dark);margin-top: 23px;" required>{{old('jobtitle')}}</textarea>
+                        @error('affinityGroupTitle')
+                        <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
+                        @enderror
+
                         <button class="btn btn-primary btn-block" type="submit" style="margin-top: 15px;">Create Affinity Group!!
                         </button>
-                       
+
                     </form>
                 </div>
             </section>

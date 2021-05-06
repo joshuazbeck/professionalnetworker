@@ -32,7 +32,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        return view('setupprofile');
+        return view('profiles/setupprofile');
     }
 
     /**
@@ -88,7 +88,7 @@ class ProfileController extends Controller
             $profileModel = ProfileService::getProfileByUserID($id);
 
             // Return view ith user and profile data
-            return view('displayProfile')->with('profile', $profileModel)->with('user', $user);
+            return view('profiles/displayProfile')->with('profile', $profileModel)->with('user', $user);
         }
 
     }
@@ -107,7 +107,7 @@ class ProfileController extends Controller
         $profile = ProfileService::getProfileByUserID($id);
 
         // Return view with User and Profile data
-        return view('updateProfile')->with('user', $user)->with('profile', $profile);
+        return view('profiles/updateProfile')->with('user', $user)->with('profile', $profile);
     }
 
     /**
