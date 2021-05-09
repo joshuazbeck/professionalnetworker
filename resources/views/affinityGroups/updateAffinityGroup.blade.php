@@ -34,7 +34,7 @@
                         <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                         @enderror
 
-                        <button class="btn btn-primary btn-block" type="submit" style="margin-top: 15px;">Create Affinity Group!!
+                        <button class="btn btn-primary btn-block" type="submit" style="margin-top: 15px;">Update Affinity Group!!
                         </button>
 
                     </form>
