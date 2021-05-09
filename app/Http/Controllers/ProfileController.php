@@ -62,7 +62,7 @@ class ProfileController extends Controller
             return redirect('/');
         }
         else{
-            return view('profiles.create');
+            return view('profiles/setupprofile');
         }
     }
 
