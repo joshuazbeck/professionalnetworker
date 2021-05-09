@@ -10,7 +10,6 @@ namespace App\Services\Data;
 
 use App\Models\UserModel;
 use App\Models\LoginModel;
-use Symfony\Component\VarDumper\Cloner\Data;
 
 class SecurityDAO
 {
@@ -43,6 +42,7 @@ class SecurityDAO
         else
         {
             $user = $result->fetch_assoc();
+
             $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"]);
             $returnedUser->setUserID($user['USER_ID']);
             $returnedUser->setSuspended($user['SUSPENDED']);

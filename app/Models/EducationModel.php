@@ -1,4 +1,11 @@
 <?php
+/*
+ * Group 1 Milestone 4
+ * EducationGroupModel.php Version 1
+ * CST-256
+ * 5/6/2021
+ * This Model represents a instance of Education for the site.
+ */
 
 
 namespace App\Models;

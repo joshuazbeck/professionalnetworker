@@ -1,10 +1,10 @@
 <?php
 /*
  * Group 1 Milestone 3
- * JobDAO.php Version 1
+ * EducationDAO.php Version 1
  * CST-256
- * 4/30/2021
- * This class is a data access object for handling database transactions regarding jobs.
+ * 5/8/2021
+ * This class is a data access object for handling database transactions regarding user Education.
  */
 namespace App\Services\Data;
 
@@ -12,7 +12,7 @@ use App\Models\EducationModel;
 
 class EducationDAO
 {
-    // For adding a users job history to the DB
+    // For adding a users education history to the DB
     public static function addEducation(EducationModel $newEdu): bool
     {
         // Connect to database
@@ -23,7 +23,7 @@ class EducationDAO
 
         $stmt = $connection->prepare($sql);
 
-        // Retrieve user inputs from ProfileModel
+        // Retrieve user inputs from EducationModel
         $userID = $newEdu->getUserID();
         $school = $newEdu->getSchoolName();
         $field = $newEdu->getFieldStudy();
@@ -43,7 +43,7 @@ class EducationDAO
         }
     }
 
-    // Method for getting a users job history by id.
+    // Method for getting a users education history by id.
     public static function getEducationByEduID($id): ?EducationModel
     {
         // Connect to database
@@ -76,7 +76,7 @@ class EducationDAO
         }
     }
 
-    // Method for getting a users job history by id.
+    // Method for getting a users education history by id.
     public static function getEducationByUserID($id): ?array
     {
         // Connect to database
@@ -103,7 +103,7 @@ class EducationDAO
             // Array to hold results
             $education_array = array();
 
-            // Step through results and create new JobHistoryModel
+            // Step through results and create new EducationModel
             while ($education = $result->fetch_assoc())
             {
                 $returnedEducation = new EducationModel($education['USER_ID'], $education['SCHOOL_NAME'], $education['FIELD_STUDY'], $education['DATE_GRAD'], $education['DEGREE']);
@@ -117,7 +117,7 @@ class EducationDAO
         }
     }
 
-    // Method for updating a user's job history.
+    // Method for updating a user's education history.
     public static function updateEducation(EducationModel $edu): bool
     {
         // Connect to database
@@ -148,7 +148,7 @@ class EducationDAO
         }
     }
 
-    // Function to delete user by their User ID. Takes User ID as argument.
+    // Function to delete education instance by education id. Takes education ID as argument.
     public static function deleteEducationById($id): bool
     {
         // Connect to database

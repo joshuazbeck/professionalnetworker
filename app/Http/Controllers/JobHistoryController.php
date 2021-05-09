@@ -4,7 +4,7 @@
  * JobHistoryController.php Version 1
  * CST-256
  * 4/30/2021
- * This is a Job History Controller that provides all requests for job historys..
+ * This is a Job History Controller that provides all requests for job histories..
  */
 namespace App\Http\Controllers;
 
@@ -76,6 +76,7 @@ class JobHistoryController extends Controller
         // Get user's job history
         $jobHistory = JobHistoryService::getJobHistoryByUserID($id);
 
+        // Return view with user data and user job history
         return view('jobHistory/displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
     }
 

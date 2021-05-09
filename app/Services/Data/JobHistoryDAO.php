@@ -1,14 +1,18 @@
 <?php
-
+/*
+ * Group 1 Milestone 4
+ * JobHistoryDAO.php Version 1
+ * CST-256
+ * 5/8/2021
+ * This class is a data access object for handling database transactions regarding job histories.
+ */
 
 namespace App\Services\Data;
-
 
 use App\Models\JobHistoryModel;
 
 class JobHistoryDAO
 {
-
     // For adding a users job history to the DB
     public static function addJobHistory(JobHistoryModel $newJob): bool
     {
@@ -53,7 +57,7 @@ class JobHistoryDAO
 
         $stmt = $con->prepare($sql);
 
-        // Retrieve user inputs from ProfileModel
+        // Retrieve user inputs from JobHistoryModel
         $jobTitle = $job->getJobTitle();
         $companyName = $job->getCompanyName();
         $dateStart = $job->getStartDate();
@@ -74,6 +78,7 @@ class JobHistoryDAO
         }
     }
 
+    // Method for getting job history by id
     public static function getJobHistoryByJobID($id)
     {
         // Connect to database
@@ -106,7 +111,7 @@ class JobHistoryDAO
         }
     }
 
-    // Method for getting a users job history by id.
+    // Method for getting a users job history by user id.
     public static function getJobHistoryByUserID($id): ?array
     {
         // Connect to database
@@ -147,7 +152,7 @@ class JobHistoryDAO
         }
     }
 
-    // Function to delete user by their User ID. Takes User ID as argument.
+    // Function to delete job history by its ID. Takes job history ID as argument.
     public static function deleteJobHistoryByJobId($id): bool
     {
         // Connect to database

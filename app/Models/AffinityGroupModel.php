@@ -1,7 +1,7 @@
 <?php
 /*
  * Group 1 Milestone 4
- * JobModel.php Version 1
+ * AffinityGroupModel.php Version 1
  * CST-256
  * 5/6/2021
  * This Model represents a Affinity Group for the site.

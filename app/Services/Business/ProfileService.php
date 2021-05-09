@@ -9,9 +9,7 @@
 
 namespace App\Services\Business;
 
-use App\Models\EducationModel;
 use App\Models\ProfileModel;
-use App\Models\JobHistoryModel;
 use App\Services\Data\ProfileDAO;
 
 class ProfileService

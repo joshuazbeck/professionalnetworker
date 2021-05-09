@@ -47,6 +47,9 @@ class LoginController extends Controller
             session([
                 'userID' => $user->getUserID()
             ]);
+            session([
+                'loggedIn' => true
+            ]);
 
             if($user->getSuspended() == true)
             {

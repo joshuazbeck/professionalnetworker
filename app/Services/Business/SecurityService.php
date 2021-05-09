@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Group 1 Milestone 2
  * SecurityService.php Version 2

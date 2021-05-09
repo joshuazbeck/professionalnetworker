@@ -1,14 +1,20 @@
 <?php
-
+/*
+ * Group 1 Milestone 4
+ * SkillDAO.php Version 1
+ * CST-256
+ * 5/8/2021
+ * This class is a data access object for handling database transactions regarding skills.
+ */
 
 namespace App\Services\Data;
-
 
 use App\Models\SkillModel;
 
 class SkillDAO
 {
-    public static function getAllSkills()
+    // Method for getting and array of all available skills.
+    public static function getAllSkills(): ?array
     {
         // Connect to database
         $connection = DatabaseConfig::getConnection();
@@ -26,17 +32,16 @@ class SkillDAO
 
             return null;
         }
-        // Retrieve job data and verify password
+        // Retrieve skill data
         else
         {
             // Array to hold results
             $skill_array = array();
 
-            // Step through results and create new UserModel
+            // Step through results and create new SkillModel
             while ($skill = $result->fetch_assoc())
             {
                 $returnedSkill = new SkillModel($skill['SKILL_ID'], $skill['SKILL_NAME']);
-                //$returnedSkill->setSkillId($skill['SKILL_ID']);
 
                 array_push($skill_array, $returnedSkill);
             }
@@ -45,7 +50,8 @@ class SkillDAO
         }
     }
 
-    public static function getUserSkillByUserID($id)
+    // Method for getting all skills associated with a user id.
+    public static function getUserSkillByUserID($id): ?array
     {
         // Connect to database
         $connection = DatabaseConfig::getConnection();
@@ -66,17 +72,16 @@ class SkillDAO
 
             return null;
         }
-        // Retrieve job data and verify password
+        // Retrieve skill data
         else
         {
             // Array to hold results
             $skill_array = array();
 
-            // Step through results and create new UserModel
+            // Step through results and create new SkillModel
             while ($skill = $result->fetch_assoc())
             {
                 $returnedSkill = new SkillModel($skill['SKILL_ID'], $skill['SKILL_NAME'], $skill['USER_SKILL_ID']);
-                //$returnedSkill->setSkillId($skill['SKILL_ID']);
 
                 array_push($skill_array, $returnedSkill);
             }
@@ -85,6 +90,7 @@ class SkillDAO
         }
     }
 
+    // Method for adding new skill to user.
     public static function addUserSkill($skillID, $userID)
     {
         // Connect to database
@@ -108,7 +114,8 @@ class SkillDAO
         }
     }
 
-    public static function deleteUserSkillById($id)
+    // Method for deleting a user's skill
+    public static function deleteUserSkillById($id): bool
     {
         // Connect to database
         $connection = DatabaseConfig::getConnection();

@@ -14,8 +14,6 @@ use App\Services\Business\JobHistoryService;
 use App\Services\Business\ProfileService;
 use App\Services\Business\SkillService;
 use App\Services\Business\UserService;
-use App\Services\Data\EducationDAO;
-use App\Services\Data\SkillDAO;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -65,8 +63,10 @@ class UserController extends Controller
         if ($checkEmail) {
             // Do something if invalid
             echo "Email address already registered";
-        } // Attempt to register user
-        else {
+        }
+        // Attempt to register user
+        else
+        {
             // Hash the password
             $hash = password_hash(trim($password), PASSWORD_DEFAULT);
             // Create a new UserModel with form data
@@ -75,7 +75,8 @@ class UserController extends Controller
             $registeredUser = UserService::addUser($user);
 
             // Check if registration was valid
-            if ($registeredUser) {
+            if ($registeredUser)
+            {
                 // Do something if valid.
                return redirect('login');
             }

@@ -8,11 +8,7 @@
  */
 namespace App\Services\Data;
 
-
-use App\Models\EducationModel;
 use App\Models\ProfileModel;
-use App\Models\JobHistoryModel;
-use App\Models\UserModel;
 
 class ProfileDAO
 {
@@ -49,7 +45,7 @@ class ProfileDAO
         }
     }
 
-    // Function for retrieving a Profile by assoicated User ID. Takes User ID as argument and returns ProfileModel
+    // Function for retrieving a Profile by associated User ID. Takes User ID as argument and returns ProfileModel
     public static function getProfileByUserId($id): ?ProfileModel
     {
         // Connect to database
@@ -113,7 +109,8 @@ class ProfileDAO
         {
             return true;
         }
-        else {
+        else
+        {
             return false;
         }
     }

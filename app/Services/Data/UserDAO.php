@@ -9,7 +9,6 @@
 namespace App\Services\Data;
 
 use App\Models\UserModel;
-use Illuminate\Support\Facades\DB;
 
 class UserDAO
 {
@@ -183,9 +182,9 @@ class UserDAO
             $user = $result->fetch_assoc();
 
             // Create UserModel from results
-          
+
             $returnedUser = new UserModel($user["FIRST_NAME"], $user["LAST_NAME"], $user["EMAIL"], $user["PASSWORD"], $user['USER_ID'], $user['ROLE_ID'], $user['SUSPENDED'], $user['PROFILE_COMPLETE']);
-           
+
             return $returnedUser;
         }
     }
@@ -221,5 +220,4 @@ class UserDAO
             return false;
         }
     }
-
 }

@@ -1,6 +1,11 @@
 <?php
-
-
+/*
+ * Group 1 Milestone 4
+ * SkillModel.php Version 1
+ * CST-256
+ * 5/6/2021
+ * This Model represents a skill for a user..
+ */
 namespace App\Models;
 
 
@@ -10,15 +15,6 @@ class SkillModel
     private $name;
     private $associatedId; // User or Job associated ID
 
-
-//    /**
-//     * SkillModel constructor.
-//     * @param $name
-//     */
-//    public function __construct($name)
-//    {
-//        $this->name = $name;
-//    }
     /**
      * SkillModel constructor.
      * @param $skillId
