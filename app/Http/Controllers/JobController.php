@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JobModel;
 use App\Services\Business\JobService;
+use App\Services\Business\SkillService;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -33,8 +34,11 @@ class JobController extends Controller
      */
     public function create()
     {
+        // Get all skills
+        $skills = SkillService::getAllSkills();
+
         // Return form for creating a job with list of Skills
-        return view('jobs/createjob');
+        return view('jobs/createjob')->with('skills', $skills);
     }
 
     /**
@@ -55,12 +59,21 @@ class JobController extends Controller
         $state = $this->clean_input($request->input('state'));
         $desiredSkill = $this->clean_input($request->input('desiredSkill'));
 
+        // Get array of "checked" skills from form
+        $skillarray = $request->input('skillarray');
+
         // Create new job
         $newJob = new JobModel(null, $title, $desiredSkill, $company, $pay, $status, $description, $city, $state);
 
         // Add new Job to database.
         if ($jobID = JobService::addJob($newJob))
         {
+            // Step through selected skills and add those not already in user's skills
+            foreach($skillarray as $skill)
+            {
+                SkillService::addJobSkill($skill, $jobID);
+            }
+
             return redirect('jobs');
         }
         else

@@ -176,4 +176,85 @@ class JobDAO
         }
     }
 
+    // Match user with jobs by skills. Takes user id as argument and returns array of JobModel
+    public static function matchUserJobSkill($userID): ?array
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL String and bind parameters
+        $sql_query = "SELECT * FROM jobs INNER JOIN (SELECT DISTINCT JOB_ID FROM job_skill INNER JOIN user_skill ON job_skill.SKILL_ID = user_skill.SKILL_ID WHERE user_skill.USER_ID = ?) JobQuery ON jobs.JOB_ID = JobQuery.JOB_ID";
+        $stmt = $connection->prepare($sql_query);
+
+        $stmt->bind_param("i", $userID);
+
+        // Execute statement and get results.
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // If no results return null.
+        if ($result->num_rows == 0)
+        {
+            return null;
+        }
+        // Retrieve job data
+        else
+        {
+            // Array to hold results
+            $job_array = array();
+
+            // Step through results and create new Job for each result
+            while ($job = $result->fetch_assoc())
+            {
+                $returnedJob = new JobModel($job['JOB_ID'], $job['TITLE'], $job['DESIRED_SKILL'], $job['COMPANY'], $job['PAY'], $job['STATUS'], $job['DESCRIPTION'], $job['CITY'], $job['STATE']);
+
+                array_push($job_array, $returnedJob);
+            }
+
+            // Return array of jobs
+            return $job_array;
+        }
+    }
+
+    // Method for searching jobs by keyword and column. Takes search stringa and column name as arguments.
+    public static function searchJobsByKeyword($searchString, $searchColumn)
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL String and bind parameters
+        $sql_query = "SELECT * FROM jobs WHERE $searchColumn LIKE ?";
+        $stmt = $connection->prepare($sql_query);
+
+        $searchString = "%" . $searchString . "%";
+        $stmt->bind_param("s", $searchString);
+
+        // Execute statement and get results.
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // If no results return null.
+        if ($result->num_rows == 0)
+        {
+            return null;
+        }
+        // Retrieve job data
+        else
+        {
+            // Array to hold results
+            $job_array = array();
+
+            // Step through results and create new Job for each result
+            while ($job = $result->fetch_assoc())
+            {
+                $returnedJob = new JobModel($job['JOB_ID'], $job['TITLE'], $job['DESIRED_SKILL'], $job['COMPANY'], $job['PAY'], $job['STATUS'], $job['DESCRIPTION'], $job['CITY'], $job['STATE']);
+
+                array_push($job_array, $returnedJob);
+            }
+
+            // Return array of jobs
+            return $job_array;
+        }
+    }
+
 }

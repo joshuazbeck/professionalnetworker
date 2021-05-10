@@ -31,6 +31,12 @@ class SkillService
         return SkillDAO::addUserSkill($skillID, $userID);
     }
 
+    // Method for adding a skill to a Job posting. Takes skill ID and job ID as arguments.
+    public static function addJobSkill($skillID, $jobID): bool
+    {
+        return SkillDAO::addJobSkill($skillID, $jobID);
+    }
+
     // Method for deleting a users skills. Takes user_skill id as argument and returns boolean.
     public static function deleteSkillByUserId($id): bool
     {

@@ -61,10 +61,20 @@
                         <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                         @enderror
 
-                            <textarea class="form-control text-white bg-dark" name="jobDescription" placeholder="Job Description" required></textarea>
+                        <textarea class="form-control text-white bg-dark" name="jobDescription" placeholder="Job Description" required></textarea>
                        	@error('jobdescription')
                         <p class="text-primary" style="font-size: 70%">{{ $message }}</p>
                         @enderror
+
+                        @if($skills)
+                            @foreach($skills as $skill)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="skillarray[]" value="{{ $skill->getSkillId() }}">
+                                    <label class="form-check-label text-primary" for="inlineCheckbox1">{{ $skill->getName() }}</label>
+                                </div>
+                            @endforeach
+                        @endif
+
                         <button class="btn btn-primary btn-block" type="submit" style="margin-top: 15px;">Create Job!!
                         </button>
                         <a class="d-md-flex justify-content-md-center already" href="{{route('jobs.index')}}"

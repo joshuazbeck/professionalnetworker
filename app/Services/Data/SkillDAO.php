@@ -114,6 +114,30 @@ class SkillDAO
         }
     }
 
+    // Method for adding new skill to job posting.
+    public static function addJobSkill($skillID, $jobID)
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL string
+        $sql_query = "INSERT INTO job_skill (SKILL_ID, JOB_ID) VALUES (?, ?)";
+        $stmt = $connection->prepare($sql_query);
+
+        // Bind parameters
+        $stmt->bind_param("ii", $skillID, $jobID);
+
+        // Execute and return boolean
+        if ($stmt->execute())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     // Method for deleting a user's skill
     public static function deleteUserSkillById($id): bool
     {
