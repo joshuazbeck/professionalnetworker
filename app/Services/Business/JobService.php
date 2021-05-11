@@ -9,8 +9,10 @@
 namespace App\Services\Business;
 
 
+use App\Models\JobApplicationModel;
 use App\Models\JobModel;
 use App\Services\Data\JobDAO;
+use Illuminate\Queue\Jobs\Job;
 
 class JobService
 {
@@ -54,5 +56,15 @@ class JobService
     public static function searchJobsByKeyword($searchString, $searchColumn): ?array
     {
         return JobDAO::searchJobsByKeyword($searchString, $searchColumn);
+    }
+
+    public static function addJobApplication(JobApplicationModel $jobApp)
+    {
+        return JobDAO::addJobApplication($jobApp);
+    }
+
+    public static function getJobApplicationsByJobID($id)
+    {
+        return JobDAO::getApplicationsByJobID($id);
     }
 }

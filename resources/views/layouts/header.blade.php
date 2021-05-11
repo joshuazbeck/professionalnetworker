@@ -15,6 +15,9 @@
                 </li>
                 @endif
                 @if(session()->has('userID'))
+                        <li class="nav-item">
+                            <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('searchJobs') }}" style="text-align: center;margin-right: 24px;">Jobs</a>
+                        </li>
                 <li class="nav-item">
                      <a class="nav-link border rounded-0 border-primary js-scroll-trigger" href="{{ route('userinfo', session('userID') ) }}" style="text-align: center;margin-right: 24px;">Profile</a>
                 </li>

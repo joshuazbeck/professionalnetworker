@@ -9,6 +9,7 @@
 
 namespace App\Services\Data;
 
+use App\Models\JobApplicationModel;
 use App\Models\JobModel;
 
 class JobDAO
@@ -257,4 +258,73 @@ class JobDAO
         }
     }
 
+    public static function addJobApplication(JobApplicationModel $jobApp)
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL string
+        $sql_query = "INSERT INTO job_applications (JOB_ID, USER_ID, FIRST_NAME, LAST_NAME, RESUME_FILE_PATH) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $connection->prepare($sql_query);
+
+        // Retrieve user inputs from job
+        $jobID = $jobApp->getJobID();
+        $userID = $jobApp->getUserID();
+        $firstName = $jobApp->getFirstName();
+        $lastName = $jobApp->getLastName();
+        $filePath = $jobApp->getResumeFilePath();
+
+        // Bind parameters
+        $stmt->bind_param("iisss", $jobID, $userID, $firstName, $lastName, $filePath);
+
+        // Execute and return boolean
+        if ($stmt->execute())
+        {
+            return $stmt->insert_id;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // Method for searching jobs by keyword and column. Takes search stringa and column name as arguments.
+    public static function getApplicationsByJobID($id)
+    {
+        // Connect to database
+        $connection = DatabaseConfig::getConnection();
+
+        // Prepare SQL String and bind parameters
+        $sql_query = "SELECT * FROM job_applications WHERE JOB_ID = ?";
+        $stmt = $connection->prepare($sql_query);
+
+        $stmt->bind_param("i", $id);
+
+        // Execute statement and get results.
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // If no results return null.
+        if ($result->num_rows == 0)
+        {
+            return null;
+        }
+        // Retrieve job data
+        else
+        {
+            // Array to hold results
+            $app_array = array();
+
+            // Step through results and create new Job for each result
+            while ($app = $result->fetch_assoc())
+            {
+                $returnedApp = new JobApplicationModel($app['APPLICATION_ID'], $app['JOB_ID'], $app['USER_ID'], $app['FIRST_NAME'], $app['LAST_NAME'], $app['RESUME_FILE_PATH']);
+
+                array_push($app_array, $returnedApp);
+            }
+
+            // Return array of jobs
+            return $app_array;
+        }
+    }
 }

@@ -28,7 +28,7 @@
                             Job Description: {{$jobs->getJobDescription()}}
                         </p>
                     </div>
-                 <div
+                    <div
                         class="btn-group d-lg-flex d-xl-flex flex-column justify-content-lg-center justify-content-xl-center"
                         role="group"
                         style="background: var(--gray-dark); padding-right: 0px; margin-left: 0px; width: auto;">
@@ -39,6 +39,52 @@
                                 <input type="hidden" name="_method" value="delete" />
                                 <button class="nav-link border rounded-0 border-primary" type="submit" style="margin-right: 0px; margin-top: 6px; padding-left: 50px; padding-right: 50px; margin-bottom: 6px; border-radius: 6px; background: var(--gray-dark);border-color: red;border-style: none; color: red;">Delete</button>
                             </form>
+                    </div>
+                </div>
+                <div class="card-footer" style="background:var(--gray-dark);">
+                    <div class="accordion" style="background:var(--gray-dark);" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" style="background:var(--gray-dark);" id="headingOne">
+                                <h2 class="mb-0" style="background:var(--gray-dark);">
+                                    <button class="btn btn-block text-left" style="background:var(--gray-dark); color:var(--primary);" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Applications
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapseOne" style="background:var(--gray-dark);"class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body" style="background:var(--gray-dark);">
+                                    <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background:var(--gray-dark);">
+                                        <div class="btn-toolbar"></div>
+                                        <div style="width: 75%; height: auto;">
+                                            <div>
+                                                <table class="table">
+                                                    <thead class="text-primary">
+                                                    <tr>
+                                                        <th>Applicant</th>
+                                                        <th>Resume</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @if($jobs->getAppArray())
+                                                        @foreach($jobs->getAppArray() as $app)
+                                                            <tr>
+                                                                <th class="text-light">
+                                                                    {{ $app->getFirstName() }} {{ $app->getLastName() }}
+                                                                </th>
+                                                                <th class="text-light">
+                                                                    <a href="" download="resume">Download
+                                                                </th>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>

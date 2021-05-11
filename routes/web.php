@@ -1,4 +1,6 @@
 <?php
+
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -59,6 +61,22 @@ Route::get('addUserToGroup/{group_id}', [
 Route::get('removeUserFromGroup/{group_id}', [
     'as' => 'removeUserFromGroup',
     'uses' => 'App\Http\Controllers\AffinityGroupsController@removeUserFromGroup'
+]);
+Route::get('searchJobs', [
+    'as' => 'searchJobs',
+    'uses' => 'App\Http\Controllers\JobController@searchJobs'
+]);
+Route::post('doJobSearch', [
+    'as' => 'doJobSearch',
+    'uses' => 'App\Http\Controllers\JobController@doJobSearch'
+]);
+Route::get('applyForJob/{job_id}', [
+    'as' => 'applyForJob',
+    'uses' => 'App\Http\Controllers\JobController@applyForJob'
+]);
+Route::post('processApplication', [
+    'as' => 'processApplication',
+    'uses' => 'App\Http\Controllers\JobController@processApplication'
 ]);
 
 Route::resource('profiles', App\Http\Controllers\ProfileController::class);

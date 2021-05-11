@@ -32,6 +32,8 @@ class JobModel
 
     private $state;
 
+    private $appArray;
+
     /**
      * JobModel constructor.
      * @param $jobID
@@ -199,6 +201,22 @@ class JobModel
     public function setState($state): void
     {
         $this->state = $state;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppArray()
+    {
+        return $this->appArray;
+    }
+
+    /**
+     * @param mixed $appArray
+     */
+    public function setAppArray($appArray): void
+    {
+        $this->appArray = $appArray;
     }
 
 }

@@ -8,9 +8,12 @@
  */
 namespace App\Http\Controllers;
 
+use App\Models\JobApplicationModel;
 use App\Models\JobModel;
 use App\Services\Business\JobService;
 use App\Services\Business\SkillService;
+use App\Services\Business\UserService;
+use App\Services\Data\JobDAO;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -23,6 +26,11 @@ class JobController extends Controller
     {
         // Get array of available jobs
         $jobsArray = JobService::getAllJobs();
+
+        foreach($jobsArray as $job)
+        {
+            $job->setAppArray(JobService::getJobApplicationsByJobID($job->getJobID()));
+        }
 
         // Return view with Jobs and Skills array
         return view('jobs/displayJobs')->with('jobsArray', $jobsArray);
@@ -151,6 +159,54 @@ class JobController extends Controller
 
         // Send user back to Job listing
         return redirect('jobs');
+    }
+
+    public function searchJobs()
+    {
+        return view('jobs/searchJobs');
+    }
+
+    public function doJobSearch(Request $request)
+    {
+        $job_Array = array();
+
+        if ($request->input('route') == 'skills')
+        {
+            $job_Array = JobService::matchUserJobSkill(session('userID'));
+        }
+        else
+        {
+            if ($request->input('searchString') &&  $request->input('searchColumn'))
+            {
+                $searchString = $request->input('searchString');
+                $searchColumn = $request->input('searchColumn');
+
+                $job_Array = JobService::searchJobsByKeyword($searchString, $searchColumn);
+            }
+        }
+        return view('jobs/jobSearchResults')->with('jobsArray', $job_Array);
+    }
+
+    public function applyForJob($id)
+    {
+        $user = UserService::getUserById(session('userID'));
+        $job = JobService::getJobByID($id);
+
+        return view('jobs/jobApplication')->with('user', $user)->with('job', $job);
+    }
+
+    public function processApplication(Request $request)
+    {
+        $jobID = $request->input('JobID');
+        $filePath = $request->file('fileToUpload')->store('resumes');
+
+        $user = UserService::getUserById(session('userID'));
+
+        $jobApp = new JobApplicationModel(0, $jobID, session('userID'), $user->getFirstName(), $user->getLastName(), $filePath);
+
+        JobDAO::addJobApplication($jobApp);
+
+        return view('jobs/searchJobs');
     }
 
     // Function for clearing user inputs against SQL injection
