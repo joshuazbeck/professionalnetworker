@@ -79,6 +79,8 @@ Route::post('processApplication', [
     'uses' => 'App\Http\Controllers\JobController@processApplication'
 ]);
 
+Route::get('download/{file_name}', 'App\Http\Controllers\DownloadController@download');
+
 Route::resource('profiles', App\Http\Controllers\ProfileController::class);
 Route::resource('users', App\Http\Controllers\UserController::class);
 Route::resource('jobs', App\Http\Controllers\JobController::class);

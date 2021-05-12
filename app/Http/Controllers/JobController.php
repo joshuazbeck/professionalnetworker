@@ -161,51 +161,76 @@ class JobController extends Controller
         return redirect('jobs');
     }
 
+    // Method for returning a view that starts a job search
     public function searchJobs()
     {
         return view('jobs/searchJobs');
     }
 
+    // Method that handles a job search request.
     public function doJobSearch(Request $request)
     {
+        // Array to hold job search results
         $job_Array = array();
 
+        //Check if user was searching by skills or keyword
         if ($request->input('route') == 'skills')
         {
+            // Search jobs against user's skills
             $job_Array = JobService::matchUserJobSkill(session('userID'));
         }
         else
         {
+            // Verify searchString and searchColumn are not empty.
             if ($request->input('searchString') &&  $request->input('searchColumn'))
             {
-                $searchString = $request->input('searchString');
-                $searchColumn = $request->input('searchColumn');
+                // Get search values
+                $searchString = $this->clean_input($request->input('searchString'));
+                $searchColumn = $this->clean_input($request->input('searchColumn'));
 
+                // Get array from search values
                 $job_Array = JobService::searchJobsByKeyword($searchString, $searchColumn);
             }
         }
+
+        // Return results
         return view('jobs/jobSearchResults')->with('jobsArray', $job_Array);
     }
 
+    // Method for returning form to apply for job
     public function applyForJob($id)
     {
+        // Get current user's data
         $user = UserService::getUserById(session('userID'));
+        // Get job data
         $job = JobService::getJobByID($id);
 
+        // Return view
         return view('jobs/jobApplication')->with('user', $user)->with('job', $job);
     }
 
+    // Method for processing job application form.
     public function processApplication(Request $request)
     {
-        $jobID = $request->input('JobID');
-        $filePath = $request->file('fileToUpload')->store('resumes');
+        // Get job ID
+        $jobID = $this->clean_input($request->input('JobID'));
 
+        // Create filename for uploaded file
+        $resumeFile = time().'.'.$request->file('fileToUpload')->getClientOriginalExtension();
+
+        // Move file to public/resumes directory
+        $request->file('fileToUpload')->move(public_path('/resumes'), $resumeFile);
+
+        // Get current user's information
         $user = UserService::getUserById(session('userID'));
 
-        $jobApp = new JobApplicationModel(0, $jobID, session('userID'), $user->getFirstName(), $user->getLastName(), $filePath);
+        // Create new JobApplicationModel
+        $jobApp = new JobApplicationModel(0, $jobID, $user->getUserID(), $user->getFirstName(), $user->getLastName(), $resumeFile);
 
+        // Add application to the database
         JobDAO::addJobApplication($jobApp);
 
+        // Return to job search view
         return view('jobs/searchJobs');
     }
 

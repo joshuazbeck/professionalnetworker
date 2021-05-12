@@ -1,9 +1,9 @@
 <?php
 /*
- * Group 1 Milestone 3
- * JobModel.php Version 1
+ * Group 1 Milestone 5
+ * JobModel.php Version 2
  * CST-256
- * 4/30/2021
+ * 5/12/2021
  * This Model represents a Job for the site.
  */
 
@@ -32,6 +32,7 @@ class JobModel
 
     private $state;
 
+    // Array to hold applicable job applications
     private $appArray;
 
     /**

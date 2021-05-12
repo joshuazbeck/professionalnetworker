@@ -1,8 +1,12 @@
 <?php
-
-
+/*
+ * Group 1 Milestone 5
+ * JobApplicationModel.php Version 1
+ * CST-256
+ * 5/12/2021
+ * This Model represents a job application.
+ */
 namespace App\Models;
-
 
 class JobApplicationModel
 {

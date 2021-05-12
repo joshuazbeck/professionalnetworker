@@ -217,7 +217,7 @@ class JobDAO
         }
     }
 
-    // Method for searching jobs by keyword and column. Takes search stringa and column name as arguments.
+    // Method for searching jobs by keyword and column. Takes search string and column name as arguments.
     public static function searchJobsByKeyword($searchString, $searchColumn)
     {
         // Connect to database
@@ -258,6 +258,7 @@ class JobDAO
         }
     }
 
+    // Method for adding a new job application to the database. Takes JobApplicationModel as argument
     public static function addJobApplication(JobApplicationModel $jobApp)
     {
         // Connect to database
@@ -267,7 +268,7 @@ class JobDAO
         $sql_query = "INSERT INTO job_applications (JOB_ID, USER_ID, FIRST_NAME, LAST_NAME, RESUME_FILE_PATH) VALUES (?, ?, ?, ?, ?)";
         $stmt = $connection->prepare($sql_query);
 
-        // Retrieve user inputs from job
+        // Retrieve user inputs from Job Application
         $jobID = $jobApp->getJobID();
         $userID = $jobApp->getUserID();
         $firstName = $jobApp->getFirstName();
@@ -288,7 +289,7 @@ class JobDAO
         }
     }
 
-    // Method for searching jobs by keyword and column. Takes search stringa and column name as arguments.
+    // Method for returning every application associated with a job id. Takes job id as argument and returns array.
     public static function getApplicationsByJobID($id)
     {
         // Connect to database
@@ -309,13 +310,13 @@ class JobDAO
         {
             return null;
         }
-        // Retrieve job data
+        // Retrieve job application data
         else
         {
             // Array to hold results
             $app_array = array();
 
-            // Step through results and create new Job for each result
+            // Step through results and create new JobApplicationModel for each result
             while ($app = $result->fetch_assoc())
             {
                 $returnedApp = new JobApplicationModel($app['APPLICATION_ID'], $app['JOB_ID'], $app['USER_ID'], $app['FIRST_NAME'], $app['LAST_NAME'], $app['RESUME_FILE_PATH']);
@@ -323,7 +324,7 @@ class JobDAO
                 array_push($app_array, $returnedApp);
             }
 
-            // Return array of jobs
+            // Return array of job applications
             return $app_array;
         }
     }

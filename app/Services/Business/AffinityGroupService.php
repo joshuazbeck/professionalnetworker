@@ -11,7 +11,7 @@ namespace App\Services\Business;
 use App\Models\AffinityGroupModel;
 use App\Services\Data\AffinityGroupDAO;
 
-abstract class AffinityGroupService
+class AffinityGroupService
 {
     // Method for returning an array of user ids for members of affinity group.
     public static function getAffinityGroupUsers($affinityGroupID): ?array

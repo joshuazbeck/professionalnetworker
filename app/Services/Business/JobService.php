@@ -12,7 +12,6 @@ namespace App\Services\Business;
 use App\Models\JobApplicationModel;
 use App\Models\JobModel;
 use App\Services\Data\JobDAO;
-use Illuminate\Queue\Jobs\Job;
 
 class JobService
 {
@@ -58,12 +57,14 @@ class JobService
         return JobDAO::searchJobsByKeyword($searchString, $searchColumn);
     }
 
+    // Static function for adding a new job application to the database.
     public static function addJobApplication(JobApplicationModel $jobApp)
     {
         return JobDAO::addJobApplication($jobApp);
     }
 
-    public static function getJobApplicationsByJobID($id)
+    // Static function for retrieving a job application from the database.
+    public static function getJobApplicationsByJobID($id): ?array
     {
         return JobDAO::getApplicationsByJobID($id);
     }

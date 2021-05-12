@@ -42,16 +42,16 @@
                     </div>
                 </div>
                 <div class="card-footer" style="background:var(--gray-dark);">
-                    <div class="accordion" style="background:var(--gray-dark);" id="accordionExample">
+                    <div class="accordion" style="background:var(--gray-dark);" id="accordionExample{{ $jobs->getJobID() }}">
                         <div class="card">
                             <div class="card-header" style="background:var(--gray-dark);" id="headingOne">
                                 <h2 class="mb-0" style="background:var(--gray-dark);">
-                                    <button class="btn btn-block text-left" style="background:var(--gray-dark); color:var(--primary);" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <button class="btn btn-block text-left" style="background:var(--gray-dark); color:var(--primary);" type="button" data-toggle="collapse" data-target="#collapseOne{{ $jobs->getJobID() }}">
                                         Applications
                                     </button>
                                 </h2>
                             </div>
-                            <div id="collapseOne" style="background:var(--gray-dark);"class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div id="collapseOne{{ $jobs->getJobID() }}" style="background:var(--gray-dark);" class="collapse" data-parent="#accordionExample{{ $jobs->getJobID() }}">
                                 <div class="card-body" style="background:var(--gray-dark);">
                                     <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background:var(--gray-dark);">
                                         <div class="btn-toolbar"></div>
@@ -69,10 +69,11 @@
                                                         @foreach($jobs->getAppArray() as $app)
                                                             <tr>
                                                                 <th class="text-light">
-                                                                    {{ $app->getFirstName() }} {{ $app->getLastName() }}
+                                                                    <a href="{{ route('userinfo', $app->getUserID()) }}" >{{ $app->getFirstName() }} {{ $app->getLastName() }}</a>
+
                                                                 </th>
                                                                 <th class="text-light">
-                                                                    <a href="" download="resume">Download
+                                                                    <a href="{{ 'download/'.$app->getResumeFilePath() }}" >Download</a>
                                                                 </th>
                                                             </tr>
                                                         @endforeach
