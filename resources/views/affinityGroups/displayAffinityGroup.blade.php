@@ -5,7 +5,7 @@
     @if ($affinityGroupArray)
     @foreach ($affinityGroupArray as $group)
     <div class="row"
-         style="margin-right: 10%; margin-left: 10%; margin-top: 8px; margin-bottom: 8px;">
+         style="margin-right: 10%; margin-left: 10%; margin-top: 8px; margin-bottom: 100px;">
         <div class="col" style="border-style: none;">
             <div class="card"
                  style="border-radius: 10px; background: var(- -gray-dark); border-style: none; border-top-width: 49px; ">

@@ -17,13 +17,16 @@
                     <h5 class="text-primary text-center">with</h5>
                     <h5 class="text-primary text-center">{{ $job->getCompany() }}</h5>
                 </div>
-                <label class="text-primary text-center">Please attach your resume to complete the application</label>
+                
+                <label class="text-primary text-center">Please attach your resume to complete the application</label><br>
+                
                 <div class="form-group">
-                    <input type="file" class="text-primary" name="fileToUpload" id="fileToUpload">
-                    @error('password')
-                    <h6 class="text-primary h-auto" style="font-size: 65%">{{ $message }}</h6>
+                    <input type="file" class="text-primary" name="fileToUpload" id="fileToUpload" required>
+                    @error('fileToUpload')
+                        <h6 class="text-primary h-auto" style="margin-top:10px;font-size: 65%">{{ $message }}</h6>
                     @enderror
                 </div>
+                
                 <div class="form-group">
                     <button class="btn btn-primary btn-block" type="submit" style="background: var(--primary);margin-top: 19px;">Apply</button>
                 </div>
