@@ -10,7 +10,7 @@
 namespace App\Models;
 
 
-class JobModel
+class JobModel implements \JsonSerializable
 {
 
     private $jobID;
@@ -33,7 +33,7 @@ class JobModel
     private $state;
 
     // Array to hold applicable job applications
-    private $appArray;
+    protected $appArray;
 
     /**
      * JobModel constructor.
@@ -220,4 +220,18 @@ class JobModel
         $this->appArray = $appArray;
     }
 
+    // Method for returning data for serialization
+    public function jsonSerialize(): array
+    {
+        return [
+            'JobID' => $this->jobID,
+            'JobTitle' => $this->jobTitle,
+            'Company' => $this->company,
+            'HourlyPay' => $this->payHourly,
+            'Status' => $this->status,
+            'JobDescription' => $this->city,
+            'City' => $this->city,
+            'State' => $this->state
+        ];
+    }
 }

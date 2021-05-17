@@ -217,13 +217,13 @@ class JobController extends Controller
 
         // Create filename for uploaded file
         $resumeFile = time().'.'.$request->file('fileToUpload')->getClientOriginalExtension();
-        
+
+        // Validate the from data
         $rules = [
             'fileToUpload' => 'required|max:1000|mimes:pdf'
-            // add validations for other fields here
         ];
-
         $this->validate($request, $rules);
+
         // Move file to public/resumes directory
         $request->file('fileToUpload')->move(public_path('/resumes'), $resumeFile);
 

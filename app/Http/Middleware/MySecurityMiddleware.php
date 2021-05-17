@@ -23,7 +23,7 @@ class MySecurityMiddleware
     public function handle(Request $request, Closure $next)
     {
         // Check request for logged in user. Restrict to index, login, and register.
-        if (!$request->is("/") && !$request->is('login') && !$request->is('register') && !$request->is('dologin') && !$request->is('users') && !$request->is('users/create') && session("loggedIn") != true)
+        if (!$request->is("/") && !$request->is('login') && !$request->is('register') && !$request->is('dologin') && !$request->is('users') && !$request->is('users/create') && !$request->is('jobrest/*') && !$request->is('jobrest') && session("loggedIn") != true)
         {
             return redirect('/');
         }
