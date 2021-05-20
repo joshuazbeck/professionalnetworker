@@ -11,6 +11,8 @@ namespace App\Services\Data;
 
 use App\Models\JobApplicationModel;
 use App\Models\JobModel;
+use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Log;
 
 class JobDAO
 {
@@ -226,7 +228,7 @@ class JobDAO
         // Prepare SQL String and bind parameters
         $sql_query = "SELECT * FROM jobs WHERE $searchColumn LIKE ?";
         $stmt = $connection->prepare($sql_query);
-
+        Log::info($connection->error."WOW");
         $searchString = "%" . $searchString . "%";
         $stmt->bind_param("s", $searchString);
 

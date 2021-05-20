@@ -14,6 +14,7 @@ use App\Models\LoginModel;
 class SecurityDAO
 {
 
+    
     // Authenticates a user login attempt. Takes LoginModel as argument and returns a UserModel or NULL
     public static function authenticateUser(LoginModel $loginModel): ?UserModel
     {

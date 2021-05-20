@@ -89,3 +89,4 @@ Route::resource('education', App\Http\Controllers\EducationController::class);
 Route::resource('skills', App\Http\Controllers\SkillController::class);
 Route::resource('affinitygroup', App\Http\Controllers\AffinityGroupsController::class);
 Route::resource('jobrest', App\Http\Controllers\JobRestController::class);
+Route::resource('profilerest', App\Http\Controllers\ProfileRestController::class);

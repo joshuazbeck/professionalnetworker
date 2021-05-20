@@ -20,8 +20,8 @@
                         <input type="text" name="searchString" class="form-control mr-sm-2 bg-dark text-primary" placeholder="Search String...">
 
                         <select class="mr-sm-2 form-control text-primary bg-dark" name="searchColumn">
-                            <option selected>Choose...</option>
-                            <option value="TITLE">Title</option>
+                          
+                            <option value="TITLE" selected>Title</option>
                             <option value="CITY">City</option>
                             <option value="DESCRIPTION">Description</option>
                         </select>

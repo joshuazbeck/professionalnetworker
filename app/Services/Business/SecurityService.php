@@ -21,4 +21,5 @@ class SecurityService
         // Return UserModel if successful or NULL if unsuccessful
         return SecurityDAO::authenticateUser($loginModel);
     }
+    
 }

@@ -10,7 +10,7 @@
 namespace App\Models;
 
 
-class ProfileModel
+class ProfileModel implements \JsonSerializable
 {
     // Profile specific variables
     private $userID;
@@ -197,6 +197,23 @@ class ProfileModel
     public function setOccupation($occupation): void
     {
         $this->occupation = $occupation;
+    }
+    
+
+    
+    public function jsonSerialize(): array
+    {
+        return [
+            'UserID' => $this->userID,
+            'ProfileID' => $this->profileID,
+            'Occupation' => $this->occupation,
+            'Phone' => $this->phone,
+            'Age' => $this->age,
+            'IsMale' => $this->is_male,
+            'City' => $this->city,
+            'State' => $this->state,
+            'Bio' => $this->bio
+        ];
     }
 
 }

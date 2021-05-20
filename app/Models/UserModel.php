@@ -187,5 +187,8 @@ class UserModel
     {
         $this->profile_complete = $profile_complete;
     }
+   
+    
+
 
 }
