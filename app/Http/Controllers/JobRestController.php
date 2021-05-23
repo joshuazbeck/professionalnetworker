@@ -25,8 +25,15 @@ class JobRestController extends Controller
         // If array has results
         if($jobsArray)
         {
-            // Create new DTO with results
-            $jobDTO = new DTOModel(0,'No Errors', $jobsArray);
+            // Limit list of returned jobs to 20
+            if(sizeof($jobsArray) > 20)
+            {
+                $jobDTO = new DTOModel(2,'Jobs clipped at 20', array_slice($jobsArray, 0 , 20));
+            }
+            else
+            {
+                $jobDTO = new DTOModel(0,'No Errors', $jobsArray);
+            }
         }
         else
         {
