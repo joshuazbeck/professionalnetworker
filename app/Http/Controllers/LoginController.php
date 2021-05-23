@@ -11,20 +11,33 @@ namespace App\Http\Controllers;
 
 use App\Services\Business\SecurityService;
 use App\Services\Data\DatabaseConfig;
+use App\Services\Utility\ILogger;
 use Illuminate\Http\Request;
 use App\Models\LoginModel;
 
 class LoginController extends Controller
 {
+    // Variable to hold Logger
+    protected $logger;
+
+    // Constructor that creates a logger
+    public function __construct(ILogger $iLogger)
+    {
+        $this->logger = $iLogger;
+    }
 
     // Method for logging in a user. Takes POST data as an argument.
     public function login(Request $request)
     {
+        $this->logger->info("Entering LoginController::login()");
+
         $this->validateForm($request);
 
         // Retrieve user form inputs and clean against SQL Injection
         $email = $this->clean_input($request->input('email'));
         $password = $this->clean_input($request->input('password'));
+
+        $this->logger->info("Attempting login for user: ", array('email'=> $email));
 
         // Create new UserModel for authentication
         $loginModel = new LoginModel($email, $password);
@@ -53,22 +66,27 @@ class LoginController extends Controller
 
             if($user->getSuspended() == true)
             {
+                $this->logger->info("Exiting LoginController. User Suspended Status");
                 return redirect('logout');
             }
 
             // Check if user has completed profile. If true, redirect to home. If False setup profile
             if ($user->getProfileComplete())
             {
+                $this->logger->info("Exiting LoginController. Login Successful");
                 return redirect('/');
             }
             else
             {
+                $this->logger->info("Exiting LoginController. Redirect to create profile");
                 return view('profiles/setupprofile');
             }
         }
         // If no user, return error
         else
         {
+            $this->logger->info("Exiting LoginController. Login Failed");
+
             return back()
                 ->withInput()
                 ->withErrors(['info' => 'Username or Password not found']);
