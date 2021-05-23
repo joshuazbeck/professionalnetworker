@@ -131,7 +131,6 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Call validate method and validate user inputs
         $this->validateForm($request);
 
         // Retrieve all user form inputs and clean against SQL injection.
@@ -238,7 +237,6 @@ class UserController extends Controller
         // Set rules
         $rules = ['firstName'=>'Required | Alpha',
             'lastName'=>'Required | Alpha',
-            'email'=>'unique:users,EMAIL|email|Required',
             'password'=>['regex:/^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{7,})\S$/'],
             'password-repeat'=>'same:password'
         ];

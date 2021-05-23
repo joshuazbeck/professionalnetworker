@@ -10,7 +10,7 @@
                         <div class="card-body d-sm-flex flex-row justify-content-sm-center" style="background: var(--gray-dark);color:var(--primary);">
                             <form class="form-inline" method="post" action='{{route("doJobSearch")}}'>
                                 @csrf
-                                <input type="hidden" name="route" value="desired_skill" />
+                                <input type="hidden" name="route" value="skills" />
                                 <button type="submit" class="btn btn-primary mr-sm-2 form-control">Match Jobs By Skill</button>
                                 <label class="form-control mr-sm-2 bg-dark border-0 text-primary">OR</label>
                             </form>
@@ -20,7 +20,7 @@
                                 <input type="text" name="searchString" class="form-control mr-sm-2 bg-dark text-primary" placeholder="Search String...">
 
                                 <select class="mr-sm-2 form-control text-primary bg-dark" name="searchColumn">
-                                   
+
                                      <option value="TITLE" selected>Title</option>
                             <option value="CITY">City</option>
                             <option value="DESCRIPTION">Description</option>

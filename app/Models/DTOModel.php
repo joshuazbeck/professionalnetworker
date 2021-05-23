@@ -1,6 +1,11 @@
 <?php
-
-
+/*
+ * Group 1 Milestone 6
+ * DTOModel.php Version 1
+ * CST-256
+ * 5/22/2021
+ * This is a Data Transfer object used to return data for a REST API
+ */
 namespace App\Models;
 
 
@@ -71,6 +76,7 @@ class DTOModel implements \JsonSerializable
         $this->data = $data;
     }
 
+    // Method to serialize object as JSON
     public function jsonSerialize()
     {
         return get_object_vars($this);
