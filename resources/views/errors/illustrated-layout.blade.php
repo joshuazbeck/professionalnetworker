@@ -16,7 +16,7 @@
 </head>
 
 <body id="page-top" style="filter: blur(0px);">
-    <header class="masthead" style="background: url({{ asset('assets/img/zachary-keimig-FmU0VB7JJpU-unsplash.jpg') }}) center / cover;">
+    <header class="masthead" style="background: url({{ asset('assets/img/sarah-kilian-52jRtc2S_VE-unsplash.jpg') }}) center / cover;">
         <div class="container">
             <div class="intro-text" style="padding-top: 150px;padding-bottom: 150px;">
                 <div class="intro-lead-in"><span>@yield('title')</span></div>
