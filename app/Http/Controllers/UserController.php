@@ -14,18 +14,32 @@ use App\Services\Business\JobHistoryService;
 use App\Services\Business\ProfileService;
 use App\Services\Business\SkillService;
 use App\Services\Business\UserService;
+use App\Services\Utility\ILogger;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // Variable to hold Logger
+    protected $logger;
+
+    // Constructor that creates a logger
+    public function __construct(ILogger $iLogger)
+    {
+        $this->logger = $iLogger;
+    }
+
     /**
      * Display a listing of the resource.
      *
      */
     public function index()
     {
+        $this->logger->info("Entering UserController::index()");
+
         // Get array of all users from database
         $userArray = UserService::getAllUsers();
+
+        $this->logger->info("Exiting UserController::index()");
 
         // Return view with Users array
         return view('users/displayUsers')->with('userArray', $userArray);
@@ -37,6 +51,10 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->logger->info("Entering UserController::create()");
+
+        $this->logger->info("Exiting UserController::create()");
+
         return view('users/register');
     }
 
@@ -48,6 +66,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->logger->info("Entering UserController::store()");
+
         // Call validate method to validate user inputs
         $this->validateForm($request);
 
@@ -61,6 +81,9 @@ class UserController extends Controller
         $checkEmail = UserService::findEmail($email);
 
         if ($checkEmail) {
+
+            $this->logger->info("Attempted to register with existing email", array('email' => $email));
+
             // Do something if invalid
             echo "Email address already registered";
         }
@@ -77,11 +100,17 @@ class UserController extends Controller
             // Check if registration was valid
             if ($registeredUser)
             {
+                $this->logger->info("User registered successfully", array('email'=>$email));
+                $this->logger->info("Exiting UserController::store()");
+
                 // Do something if valid.
                return redirect('login');
             }
             else
             {
+                $this->logger->info("User registration unsuccessful");
+                $this->logger->info("Exiting UserController::store()");
+
                 // Do something if invalid
                 return back()
                     ->withInput()
@@ -108,13 +137,21 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+
+        $this->logger->info("Entered UserController::edit()", array('loggedInUserID' => session('userID'), 'editedUserID' => $id));
+
         // Check if user is admin or trying to update a user other than themselves. Reroute to main page
         if(session('userRole') != 3 && session('userID') != $id)
         {
+            $this->logger->info("Permission denied to edit user id");
+            $this->logger->info("Exiting UserController::edit()");
+
             return redirect('/');
         }
         else
         {
+            $this->logger->info("Exiting UserController::edit()");
+
             // Get user info
             $user = UserService::getUserById($id);
 
@@ -131,6 +168,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->logger->info("Entering UserController::update()");
+
         $this->validateForm($request);
 
         // Retrieve all user form inputs and clean against SQL injection.
@@ -159,6 +198,9 @@ class UserController extends Controller
         // Reroute based upon success of update
         if(UserService::updateUser($userModel))
         {
+            $this->logger->info("UserID edited");
+            $this->logger->info("Exiting UserController::update()");
+
             if(session('userRole') != 3)
             {
                 return redirect('userinfo/'.session('userID'));
@@ -170,6 +212,9 @@ class UserController extends Controller
         }
         else
         {
+            $this->logger->info("UserID update failed");
+            $this->logger->info("Exiting UserController::update()");
+
             return redirect('/');
         }
     }
@@ -181,18 +226,32 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        // Call Delete function and delete user
-       UserService::deleteUser($id);
+        $this->logger->info("Entering UserController::destroy()", array('DeleteUserID'=>$id));
 
-       return redirect('/users');
+        // Call Delete function and delete user
+        if(UserService::deleteUser($id))
+        {
+            $this->logger->info("User deleted", array('DeleteUserID'=>$id));
+        }
+        else
+        {
+            $this->logger->info("User delete failed");
+        }
+
+        $this->logger->info('Exiting UserController::destroy()');
+
+        return redirect('/users');
     }
 
     // Function for returning a single user ID combined with the user's profile data and Job history
     public function userInfo($id)
     {
+        $this->logger->info("Entering UserController::userInfo", array("requestedUserID"=>$id));
+
         // Check if user is admin or trying to access user information other than their own
         if(session('userRole') != 3 && session('userID') != $id)
         {
+            $this->logger->info("Exiting UserController::userInfo");
             return redirect('/');
         }
         else
@@ -211,6 +270,8 @@ class UserController extends Controller
 
             // Get User Skills
             $skills = SkillService::getSkillsByUserId($id);
+
+            $this->logger->info("Exiting UserController::userInfo");
 
             // Return view with User and Profile data
             return view('users/displayUserInfo')

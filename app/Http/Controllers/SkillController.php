@@ -9,18 +9,32 @@
 namespace App\Http\Controllers;
 
 use App\Services\Business\SkillService;
+use App\Services\Utility\ILogger;
 use Illuminate\Http\Request;
 
 class SkillController extends Controller
 {
+    // Variable to hold Logger
+    protected $logger;
+
+    // Constructor that creates a logger
+    public function __construct(ILogger $iLogger)
+    {
+        $this->logger = $iLogger;
+    }
+
     /**
      * Display a listing of the resource.
      *
      */
     public function index()
     {
+        $this->logger->info("Entering SkillController::index()");
+
         // Get all skills
         $skills = SkillService::getAllSkills();
+
+        $this->logger->info("Exiting SkillController::index()");
 
         return view('skills/displaySkills')->with('skills', $skills);
     }
@@ -94,11 +108,15 @@ class SkillController extends Controller
     // Method for displaying a form for editing user's skills
     public function editUserSkills($id)
     {
+        $this->logger->info("Entering SkillController::editUserSkills()", array('UserID'=>$id));
+
         // Get all skills in database
         $skills = SkillService::getAllSkills();
 
         // Get all skills associated with user
         $userSkill = SkillService::getSkillsByUserId($id);
+
+        $this->logger->info("Exiting SkillController::editUserSkills()");
 
         return view('skills/updateUserSkills')->with('skills', $skills)->with('userSkill', $userSkill);
     }
@@ -106,6 +124,8 @@ class SkillController extends Controller
     // Method for updating user skills in database
     public function updateUserSkills(Request $request, $id)
     {
+        $this->logger->info("Entering SkillController::updateUserSkills()", array('UserID'=>$id));
+
         // Get array of "checked" skills from form
         $skillarray = $request->input('skillarray');
 
@@ -153,6 +173,8 @@ class SkillController extends Controller
                 }
             }
         }
+
+        $this->logger->info("Exiting SkillController::updateUserSkills()");
 
         return redirect('userinfo/'.session('userID'));
     }

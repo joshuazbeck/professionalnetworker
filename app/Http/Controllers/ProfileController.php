@@ -11,11 +11,21 @@ namespace App\Http\Controllers;
 
 use App\Services\Business\ProfileService;
 use App\Services\Business\UserService;
+use App\Services\Utility\ILogger;
 use Illuminate\Http\Request;
 use App\Models\ProfileModel;
 
 class ProfileController extends Controller
 {
+    // Variable to hold Logger
+    protected $logger;
+
+    // Constructor that creates a logger
+    public function __construct(ILogger $iLogger)
+    {
+        $this->logger = $iLogger;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +33,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
@@ -32,6 +43,9 @@ class ProfileController extends Controller
      */
     public function create()
     {
+        $this->logger->info("Entering ProfileController::create()");
+        $this->logger->info("Exiting ProfileController::create()");
+
         return view('profiles/setupprofile');
     }
 
@@ -42,6 +56,8 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
+        $this->logger->info("Entering ProfileController::store()");
+
         // Retrieve variables from form input
         $user_id = session('userID');
         $occupation = $this->clean_input($request->input('occupation'));
@@ -58,10 +74,14 @@ class ProfileController extends Controller
         // Add new Profile to database. If good update User class for profile complete
         if (ProfileService::addProfile($newProfile))
         {
+            $this->logger->info("Exiting ProfileController::store()");
+
             UserService::updateProfileComplete($user_id, true);
             return redirect('/');
         }
         else{
+            $this->logger->info("Exiting ProfileController::store()");
+
             return view('profiles/setupprofile');
         }
     }
@@ -73,9 +93,13 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
+        $this->logger->info("Entering ProfileController::show()", array('ProfileID'=>$id));
+
         // If user is not admin or the profile being accessed is not their own, reroute to mainpage
         if(session('userRole') != 3 && session('userID') != $id)
         {
+            $this->logger->info("Exiting ProfileController::show()");
+
             return redirect('/');
         }
         // Get User Profile and return displayProfile view
@@ -86,6 +110,8 @@ class ProfileController extends Controller
 
             // Get User's Profile data
             $profileModel = ProfileService::getProfileByUserID($id);
+
+            $this->logger->info("Exiting ProfileController::show()");
 
             // Return view ith user and profile data
             return view('profiles/displayProfile')->with('profile', $profileModel)->with('user', $user);
@@ -100,11 +126,15 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
+        $this->logger->info("Entering ProfileController::edit()", array('ProfileID'=>$id));
+
         // Get User data
         $user = UserService::getUserById($id);
 
         // Get user Profile Data
         $profile = ProfileService::getProfileByUserID($id);
+
+        $this->logger->info("Exiting ProfileController::edit()");
 
         // Return view with User and Profile data
         return view('profiles/updateProfile')->with('user', $user)->with('profile', $profile);
@@ -118,6 +148,8 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->logger->info("Entering ProfileController::update()", array('ProfileID'=>$id));
+
         // Get form input data
         $user_id = $id;
         $profileID = $this->clean_input($request->input('profileID'));
@@ -139,15 +171,24 @@ class ProfileController extends Controller
             // If user is Admin, reroute to admin page. If not reroute to profile page
             if(session('userRole') != 3)
             {
+                $this->logger->info("Profile update successful", array('ProfileID'=>$id));
+                $this->logger->info("Exiting ProfileController::update()");
+
                 return redirect('userinfo/'.session('userID'));
             }
             else
             {
+                $this->logger->info("Profile update successful", array('ProfileID'=>$id));
+                $this->logger->info("Exiting ProfileController::update()");
+
                 return redirect('profiles/'.$id);
             }
         }
         else
         {
+            $this->logger->info("Profile update unsuccessful", array('ProfileID'=>$id));
+            $this->logger->info("Exiting ProfileController::update()");
+
             return redirect('/');
         }
 

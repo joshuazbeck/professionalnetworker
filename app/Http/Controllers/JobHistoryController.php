@@ -10,11 +10,21 @@ namespace App\Http\Controllers;
 
 use App\Services\Business\JobHistoryService;
 use App\Services\Business\UserService;
+use App\Services\Utility\ILogger;
 use Illuminate\Http\Request;
 use App\Models\JobHistoryModel;
 
 class JobHistoryController extends Controller
 {
+    // Variable to hold Logger
+    protected $logger;
+
+    // Constructor that creates a logger
+    public function __construct(ILogger $iLogger)
+    {
+        $this->logger = $iLogger;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +41,9 @@ class JobHistoryController extends Controller
      */
     public function create()
     {
+        $this->logger->info("Entering JobHistoryController::create()");
+        $this->logger->info("Exiting JobHistoryController::create()");
+
         // Return view with User and Profile data
         return view('jobHistory/createJobHistory');
     }
@@ -42,6 +55,8 @@ class JobHistoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->logger->info("Entering JobHistoryController::store()");
+
         // Get form inputs
         $user_id = $this->clean_input($request->input('userID'));
         $company = $this->clean_input($request->input('job-company'));
@@ -56,9 +71,13 @@ class JobHistoryController extends Controller
         // If success, return to user's info, if not return to profile
         if (JobHistoryService::addJobHistory($newJobHistory))
         {
+            $this->logger->info("Exiting JobHistoryController::store()");
+
             return redirect('userinfo/'.session('userID'));
         }
         else{
+            $this->logger->info("Exiting JobHistoryController::store()");
+
             return redirect('profiles/'.$user_id);
         }
     }
@@ -70,11 +89,15 @@ class JobHistoryController extends Controller
      */
     public function show($id)
     {
+        $this->logger->info("Entering JobHistoryController::show()", array('JobHistoryID'=>$id));
+
         // Get user information
         $user = UserService::getUserById($id);
 
         // Get user's job history
         $jobHistory = JobHistoryService::getJobHistoryByUserID($id);
+
+        $this->logger->info("Exiting JobHistoryController::show()");
 
         // Return view with user data and user job history
         return view('jobHistory/displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
@@ -87,8 +110,12 @@ class JobHistoryController extends Controller
      */
     public function edit($id)
     {
+        $this->logger->info("Entering JobHistoryController::edit()", array('JobHistoryID'=>$id));
+
         // Get user Job Data
         $job = JobHistoryService::getJobHistoryByJobID($id);
+
+        $this->logger->info("Exiting JobHistoryController::edit()");
 
         // Return view with job history
         return view('jobHistory/editJobHistory')->with('job', $job);
@@ -102,6 +129,8 @@ class JobHistoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->logger->info("Entering JobHistoryController::update()", array('JobHistoryID'=>$id));
+
         // Get form inputs
         $user_id = $this->clean_input($request->input('userID'));
         $company = $this->clean_input($request->input('job-company'));
@@ -117,10 +146,16 @@ class JobHistoryController extends Controller
         // If success, return to user's info, if not return to profile
         if (JobHistoryService::updateJobHistory($jobHistory))
         {
+            $this->logger->info("Job History Update successful", array('JobHistoryID'=>$id));
+            $this->logger->info("Exiting JobHistoryController::update()");
+
             return redirect('jobHistory/'.session('userID'));
         }
         else
         {
+            $this->logger->info("Job History Update unsuccessful", array('JobHistoryID'=>$id));
+            $this->logger->info("Exiting JobHistoryController::update()");
+
             return redirect('profiles/'.$id);
         }
     }
@@ -132,8 +167,17 @@ class JobHistoryController extends Controller
      */
     public function destroy($id)
     {
+        $this->logger->info("Entering JobHistoryController::destroy()", array('JobHistoryID'=>$id));
+
         // Delete job history by id
-        JobHistoryService::deleteJobHistoryByJobID($id);
+        if(JobHistoryService::deleteJobHistoryByJobID($id))
+        {
+            $this->logger->info("Job History Delete successful", array('JobHistoryID'=>$id));
+        }
+        else
+        {
+            $this->logger->info("Job History Delete unsuccessful", array('JobHistoryID'=>$id));
+        }
 
         // Get user id
         $userID = session('userID');
@@ -143,6 +187,8 @@ class JobHistoryController extends Controller
 
         // Get user job history
         $jobHistory = JobHistoryService::getJobHistoryByUserID($userID);
+
+        $this->logger->info("Exiting JobHistoryController::destroy()");
 
         return view('jobHistory/displayJobHistory')->with('user', $user)->with('jobHistory', $jobHistory);
     }

@@ -14,23 +14,38 @@ use App\Services\Business\JobService;
 use App\Services\Business\SkillService;
 use App\Services\Business\UserService;
 use App\Services\Data\JobDAO;
+use App\Services\Utility\ILogger;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
+    // Variable to hold Logger
+    protected $logger;
+
+    // Constructor that creates a logger
+    public function __construct(ILogger $iLogger)
+    {
+        $this->logger = $iLogger;
+    }
+
     /**
      * Display a listing of the resource.
      *
      */
     public function index()
     {
+        $this->logger->info("Entering JobController::index()");
+
         // Get array of available jobs
         $jobsArray = JobService::getAllJobs();
 
+        // Get job applications for each job in array
         foreach($jobsArray as $job)
         {
             $job->setAppArray(JobService::getJobApplicationsByJobID($job->getJobID()));
         }
+
+        $this->logger->info("Exiting JobController::index()");
 
         // Return view with Jobs and Skills array
         return view('jobs/displayJobs')->with('jobsArray', $jobsArray);
@@ -42,8 +57,12 @@ class JobController extends Controller
      */
     public function create()
     {
+        $this->logger->info("Entering JobController::create()");
+
         // Get all skills
         $skills = SkillService::getAllSkills();
+
+        $this->logger->info("Exiting JobController::create()");
 
         // Return form for creating a job with list of Skills
         return view('jobs/createjob')->with('skills', $skills);
@@ -56,6 +75,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+        $this->logger->info("Entering JobController::store()");
 
         // Retrieve variables from form input
         $title = $this->clean_input($request->input('jobTitle'));
@@ -82,10 +102,14 @@ class JobController extends Controller
                 SkillService::addJobSkill($skill, $jobID);
             }
 
+            $this->logger->info("Exiting JobController::store()");
+
             return redirect('jobs');
         }
         else
         {
+            $this->logger->info("Exiting JobController::store()");
+
             return view('jobs.create');
         }
     }
@@ -108,8 +132,12 @@ class JobController extends Controller
      */
     public function edit($id)
     {
+        $this->logger->info("Entering JobController::edit()", array('JobID'=>$id));
+
         // Get Job by its id
         $job = JobService::getJobByID($id);
+
+        $this->logger->info("Exiting JobController::edit()");
 
         // Return form with Job information
         return view('jobs/updateJob')->with('job', $job);
@@ -123,6 +151,8 @@ class JobController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->logger->info("Entering JobController::update()", array('JobID'=>$id));
+
         // Retrieve variables from form input
         $title = $this->clean_input($request->input('jobTitle'));
         $company = $this->clean_input($request->input('company'));
@@ -139,10 +169,16 @@ class JobController extends Controller
         // Reroute based upon job update success
         if(JobService::updateJob($newJob))
         {
+            $this->logger->info("Job update successful", array('JobID'=>$id));
+            $this->logger->info("Exiting JobController::update()");
+
             return redirect('jobs');
         }
         else
         {
+            $this->logger->info("Job update unsuccessful", array('JobID'=>$id));
+            $this->logger->info("Exiting JobController::update()");
+
             return redirect('/');
         }
     }
@@ -154,8 +190,19 @@ class JobController extends Controller
      */
     public function destroy($id)
     {
+        $this->logger->info("Entering JobController::destroy()", array('JobID'=>$id));
+
         // Call Delete function and delete job
-        JobService::deleteJobById($id);
+        if(JobService::deleteJobById($id))
+        {
+            $this->logger->info("Job delete successful", array('JobID'=>$id));
+        }
+        else
+        {
+            $this->logger->info("Job delete unsuccessful", array('JobID'=>$id));
+        }
+
+        $this->logger->info("Exiting JobController::destroy()");
 
         // Send user back to Job listing
         return redirect('jobs');
@@ -164,12 +211,17 @@ class JobController extends Controller
     // Method for returning a view that starts a job search
     public function searchJobs()
     {
+        $this->logger->info("Entering JobController::searchJobs()");
+        $this->logger->info("Exiting JobController::searchJobs()");
+
         return view('jobs/searchJobs');
     }
 
     // Method that handles a job search request.
     public function doJobSearch(Request $request)
     {
+        $this->logger->info("Entering JobController::doJobSearch()");
+
         // Array to hold job search results
         $job_Array = array();
 
@@ -193,6 +245,8 @@ class JobController extends Controller
             }
         }
 
+        $this->logger->info("Exiting JobController::doJobSearch()");
+
         // Return results
         return view('jobs/jobSearchResults')->with('jobsArray', $job_Array);
     }
@@ -200,10 +254,14 @@ class JobController extends Controller
     // Method for returning form to apply for job
     public function applyForJob($id)
     {
+        $this->logger->info("Entering JobController::applyForJob()");
+
         // Get current user's data
         $user = UserService::getUserById(session('userID'));
         // Get job data
         $job = JobService::getJobByID($id);
+
+        $this->logger->info("Exiting JobController::applyForJob()");
 
         // Return view
         return view('jobs/jobApplication')->with('user', $user)->with('job', $job);
@@ -212,6 +270,8 @@ class JobController extends Controller
     // Method for processing job application form.
     public function processApplication(Request $request)
     {
+        $this->logger->info("Entering JobController::processApplication()");
+
         // Get job ID
         $jobID = $this->clean_input($request->input('JobID'));
 
@@ -235,6 +295,8 @@ class JobController extends Controller
 
         // Add application to the database
         JobDAO::addJobApplication($jobApp);
+
+        $this->logger->info("Exiting JobController::processApplication()");
 
         // Return to job search view
         return view('jobs/searchJobs');

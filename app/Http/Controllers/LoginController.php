@@ -14,6 +14,7 @@ use App\Services\Data\DatabaseConfig;
 use App\Services\Utility\ILogger;
 use Illuminate\Http\Request;
 use App\Models\LoginModel;
+use Illuminate\Support\Facades\Route;
 
 class LoginController extends Controller
 {
@@ -29,7 +30,7 @@ class LoginController extends Controller
     // Method for logging in a user. Takes POST data as an argument.
     public function login(Request $request)
     {
-        $this->logger->info("Entering LoginController::login()");
+        $this->logger->info("Entering LoginController::Index()");
 
         $this->validateForm($request);
 
@@ -93,7 +94,7 @@ class LoginController extends Controller
         }
     }
 
-    // Function for login off a user by deleting the session data.
+    // Function for logging off a user by deleting the session data.
     function log_out(){
         session()->flush();
         return redirect('login');

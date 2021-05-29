@@ -10,15 +10,27 @@ namespace App\Http\Controllers;
 
 use App\Models\DTOModel;
 use App\Services\Business\JobService;
+use App\Services\Utility\ILogger;
 
 class JobRestController extends Controller
 {
+    // Variable to hold Logger
+    protected $logger;
+
+    // Constructor that creates a logger
+    public function __construct(ILogger $iLogger)
+    {
+        $this->logger = $iLogger;
+    }
+
     /**
      * Display a listing of all jobs as JSON
      *
      */
     public function index()
     {
+        $this->logger->info('Entering JobRestController::index()');
+
         // Get Array of all jobs
         $jobsArray = JobService::getAllJobs();
 
@@ -41,6 +53,8 @@ class JobRestController extends Controller
             $jobDTO = new DTOModel(1,'No Data Found', $jobsArray);
         }
 
+        $this->logger->info('Exiting JobRestController::index()');
+
         // Return data as JSON
         return json_encode($jobDTO);
     }
@@ -52,6 +66,8 @@ class JobRestController extends Controller
      */
     public function show($id)
     {
+        $this->logger->info('Entering JobRestController::show()', array('JobID'=>$id));
+
         // Get job by its id
         $job = JobService::getJobByID($id);
 
@@ -66,6 +82,8 @@ class JobRestController extends Controller
             // Create DTO with error
             $jobDTO = new DTOModel(2,'Job Index Not Found', $job);
         }
+
+        $this->logger->info('Exiting JobRestController::show()');
 
         // Return data as JSON
         return json_encode($jobDTO);
